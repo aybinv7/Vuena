@@ -1,6 +1,6 @@
-# VueF7
+# Vuena
 
-VueF7 is a modern, modular mobile-first application built with Vue 3, Framework7, and Capacitor for cross-platform deployment. This project follows a modular architecture with TypeScript, Pinia for state management, Vue I18n for internationalization, and Tailwind CSS for styling.
+Vuena is a modern, modular mobile-first application built with Vue 3, Framework7, and Capacitor for cross-platform deployment. This project follows a modular architecture with TypeScript, Pinia for state management, Vue I18n for internationalization, and Tailwind CSS for styling.
 
 ## Tech Stack
 

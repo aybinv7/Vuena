@@ -1,6 +1,6 @@
 <template>
   <div>
-    <F7List v-if="filteredGroups.length > 0" media-list class="animated-list">
+    <F7List sortable class="!mt-3" v-if="filteredGroups.length > 0" media-list>
       <TransitionGroup
         name="list"
         tag="ul"
@@ -20,16 +20,11 @@
           swipeout
           @click="openGroup(group)"
           @swipeout:deleted="deleteGroup(group.id)"
-          class="list-item-animated"
         >
           <template #media>
             <div
-              :style="{
-                background: `linear-gradient(135deg, ${getGroupColor(
-                  group.id
-                )}, ${getGroupColorDark(group.id)})`,
-              }"
-              class="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shadow-md transition-all duration-300 hover:scale-110"
+              style="background-color: rgb(157, 67, 36)"
+              class="w-12 h-12 text-[rgb(157, 67, 36)] rounded-xl flex items-center justify-center text-white font-bold shadow-md transition-all duration-300 hover:scale-110"
             >
               {{ (group.name || "U").charAt(0).toUpperCase() }}
             </div>
@@ -65,8 +60,8 @@
     <!-- Empty State -->
     <F7Block v-else class="text-align-center margin-top">
       <Transition name="fade" mode="out-in">
-        <div key="empty-state" class="empty-state">
-          <div class="pulse-icon">
+        <div key="empty-state">
+          <div>
             <F7Icon f7="person_3" size="80" color="gray" />
           </div>
           <h3 class="margin-top">
@@ -84,9 +79,8 @@
             fill
             large
             @click="$emit('create-group')"
-            class="bounce-button"
           >
-            <F7Icon f7="plus" class="margin-right-half" />
+            <F7Icon f7="plus" />
             Create Group
           </F7Button>
         </div>
@@ -172,36 +166,6 @@ function cycleSortOrder() {
   }
 }
 
-function getGroupColor(groupId: string): string {
-  const colors = [
-    "#3B82F6", // blue
-    "#8B5CF6", // purple
-    "#EC4899", // pink
-    "#F59E0B", // amber
-    "#10B981", // emerald
-    "#06B6D4", // cyan
-  ];
-  const hash = groupId
-    .split("")
-    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return colors[hash % colors.length] ?? "#06B6D4";
-}
-
-function getGroupColorDark(groupId: string): string {
-  const colorsDark = [
-    "#2563EB",
-    "#7C3AED",
-    "#DB2777",
-    "#D97706",
-    "#059669",
-    "#0891B2",
-  ];
-  const hash = groupId
-    .split("")
-    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return colorsDark[hash % colorsDark.length] ?? "#0891B2";
-}
-
 // Animation hooks
 function onBeforeEnter(el: any) {
   el.style.opacity = "0";
@@ -228,7 +192,7 @@ function onLeave(el: any, done: any) {
 function openGroup(group: any) {
   f7.views.main.router.navigate(`/group/${group.id}`, {
     animate: true,
-    transition: "f7-dive",
+    transition: "f7-parallax",
   });
 }
 
@@ -316,127 +280,3 @@ onMounted(() => {
   loadCounts();
 });
 </script>
-
-<style scoped>
-/* List animations */
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.list-enter-from {
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(30px) scale(0.9);
-}
-
-.list-move {
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Badge animation */
-.badge-enter-active {
-  animation: badgePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.badge-leave-active {
-  animation: badgePop 0.2s reverse;
-}
-
-@keyframes badgePop {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Fade animation */
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-/* Empty state animations */
-.empty-state {
-  animation: fadeInUp 0.5s ease;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.pulse-icon {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.8;
-  }
-}
-
-.bounce-button {
-  animation: bounce 2s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
-  }
-}
-
-/* Smooth list item hover */
-.list-item-animated {
-  transition: background-color 0.2s ease;
-}
-
-.list-item-animated:active {
-  background-color: rgba(0, 0, 0, 0.02);
-}
-
-/* Animated list container */
-.animated-list {
-  contain: layout style paint;
-  will-change: contents;
-}
-</style>

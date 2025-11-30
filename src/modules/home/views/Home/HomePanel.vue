@@ -34,13 +34,15 @@
             :class="{ border: appTheme.theme === 'ios' }"
             @click="appTheme.setTheme('ios')"
           >
-            <F7Icon :size="64" ios="f7:logo-apple" md="material:apple" />
+            <F7Icon :size="64" ios="f7:logo_apple" md="material:apple" />
           </div>
           <div
             class="h-20 rounded-xl flex flex-col items-center justify-center"
             @click="appTheme.setTheme('md')"
             :class="{ border: appTheme.theme === 'md' }"
-          ></div>
+          >
+            <F7Icon :size="64" ios="f7:logo_android" md="material:android" />
+          </div>
         </div>
       </div>
     </f7-page>

@@ -1,6 +1,6 @@
 {
-  "appId": "io.aybinv7.vue-f7",
-  "appName": "VueF7",
+  "appId": "io.aybinv7.vuena",
+  "appName": "Vuena",
   "npmClient": "pnpm",
   "webDir": "dist",
   "plugins": {

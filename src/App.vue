@@ -16,28 +16,30 @@
 
       <!-- Main Tabbar -->
       <F7Toolbar tabbar icons bottom class="safe-area-bottom">
-        <F7Link
-          tab-link="#view-groups"
-          tab-link-active
-          icon-ios="f7:person_2_fill"
-          icon-md="material:group"
-          text="Groups"
-          ripple-color="transparent"
-        />
-        <F7Link
-          tab-link="#view-activity"
-          icon-ios="f7:graph_square_fill"
-          icon-md="material:analytics"
-          text="Activity"
-          ripple-color="transparent"
-        />
-        <F7Link
-          tab-link="#view-profile"
-          icon-ios="f7:person_circle_fill"
-          icon-md="material:account_circle"
-          text="Profile"
-          ripple-color="transparent"
-        />
+        <div class="toolbar-pane">
+          <F7Link
+            tab-link="#view-groups"
+            tab-link-active
+            icon-ios="f7:person_2_fill"
+            icon-md="material:group"
+            text="Groups"
+            ripple-color="transparent"
+          />
+          <F7Link
+            tab-link="#view-activity"
+            icon-ios="f7:graph_square_fill"
+            icon-md="material:analytics"
+            text="Activity"
+            ripple-color="transparent"
+          />
+          <F7Link
+            tab-link="#view-profile"
+            icon-ios="f7:person_circle_fill"
+            icon-md="material:account_circle"
+            text="Profile"
+            ripple-color="transparent"
+          />
+        </div>
       </F7Toolbar>
     </F7Views>
   </F7App>
@@ -51,7 +53,6 @@ import { framework7 } from "./plugins/framework7.plugin";
 import databaseInitializer from "./shared/database/inittalizer.database";
 import { useAuthStore } from "@/stores/auth.store";
 import LoginView from "@/modules/auth/views/LoginView.vue";
-
 const device = getDevice();
 const f7Params = framework7();
 const authStore = useAuthStore();

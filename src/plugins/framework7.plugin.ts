@@ -6,7 +6,7 @@ export const framework7 = (): Framework7Parameters => {
   const device = getDevice();
   const appTheme = useAppThemeProvider();
   return {
-    name: "VueF7",
+    name: "Vuena",
 
     theme: appTheme.value.theme,
     darkMode: appTheme.value.darkMode,
@@ -14,13 +14,13 @@ export const framework7 = (): Framework7Parameters => {
     routes: routes,
 
     input: {
-      scrollIntoViewOnFocus: device.capacitor,
-      scrollIntoViewCentered: device.capacitor,
+      scrollIntoViewOnFocus: true,
+      scrollIntoViewCentered: true,
     },
 
     statusbar: {
       iosOverlaysWebView: true,
-      androidOverlaysWebView: false,
+      androidOverlaysWebView: true,
     },
 
     view: {

@@ -1669,148 +1669,148 @@
   {
     "name": "default",
     "as": "aboutRoutes",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/modules/about/router/routes/about.routes.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/modules/about/router/routes/about.routes.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "homeRoutes",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/modules/home/router/routes/home.routes.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/modules/home/router/routes/home.routes.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "capacitorPlugin",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/plugins/capacitor.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/capacitor.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "useAndroidBackButton",
     "as": "useAndroidBackButton",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/plugins/capcitor/useAndroidBackButton.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/capcitor/useAndroidBackButton.ts",
     "__source": "dir"
   },
   {
     "name": "useKeyboard",
     "as": "useKeyboard",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/plugins/capcitor/useKeyboard.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/capcitor/useKeyboard.ts",
     "__source": "dir"
   },
   {
     "name": "useSplashscreen",
     "as": "useSplashscreen",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/plugins/capcitor/useSplashScreen.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/capcitor/useSplashScreen.ts",
     "__source": "dir"
   },
   {
     "name": "framework7",
     "as": "framework7",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/plugins/framework7.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/framework7.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "i18nPlugin",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/plugins/i18n.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/i18n.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "piniaPlugin",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/plugins/pinia.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/pinia.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "powersyncPlugin",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/plugins/powersync.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/powersync.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "supabase",
     "as": "supabase",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/plugins/supabase.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/supabase.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "globalRoutes",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/router/global/global.routes.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/router/global/global.routes.ts",
     "__source": "dir"
   },
   {
     "name": "useAuthGuard",
     "as": "useAuthGuard",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/router/guards/useAuth.guard.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/router/guards/useAuth.guard.ts",
     "__source": "dir"
   },
   {
     "name": "usePermissionGuard",
     "as": "usePermissionGuard",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/router/guards/usePermission.guard.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/router/guards/usePermission.guard.ts",
     "__source": "dir"
   },
   {
     "name": "useRoleGuard",
     "as": "useRoleGuard",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/router/guards/useRole.guard.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/router/guards/useRole.guard.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "router",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/router/index.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/router/index.ts",
     "__source": "dir"
   },
   {
     "name": "AppContextKey",
     "as": "AppContextKey",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/theme/useAppTheme.ts",
     "__source": "dir"
   },
   {
     "name": "useAppThemeProvider",
     "as": "useAppThemeProvider",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/theme/useAppTheme.ts",
     "__source": "dir"
   },
   {
     "name": "useAppTheme",
     "as": "useAppTheme",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/theme/useAppTheme.ts",
     "__source": "dir"
   },
   {
     "name": "AppTheme",
     "as": "AppTheme",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/theme/useAppTheme.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "AppMode",
     "as": "AppMode",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/theme/useAppTheme.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "AppContext",
     "as": "AppContext",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/theme/useAppTheme.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "SupabaseConnector",
     "as": "SupabaseConnector",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/connector.database.ts",
     "__source": "dir"
   },
   {
     "name": "SupabaseConnector",
     "as": "SupabaseConnector",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/connector.database.ts",
     "type": true,
     "declarationType": "class",
     "__source": "dir"
@@ -1818,118 +1818,118 @@
   {
     "name": "databaseConnector",
     "as": "databaseConnector",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/connector.database.ts",
     "__source": "dir"
   },
   {
     "name": "SupabaseConfig",
     "as": "SupabaseConfig",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/connector.database.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "SupabaseConnectorListener",
     "as": "SupabaseConnectorListener",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/connector.database.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "database",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/index.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/index.ts",
     "__source": "dir"
   },
   {
     "name": "powerSync",
     "as": "powerSync",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/index.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/index.ts",
     "__source": "dir"
   },
   {
     "name": "db",
     "as": "db",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/index.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/index.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "inittalizerDatabase",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/inittalizer.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/inittalizer.database.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "loggerDatabase",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/logger.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/logger.database.ts",
     "__source": "dir"
   },
   {
     "name": "AppSchema",
     "as": "AppSchema",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/schemas/AppSchema.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/schemas/AppSchema.ts",
     "__source": "dir"
   },
   {
     "name": "Database",
     "as": "Database",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "KyselyDatabase",
     "as": "KyselyDatabase",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "GroupRecord",
     "as": "GroupRecord",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "MemberRecord",
     "as": "MemberRecord",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "ExpenseRecord",
     "as": "ExpenseRecord",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "SplitRecord",
     "as": "SplitRecord",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "SettlementRecord",
     "as": "SettlementRecord",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "Auth",
     "as": "Auth",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/services/auth/auth.service.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/auth/auth.service.ts",
     "__source": "dir"
   },
   {
     "name": "Auth",
     "as": "Auth",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/services/auth/auth.service.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/auth/auth.service.ts",
     "type": true,
     "declarationType": "class",
     "__source": "dir"
@@ -1937,37 +1937,37 @@
   {
     "name": "useLanguageStore",
     "as": "useLanguageStore",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/stores/useLanguage.stores.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/stores/useLanguage.stores.ts",
     "__source": "dir"
   },
   {
     "name": "Framework7VueResolver",
     "as": "Framework7VueResolver",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/utils/resolvers/resolvers.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/utils/resolvers/resolvers.ts",
     "__source": "dir"
   },
   {
     "name": "getFramework7AutoImports",
     "as": "getFramework7AutoImports",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/shared/utils/resolvers/resolvers.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/utils/resolvers/resolvers.ts",
     "__source": "dir"
   },
   {
     "name": "useAuthStore",
     "as": "useAuthStore",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/stores/auth.store.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/stores/auth.store.ts",
     "__source": "dir"
   },
   {
     "name": "useExpensesStore",
     "as": "useExpensesStore",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/stores/expenses.store.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/stores/expenses.store.ts",
     "__source": "dir"
   },
   {
     "name": "useGroupsStore",
     "as": "useGroupsStore",
-    "from": "C:/Users/PC/code/ayb/VueF7/src/stores/groups.store.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/stores/groups.store.ts",
     "__source": "dir"
   }
 ]

@@ -1,46 +1,42 @@
 <template>
   <F7Sheet
-    class="demo-sheet-swipe-to-close"
-    style="height: auto; --f7-sheet-bg-color: #fff"
+    class="!h-auto"
     swipe-to-close
     backdrop
     :opened="opened"
     @sheet:closed="$emit('update:opened', false)"
   >
-    <div class="sheet-modal-swipe-step">
-      <div
-        class="display-flex padding justify-content-space-between align-items-center"
+    <template #fixed>
+      <div class="text-xl font-bold p-4">Create New Group</div>
+    </template>
+
+    <F7List class="!my-1" no-hairlines-md>
+      <F7ListInput
+        label="Group Name"
+        type="text"
+        placeholder="e.g. Summer Trip"
+        :value="name"
+        @input="name = $event.target.value"
+        clear-button
+      />
+
+      <f7-list-item
+        title="Currency"
+        smart-select
+        :smart-select-params="{ openIn: 'sheet' }"
       >
-        <div style="font-size: 18px"><b>Create New Group</b></div>
-      </div>
-      <div class="padding-bottom">
-        <F7List no-hairlines-md>
-          <F7ListInput
-            label="Group Name"
-            type="text"
-            placeholder="e.g. Summer Trip"
-            :value="name"
-            @input="name = $event.target.value"
-            clear-button
-          />
-          <F7ListInput
-            label="Currency"
-            type="select"
-            :value="currency"
-            @change="currency = $event.target.value"
-          >
-            <option value="USD">USD ($)</option>
-            <option value="EUR">EUR (€)</option>
-            <option value="GBP">GBP (£)</option>
-            <option value="JPY">JPY (¥)</option>
-          </F7ListInput>
-        </F7List>
-        <div class="padding-horizontal padding-bottom">
-          <F7Button fill large @click="create" :loading="loading"
-            >Create Group</F7Button
-          >
-        </div>
-      </div>
+        <select v-model="currency" name="currency">
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="JPY">JPY (¥)</option>
+        </select>
+      </f7-list-item>
+    </F7List>
+    <div class="!p-4">
+      <F7Button fill large @click="create" :loading="loading"
+        >Create Group</F7Button
+      >
     </div>
   </F7Sheet>
 </template>

@@ -16,7 +16,6 @@ export const useKeyboard = (f7: Framework7) => {
 
   Keyboard.setResizeMode({ mode: KeyboardResize.Native });
   Keyboard.setScroll({ isDisabled: true });
-  Keyboard.setAccessoryBarVisible({ isVisible: false });
 
   Keyboard.addListener("keyboardWillShow", () => {
     if (document.activeElement) {

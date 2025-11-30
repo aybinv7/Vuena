@@ -39,7 +39,7 @@
     <!-- Settings -->
     <F7BlockTitle>Settings</F7BlockTitle>
     <F7List>
-      <F7ListItem link title="Notifications" @click="openNotifications">
+      <F7ListItem title="Notifications">
         <template #media>
           <F7Icon f7="bell_fill" color="red" />
         </template>
@@ -57,7 +57,7 @@
         </template>
       </F7ListItem>
 
-      <F7ListItem link title="Theme" :after="theme">
+      <F7ListItem popup-open="#theme-popup" link title="Theme" :after="theme">
         <template #media>
           <F7Icon f7="paintbrush_fill" color="purple" />
         </template>
@@ -94,6 +94,8 @@
       <p class="text-color-gray">Version 1.0.0</p>
       <p class="text-color-gray">© 2025 FairShare</p>
     </F7Block>
+
+    <HomePanel />
   </F7Page>
 </template>
 
@@ -104,6 +106,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useGroupsStore } from "@/stores/groups.store";
 import { f7 } from "framework7-vue";
 import database from "@/shared/database/index";
+import AppToolBar from "@/shared/components/app/AppToolBar.vue";
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
@@ -168,10 +171,6 @@ function toggleNotifications(e: any) {
       closeTimeout: 2000,
     })
     .open();
-}
-
-function openNotifications() {
-  f7.dialog.alert("Notification settings would open here");
 }
 
 async function handleClearSync() {

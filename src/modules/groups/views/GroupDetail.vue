@@ -1,5 +1,5 @@
 <template>
-  <F7Page ptr @ptr:refresh="handleRefresh">
+  <F7Page no-toolbar ptr @ptr:refresh="handleRefresh">
     <F7Navbar :title="groupName" back-link="Back">
       <F7NavRight>
         <F7Link
@@ -111,6 +111,14 @@
     <F7Tabs animated swipeable>
       <!-- Expenses Tab -->
       <F7Tab id="tab-expenses" tab-active>
+        <F7Fab
+          position="right-bottom"
+          color="primary"
+          class="mb-20"
+          @click="showAddExpense = true"
+        >
+          <F7Icon f7="plus" />
+        </F7Fab>
         <F7List
           v-if="filteredExpenses.length > 0"
           media-list
@@ -144,14 +152,14 @@
                 }}</span>
               </div>
             </template>
-            <template #text>
+            <!-- <template #text>
               <F7Chip
                 :text="expense.category || 'general'"
                 color="blue"
                 class="margin-right-half"
               />
               {{ formatDate(expense.date || expense.created_at) }}
-            </template>
+            </template> -->
 
             <F7SwipeoutActions right>
               <F7SwipeoutButton color="blue" @click="editExpense(expense)">
@@ -165,7 +173,7 @@
         </F7List>
 
         <F7Block v-else class="text-align-center margin-top">
-          <div class="animate-bounce">
+          <div>
             <F7Icon f7="tray" size="64" color="gray" class="margin-bottom" />
           </div>
           <h3>
@@ -187,15 +195,6 @@
             Add Expense
           </F7Button>
         </F7Block>
-
-        <F7Fab
-          v-if="filteredExpenses.length > 0"
-          position="right-bottom"
-          color="blue"
-          @click="showAddExpense = true"
-        >
-          <F7Icon ios="f7:plus" md="material:add" />
-        </F7Fab>
       </F7Tab>
 
       <!-- Balances Tab -->
@@ -338,6 +337,8 @@
 </template>
 
 <script setup lang="ts">
+import { f7Fab } from "framework7-vue";
+
 const props = defineProps<{
   id: string;
 }>();
@@ -603,33 +604,3 @@ onUnmounted(() => {
   expensesStore.stopWatching();
 });
 </script>
-
-<style scoped>
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-bounce {
-  animation: bounce 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.animate-pulse {
-  animation: pulse 2s ease-in-out infinite;
-}
-</style>

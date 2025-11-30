@@ -70,6 +70,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import { f7 } from "framework7-vue";
 import database from "@/shared/database/index";
 import { useAuthStore } from "@/stores/auth.store";
+import AppToolBar from "@/shared/components/app/AppToolBar.vue";
 
 const authStore = useAuthStore();
 const filter = ref<"all" | "expenses" | "settlements">("all");

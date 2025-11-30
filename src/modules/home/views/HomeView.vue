@@ -1,5 +1,5 @@
 <template>
-  <F7Page ptr @ptr:refresh="handleRefresh" class="pb-16">
+  <F7Page infinite ptr @ptr:refresh="handleRefresh">
     <F7Navbar
       @navbar:collapse="isNavbarCollapsed = true"
       @navbar:expand="isNavbarCollapsed = false"
@@ -9,13 +9,14 @@
       :sliding="false"
     >
       <F7NavRight>
-        <F7Link
+        <F7Button
+          class="text-center"
           icon-ios="f7:plus_circle_fill"
           icon-md="material:add_circle"
-          @click="showCreateGroup = true"
           color="primary"
-          icon-size="32"
-          size="32"
+          round
+          icon-size="34"
+          @click="showCreateGroup = true"
         />
       </F7NavRight>
 
@@ -32,7 +33,17 @@
           :backdrop="false"
           @searchbar:search="handleSearch"
           @searchbar:clear="clearSearch"
-      /></F7Subnavbar>
+        />
+        <F7Button
+          class="text-center"
+          icon-ios="f7:sort_down_circle_fill"
+          icon-md="material:sort"
+          color="primary"
+          round
+          icon-size="34"
+          sortable-toggle=".sortable"
+        />
+      </F7Subnavbar>
     </F7Navbar>
 
     <GroupsList ref="groupsList" @create-group="showCreateGroup = true" />
@@ -41,6 +52,8 @@
 </template>
 
 <script setup lang="ts">
+import AppToolBar from "@/shared/components/app/AppToolBar.vue";
+
 const groupsStore = useGroupsStore();
 const showCreateGroup = ref(false);
 const groupsList = ref<any>(null);

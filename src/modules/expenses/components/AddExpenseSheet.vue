@@ -1,7 +1,7 @@
 <template>
   <F7Sheet
     class="demo-sheet-swipe-to-close"
-    style="height: auto; --f7-sheet-bg-color: #fff"
+    style="height: auto"
     swipe-to-close
     backdrop
     :opened="opened"

@@ -5,7 +5,7 @@ This file provides guidance to agents when working with code in this repository.
 ## Documentation-specific Context
 
 ### Misleading Project Name
-- The project is named "VueF7" in the README and framework7.json, but the actual project directory is "VueF7"
+- The project is named "Vuena" in the README and framework7.json, but the actual project directory is "Vuena"
 - This discrepancy could cause confusion when referencing documentation or project-specific information
 
 ### Hidden Documentation Locations
