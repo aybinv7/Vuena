@@ -20,6 +20,9 @@ const SRC_DIR = path.resolve(__dirname, "./src");
 const SRC_LOCALES = path.resolve(__dirname, "./src/locales/**");
 
 export default defineConfig({
+  optimizeDeps: {
+    exclude: ["jeep-sqlite/loader"],
+  },
   plugins: [
     vue({
       template: {
@@ -108,45 +111,7 @@ export default defineConfig({
   base: "",
   build: {
     rollupOptions: {
-      output: {
-        advancedChunks: {
-          groups: [
-            {
-              name: "vue-ecosystem",
-              test: /[\\/]node_modules[\\/](vue|pinia|vue-router|@vueuse)[\\/]/,
-            },
-            {
-              name: "f7-core",
-              test: /[\\/]node_modules[\\/]framework7[\\/](lite|shared|utils)/,
-            },
-            {
-              name: "f7-vue",
-              test: /[\\/]node_modules[\\/]framework7-vue[\\/]/,
-            },
-            {
-              name: "f7-heavy",
-              test: /[\\/]node_modules[\\/]framework7[\\/](components[\\/](calendar|color-picker|photo-browser|autocomplete)|modules[\\/](keyboard|mousewheel))/,
-            },
-            {
-              name: "styles",
-              test: /[\\/]node_modules[\\/](tailwind|@tailwindcss|vue-i18n)[\\/]/,
-            },
-            {
-              name: "vendor",
-              test: /[\\/]node_modules[\\/]/,
-            },
-            {
-              name: "shared",
-              test: /[\\/]src[\\/]shared[\\/]/,
-            },
-            {
-              name: "app-modules",
-              test: /[\\/]src[\\/]modules[\\/]/,
-              maxSize: 50 * 1024,
-            },
-          ],
-        },
-      },
+      output: {},
     },
     chunkSizeWarningLimit: 500,
     commonjsOptions: { include: [/node_modules/] },
