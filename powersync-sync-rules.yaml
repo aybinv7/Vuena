@@ -1,7 +1,7 @@
-# PowerSync Sync Rules for FairShare App
-# PowerSync Sync Rules for FairShare App
+# PowerSync Sync Rules for Vuenna App
+
 config:
-  edition: 2
+  edition: 1
 
 bucket_definitions:
   # Sync all groups where the user is a member
@@ -9,17 +9,5 @@ bucket_definitions:
     # Simple parameter query - no DISTINCT, no aliases, single table
     parameters: SELECT group_id FROM members WHERE user_id = request.user_id()
     data:
-      # Sync the group itself
-      - SELECT * FROM groups WHERE id = bucket.group_id
-
       # Sync all members of this group
       - SELECT * FROM members WHERE group_id = bucket.group_id
-
-      # Sync all expenses in this group
-      - SELECT * FROM expenses WHERE group_id = bucket.group_id
-
-      # Sync splits for expenses in this group (now has group_id)
-      - SELECT * FROM splits WHERE group_id = bucket.group_id
-
-      # Sync settlements in this group
-      - SELECT * FROM settlements WHERE group_id = bucket.group_id

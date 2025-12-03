@@ -1,150 +1,284 @@
-# Vuena
+# ERP Template with PowerSync
 
-Vuena is a modern, modular mobile-first application built with Vue 3, Framework7, and Capacitor for cross-platform deployment. This project follows a modular architecture with TypeScript, Pinia for state management, Vue I18n for internationalization, and Tailwind CSS for styling.
+A scalable, modular **Enterprise Resource Planning (ERP) template** built with **Vue 3**, **Framework7**, **PowerSync**, and **Capacitor** for cross-platform deployment. This template provides a solid foundation for building offline-first, real-time syncing ERP applications with a mobile-first approach.
 
-## Tech Stack
+## 🚀 Features
 
-- Vue 3 with TypeScript
-- Framework7 (lite-bundle) with Vue integration
-- Vite as bundler
-- Capacitor for mobile app builds (iOS/Android)
-- Pinia for state management
-- Vue I18n for internationalization
-- Tailwind CSS for styling
-- @intlify/unplugin-vue-i18n for i18n resources compilation
-- unplugin-vue-components for automatic component imports
-- unplugin-auto-import for automatic imports
-- unplugin-imagemin for image optimization (on build)
-- unplugin-turbo-console for enhanced console logging
+- **Offline-First Architecture**: Built with PowerSync for robust offline support and automatic data synchronization
+- **Real-Time Sync**: Instant data synchronization across devices using PowerSync and Supabase
+- **Modular Design**: Clean module architecture for easy scalability and maintenance
+- **Mobile-First**: Framework7-based UI optimized for iOS and Android with Capacitor
+- **Type-Safe**: Full TypeScript support with Kysely for type-safe database queries
+- **Developer Experience**: Auto-imports, hot reload, and comprehensive developer tools
 
-## Project Structure
+## 📦 Tech Stack
 
-The project follows a modular architecture:
+- **Frontend**: Vue 3 with TypeScript and Composition API
+- **UI Framework**: Framework7 (lite-bundle) with Vue integration
+- **Database & Sync**: PowerSync with Kysely for type-safe queries
+- **Backend**: Supabase (PostgreSQL with Row Level Security)
+- **Mobile**: Capacitor for iOS/Android builds
+- **State Management**: Pinia with persisted state
+- **Styling**: Tailwind CSS
+- **Internationalization**: Vue I18n
+- **Build Tool**: Vite
+
+## 📁 Project Structure
 
 ```
 src/
-├── modules/{module-name}/
-│   ├── components/
-│   ├── composables/
-│   ├── router/
-│   │   └── routes/
-│   ├── services/
-│   ├── stores/
-│   └── views/
-├── shared/
-│   ├── components/
-│   ├── composables/
-│   ├── services/
-│   ├── stores/
-│   └── utils/
-├── plugins/
+├── modules/              # Feature modules
+│   ├── _template/       # Module template for creating new modules
+│   ├── auth/            # Authentication module
+│   ├── home/            # Dashboard and navigation
+│   ├── contacts/        # Example: Contacts module (coming soon)
+│   ├── documents/       # Example: Documents module (coming soon)
+│   └── [expenses/groups] # Example: FairShare modules (reference implementation)
+├── shared/              # Shared resources
+│   ├── components/      # Reusable UI components
+│   ├── composables/     # Reusable Vue composables
+│   ├── database/        # PowerSync database configuration
+│   │   ├── base/        # Base entity and model classes
+│   │   └── schemas/     # Database schema definitions
+│   ├── services/        # Shared services
+│   ├── stores/          # Global Pinia stores
+│   └── utils/           # Utility functions
+├── plugins/             # App plugins (Capacitor, etc.)
+├── router/              # Global routing configuration
+└── assets/              # Static assets (images, fonts, etc.)
+```
+
+## 🏗️ Module Architecture
+
+Each module follows a consistent structure:
+
+```
+src/modules/{module-name}/
+├── components/          # Module-specific components
+├── composables/         # Module-specific composables
 ├── router/
-└── assets/
+│   └── routes/          # Module routes
+├── services/            # Module-specific services
+├── stores/              # Module state management
+├── views/               # Module pages
+└── types.ts             # Module type definitions
 ```
 
-## Install Dependencies
+## 🛠️ Getting Started
 
-First, install dependencies using pnpm:
+### Prerequisites
 
-```bash
-pnpm install
-```
+- Node.js 18+ and pnpm
+- Supabase account (for backend)
+- PowerSync account (for sync infrastructure)
 
-## Build/Lint/Test Commands
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/ayb/erp-template-powersync.git
+   cd erp-template-powersync
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   pnpm install
+   ```
+
+3. **Configure environment variables**
+
+   Create a `.env.local` file in the root directory:
+
+   ```env
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   VITE_POWERSYNC_URL=your_powersync_url
+   ```
+
+4. **Set up Supabase database**
+
+   Run the SQL schema from `schema.sql` in your Supabase SQL editor to create tables and set up Row Level Security policies.
+
+5. **Configure PowerSync**
+
+   Deploy the sync rules from `powersync-sync-rules.yaml` to your PowerSync instance.
+
+6. **Start development server**
+   ```bash
+   pnpm run dev
+   ```
+
+## 📝 Available Scripts
 
 ### Development
-- `pnpm run dev` - Start development server
-- `pnpm start` - Alias for development server (runs `npm run dev`)
+
+- `pnpm dev` - Start development server with hot reload
+- `pnpm start` - Alias for `pnpm dev`
 
 ### Build
-- `pnpm run build` - Build web app for production (runs with type checking)
-- `pnpm run build-only` - Build web app without type checking
-- `pnpm run build-capacitor-ios` - Build and copy to iOS capacitor project
-- `pnpm run build-capacitor-android` - Build and copy to Android capacitor project
-- `pnpm run ios` - Build and copy to iOS capacitor project
-- `pnpm run ios-open` - Build, copy to iOS, and open in Xcode
-- `pnpm run android` - Build and copy to Android capacitor project
-- `pnpm run android-open` - Build, copy to Android, and open in Android Studio
 
-### Preview
-- `pnpm run preview` - Preview production build locally on port 4173
+- `pnpm build` - Build for production with type checking
+- `pnpm build-only` - Build without type checking
+- `pnpm preview` - Preview production build locally
+
+### Mobile
+
+- `pnpm ios` - Build and sync to iOS project
+- `pnpm ios-open` - Build, sync, and open in Xcode
+- `pnpm android` - Build and sync to Android project
+- `pnpm android-open` - Build, sync, and open in Android Studio
 
 ### Type Checking
-- `pnpm run type-check` - Run TypeScript type checking (vue-tsc --noEmit)
 
-### Other Commands
-- `pnpm run postinstall` - Copy font files from node_modules to src/fonts/
+- `pnpm type-check` - Run TypeScript type checking
 
-## Architecture
+## 🎨 Creating a New Module
 
-### Modular Structure
-- Each feature is organized in its own module within `src/modules/{module-name}/`
-- Each module contains components, composables, router, services, stores, and views directories
-- Route parameter arrays are named as `{module}Routes` (e.g., `homeRoutes`, `aboutRoutes`)
+1. **Use the module template**
 
-### Code Style Guidelines
-- Use `@/*` alias for paths relative to `src/` directory (e.g., `@/modules/home/views/Home.vue`)
-- Use `@modules/*` alias for paths relative to `src/modules/*` directory
-- Vue components use PascalCase (e.g., `Home.vue`, `About.vue`)
-- Composables follow `use{Feature}` pattern (e.g., `useAppTheme`, `useLanguageStore`)
-- Store files use `use{Feature}.stores.ts` pattern (note the plural "stores")
+   ```bash
+   cp -r src/modules/_template src/modules/your-module-name
+   ```
 
-### Auto-imports
-- `useLocalStorage`, `computed`, `provide`, `inject`, `onMounted`, and other Vue composables are auto-imported
-- No need to manually import these functions from 'vue' or other libraries
-- Uses unplugin-auto-import for automatic API imports from Vue, Pinia, Vue Router, VueUse, and Vue I18n
-- Framework7 specific auto-imports are configured through the getFramework7AutoImports function
+2. **Update the module files**
 
-### Component Auto-imports
-- Uses unplugin-vue-components for automatic component discovery and imports
-- Components from src/components, src/views, and module directories are automatically imported
-- Supports .vue, .ts, and .tsx component files
-- Uses Framework7VueResolver for Framework7 component resolution
+   - Define routes in `router/routes/index.ts`
+   - Create views in `views/`
+   - Add components in `components/`
+   - Define types in `types.ts`
 
-### Internationalization (i18n)
-- Uses Vue I18n for internationalization with @intlify/unplugin-vue-i18n plugin
-- Locale files are located in src/locales/ directory
-- Supports automatic compilation of i18n resources
+3. **Register module routes**
 
-### Image Optimization
-- Uses unplugin-imagemin for automatic image optimization
-- Supports optimization for JPG, JPEG, PNG, and WebP formats
-- Configured with quality settings and progressive loading for optimized assets
+   Import and add your module routes in `src/router/index.ts`
 
-### Development Tools
-- Uses unplugin-turbo-console for enhanced console logging during development
-- Provides better error tracking and debugging capabilities
+4. **Create database schema (if needed)**
 
-## Capacitor Integration
+   Add tables to `src/shared/database/schemas/DbSchema.ts` and update `schema.sql`
 
-This project supports mobile app builds for both iOS and Android using Capacitor:
+For detailed instructions, see [docs/MODULE_CREATION.md](docs/MODULE_CREATION.md) (coming soon).
 
-1. Add capacitor platforms:
+## 🗄️ Database Architecture
+
+The template uses **PowerSync** for offline-first data synchronization with **Kysely** for type-safe queries.
+
+### Base Tables (Generic ERP Foundation)
+
+- `organizations` - Top-level organizational units
+- `organizational_units` - Departments, teams, projects
+- `contacts` - Customers, suppliers, employees
+- `documents` - Generic document structure (invoices, orders, etc.)
+- `document_lines` - Line items for documents
+- `products` - Products/services catalog
+- `transactions` - Financial transactions
+- `user_roles` - Role-based access control
+
+### Example Tables (FairShare Module - Reference Implementation)
+
+- `groups` - Expense groups
+- `members` - Group membership
+- `expenses` - Expense records
+- `splits` - Expense splits
+- `settlements` - Payment settlements
+
+See [docs/DATABASE_PATTERNS.md](docs/DATABASE_PATTERNS.md) (coming soon) for detailed database patterns and PowerSync integration.
+
+## 🔐 Authentication & Authorization
+
+- **Authentication**: Supabase Auth with email/password
+- **Authorization**: Row Level Security (RLS) policies in PostgreSQL
+- **Multi-tenancy**: Organization/group-based data isolation
+- **Offline**: PowerSync handles authentication token management
+
+## 📱 Mobile Development
+
+### Setup Capacitor
+
 ```bash
-npx cap add ios && npx cap add android
+# Add iOS platform
+npx cap add ios
+
+# Add Android platform
+npx cap add android
 ```
 
-2. Build for mobile:
+### Build for Mobile
+
 ```bash
-pnpm run ios        # Build and copy to iOS
-pnpm run android    # Build and copy to Android
+# iOS
+pnpm run ios-open
+
+# Android
+pnpm run android-open
 ```
 
-Check out [official Capacitor documentation](https://capacitorjs.com) for more examples and usage.
+### Capacitor Plugins Included
 
-## Assets
+- `@capacitor/app` - App lifecycle events
+- `@capacitor/keyboard` - Keyboard management
+- `@capacitor/status-bar` - Status bar styling
+- `@capacitor/splash-screen` - Splash screen control
+- `@capacitor-community/sqlite` - SQLite for PowerSync
 
-Assets (icons, splash screens) source images are located in the public directory. The project includes icons in various sizes in `public/icons/` and native assets in `public/native/`.
+## 🎯 Code Style & Conventions
 
-## Documentation & Resources
+### Import Aliases
 
-* [Framework7 Core Documentation](https://framework7.io/docs/)
-* [Framework7 Vue Documentation](https://framework7.io/vue/)
-* [Vue 3 Documentation](https://vuejs.org/)
-* [Vite Documentation](https://vitejs.dev/)
-* [Capacitor Documentation](https://capacitorjs.com/)
-* [Pinia Documentation](https://pinia.vuejs.org/)
+- `@/*` - Paths relative to `src/` directory
+- `@modules/*` - Paths relative to `src/modules/` directory
 
-## Contributing
+### Naming Conventions
 
-This project follows a modular architecture designed to scale with multiple developers. Each feature module is self-contained, making it easy for multiple developers to work simultaneously without conflicts.
+- **Components**: PascalCase (e.g., `UserProfile.vue`)
+- **Composables**: `use{Feature}` pattern (e.g., `useEntityList.ts`)
+- **Stores**: `use{Feature}.stores.ts` (e.g., `useAuth.stores.ts`)
+- **Routes**: `{module}Routes` arrays (e.g., `contactsRoutes`)
+
+### Auto-Imports
+
+Vue composables, VueUse functions, and Framework7 components are auto-imported via `unplugin-auto-import` and `unplugin-vue-components`. Check `.biomelintrc-auto-import.json` for the complete list.
+
+## 🧪 Testing
+
+Testing infrastructure coming soon. The template will include:
+
+- Unit tests with Vitest
+- Component tests with Testing Library
+- E2E tests for mobile builds
+
+## 📚 Documentation
+
+- [AGENTS.md](AGENTS.md) - Agent/AI developer guidelines
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Architecture overview (coming soon)
+- [docs/MODULE_CREATION.md](docs/MODULE_CREATION.md) - Module creation guide (coming soon)
+- [docs/DATABASE_PATTERNS.md](docs/DATABASE_PATTERNS.md) - Database patterns (coming soon)
+
+## 🤝 Contributing
+
+This is a template project. Feel free to fork and customize for your specific ERP needs. The modular architecture is designed to make it easy to add, remove, or modify modules.
+
+## 📄 License
+
+UNLICENSED - This is a template for private use.
+
+## 🔗 Resources
+
+- [Framework7 Documentation](https://framework7.io/docs/)
+- [Vue 3 Documentation](https://vuejs.org/)
+- [PowerSync Documentation](https://docs.powersync.com/)
+- [Supabase Documentation](https://supabase.com/docs)
+- [Capacitor Documentation](https://capacitorjs.com/)
+- [Kysely Documentation](https://kysely.dev/)
+
+## 💡 Example Modules
+
+This template includes the **FairShare expense splitting app** as a reference implementation demonstrating:
+
+- Relational data modeling (groups, expenses, splits)
+- PowerSync sync patterns
+- Offline-first CRUD operations
+- Framework7 UI components
+- Multi-user collaboration
+
+Use it as a guide for building your own ERP modules!

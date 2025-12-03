@@ -1,13 +1,12 @@
 import { PowerSyncDatabase } from "@powersync/capacitor";
 import { WASQLiteOpenFactory, WASQLiteVFS } from "@powersync/web";
-import { AppSchema } from "./schemas/AppSchema";
+import { DbSchema } from "./schemas/DbSchema";
 import { wrapPowerSyncWithKysely } from "@powersync/kysely-driver";
-import type { Database } from "./types";
 
 export const powerSync = new PowerSyncDatabase({
-  schema: AppSchema,
+  schema: DbSchema,
   database: new WASQLiteOpenFactory({
-    dbFilename: "exampleVFS.db",
+    dbFilename: import.meta.env.VITE_DB_FILENAME,
     vfs: WASQLiteVFS.OPFSCoopSyncVFS,
     flags: {
       enableMultiTabs: typeof SharedWorker !== "undefined",

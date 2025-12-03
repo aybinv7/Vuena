@@ -14,14 +14,16 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/modules/*": ["./src/modules/*"],
-      "@/shared/*": ["./src/shared/*"]
+      "@/shared/*": ["./src/shared/*"],
+      "@/database/*": ["./src/shared/database/*"]
     },
     "allowJs": true,
     "types": [
       "node",
       "@intlify/unplugin-vue-i18n/messages",
       "./auto-imports.d.ts",
-      "./components.d.ts"
+      "./components.d.ts",
+      "vite/client"
     ]
   }
 }

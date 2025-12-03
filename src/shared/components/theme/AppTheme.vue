@@ -1,6 +1,6 @@
 <template>
   <F7Popup
-    id="theme-popup"
+    id="app-theme-popup"
     class="home-popup-swipe-handler"
     swipe-to-close="to-bottom"
     push

@@ -1668,12 +1668,6 @@
   },
   {
     "name": "default",
-    "as": "aboutRoutes",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/modules/about/router/routes/about.routes.ts",
-    "__source": "dir"
-  },
-  {
-    "name": "default",
     "as": "homeRoutes",
     "from": "C:/Users/PC/code/ayb/Vuena/src/modules/home/router/routes/home.routes.ts",
     "__source": "dir"
@@ -1733,36 +1727,6 @@
     "__source": "dir"
   },
   {
-    "name": "default",
-    "as": "globalRoutes",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/router/global/global.routes.ts",
-    "__source": "dir"
-  },
-  {
-    "name": "useAuthGuard",
-    "as": "useAuthGuard",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/router/guards/useAuth.guard.ts",
-    "__source": "dir"
-  },
-  {
-    "name": "usePermissionGuard",
-    "as": "usePermissionGuard",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/router/guards/usePermission.guard.ts",
-    "__source": "dir"
-  },
-  {
-    "name": "useRoleGuard",
-    "as": "useRoleGuard",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/router/guards/useRole.guard.ts",
-    "__source": "dir"
-  },
-  {
-    "name": "default",
-    "as": "router",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/router/index.ts",
-    "__source": "dir"
-  },
-  {
     "name": "AppContextKey",
     "as": "AppContextKey",
     "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/theme/useAppTheme.ts",
@@ -1802,15 +1766,145 @@
     "__source": "dir"
   },
   {
-    "name": "SupabaseConnector",
-    "as": "SupabaseConnector",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/connector.database.ts",
+    "name": "useEntity",
+    "as": "useEntity",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/useEntity.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "EntityOperations",
+    "as": "EntityOperations",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/useEntity.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "useEntityList",
+    "as": "useEntityList",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/useEntityList.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "UseEntityListReturn",
+    "as": "UseEntityListReturn",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/useEntityList.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "useForm",
+    "as": "useForm",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/useForm.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "ValidationRule",
+    "as": "ValidationRule",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/useForm.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "FieldValidation",
+    "as": "FieldValidation",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/useForm.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "useKyselyQuery",
+    "as": "useKyselyQuery",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/useKyselyQuery.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "UseKyselyQueryReturn",
+    "as": "UseKyselyQueryReturn",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/composables/useKyselyQuery.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "BaseEntity",
+    "as": "BaseEntity",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/base/BaseEntity.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "SoftDeletableEntity",
+    "as": "SoftDeletableEntity",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/base/BaseEntity.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "OrganizationEntity",
+    "as": "OrganizationEntity",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/base/BaseEntity.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "AuditableEntity",
+    "as": "AuditableEntity",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/base/BaseEntity.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "DocumentEntity",
+    "as": "DocumentEntity",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/base/BaseEntity.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "EntityUpdate",
+    "as": "EntityUpdate",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/base/BaseEntity.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "EntityCreate",
+    "as": "EntityCreate",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/base/BaseEntity.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "BaseModel",
+    "as": "BaseModel",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/base/BaseModel.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "BaseModel",
+    "as": "BaseModel",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/base/BaseModel.ts",
+    "type": true,
+    "declarationType": "class",
+    "__source": "dir"
+  },
+  {
+    "name": "BaseModel",
+    "as": "BaseModel",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/base/BaseModel.ts",
+    "type": true,
+    "declarationType": "class",
     "__source": "dir"
   },
   {
     "name": "SupabaseConnector",
     "as": "SupabaseConnector",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/config/connector.database.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "SupabaseConnector",
+    "as": "SupabaseConnector",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/config/connector.database.ts",
     "type": true,
     "declarationType": "class",
     "__source": "dir"
@@ -1818,21 +1912,33 @@
   {
     "name": "databaseConnector",
     "as": "databaseConnector",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/config/connector.database.ts",
     "__source": "dir"
   },
   {
     "name": "SupabaseConfig",
     "as": "SupabaseConfig",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/config/connector.database.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "SupabaseConnectorListener",
     "as": "SupabaseConnectorListener",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/config/connector.database.ts",
     "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "default",
+    "as": "inittalizerDatabase",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/config/inittalizer.database.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "default",
+    "as": "loggerDatabase",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/config/logger.database.ts",
     "__source": "dir"
   },
   {
@@ -1854,70 +1960,53 @@
     "__source": "dir"
   },
   {
-    "name": "default",
-    "as": "inittalizerDatabase",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/inittalizer.database.ts",
-    "__source": "dir"
-  },
-  {
-    "name": "default",
-    "as": "loggerDatabase",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/logger.database.ts",
-    "__source": "dir"
-  },
-  {
-    "name": "AppSchema",
-    "as": "AppSchema",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/schemas/AppSchema.ts",
+    "name": "DbSchema",
+    "as": "DbSchema",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/schemas/DbSchema.ts",
     "__source": "dir"
   },
   {
     "name": "Database",
     "as": "Database",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types/index.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "KyselyDatabase",
     "as": "KyselyDatabase",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types/index.ts",
     "type": true,
     "__source": "dir"
   },
   {
-    "name": "GroupRecord",
-    "as": "GroupRecord",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
-    "type": true,
+    "name": "default",
+    "as": "globalRoutes",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/router/global/global.routes.ts",
     "__source": "dir"
   },
   {
-    "name": "MemberRecord",
-    "as": "MemberRecord",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
-    "type": true,
+    "name": "useAuthGuard",
+    "as": "useAuthGuard",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/router/guards/useAuth.guard.ts",
     "__source": "dir"
   },
   {
-    "name": "ExpenseRecord",
-    "as": "ExpenseRecord",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
-    "type": true,
+    "name": "usePermissionGuard",
+    "as": "usePermissionGuard",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/router/guards/usePermission.guard.ts",
     "__source": "dir"
   },
   {
-    "name": "SplitRecord",
-    "as": "SplitRecord",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
-    "type": true,
+    "name": "useRoleGuard",
+    "as": "useRoleGuard",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/router/guards/useRole.guard.ts",
     "__source": "dir"
   },
   {
-    "name": "SettlementRecord",
-    "as": "SettlementRecord",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/types.ts",
-    "type": true,
+    "name": "default",
+    "as": "router",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/router/index.ts",
     "__source": "dir"
   },
   {
@@ -1941,21 +2030,9 @@
     "__source": "dir"
   },
   {
-    "name": "useExpensesStore",
-    "as": "useExpensesStore",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/stores/expenses.store.ts",
-    "__source": "dir"
-  },
-  {
-    "name": "useGroupsStore",
-    "as": "useGroupsStore",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/stores/groups.store.ts",
-    "__source": "dir"
-  },
-  {
     "name": "useLanguageStore",
     "as": "useLanguageStore",
-    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/stores/useLanguage.stores.ts",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/stores/language.store.ts",
     "__source": "dir"
   },
   {

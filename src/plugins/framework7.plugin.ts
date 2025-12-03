@@ -1,4 +1,4 @@
-import routes from "@/router";
+import routes from "@/shared/router";
 import { getDevice } from "framework7";
 import type { Framework7Parameters } from "framework7/types";
 

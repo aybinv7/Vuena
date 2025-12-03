@@ -164,6 +164,7 @@ export default defineConfig({
       "@": SRC_DIR,
       "@modules": "./src/modules",
       "@shared": "./src/shared",
+      "@database": "./src/shared/database",
     },
   },
 });

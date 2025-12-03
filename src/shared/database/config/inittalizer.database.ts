@@ -1,4 +1,4 @@
-import databaseLogger from "./logger.database";
+import databaseLogger from "@/shared/database/config/logger.database";
 
 const databaseInitializer = async () => {
   await database.init();

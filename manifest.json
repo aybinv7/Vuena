@@ -1,7 +1,7 @@
 {
   "name": "Vuena",
   "short_name": "Vuena",
-  "description": "A modern mobile application built with Vue.js and Framework7",
+  "description": "A modern mobile application built with Vue, Framework7 and Powersync",
   "lang": "en-US",
   "start_url": "/",
   "display": "standalone",
