@@ -15,7 +15,7 @@
       <F7View id="view-profile" tab url="/profile"></F7View>
 
       <!-- Main Tabbar -->
-      <F7Toolbar tabbar icons bottom class="safe-area-bottom">
+      <F7Toolbar tabbar icons bottom class="safe-area-bottom toolbar-main-app">
         <div class="toolbar-pane">
           <F7Link
             tab-link="#view-groups"

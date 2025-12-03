@@ -1,5 +1,5 @@
 <template>
-  <F7Page>
+  <F7Page infinite>
     <F7Navbar large transparent title="Profile" />
 
     <!-- User Card -->
@@ -106,7 +106,6 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useGroupsStore } from "@/stores/groups.store";
 import { f7 } from "framework7-vue";
 import database from "@/shared/database/index";
-import AppToolBar from "@/shared/components/app/AppToolBar.vue";
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);

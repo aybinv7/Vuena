@@ -18,6 +18,11 @@ export const framework7 = (): Framework7Parameters => {
       scrollIntoViewCentered: true,
     },
 
+    touch: {
+      tapHold: true, //enable tap hold events
+      tapHoldDelay: 500,
+    },
+
     statusbar: {
       iosOverlaysWebView: true,
       androidOverlaysWebView: true,

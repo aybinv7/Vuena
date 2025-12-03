@@ -131,7 +131,7 @@
             :title="expense.description || 'No description'"
             :after="formatCurrency(expense.amount)"
             swipeout
-            @click="viewExpenseDetails(expense)"
+            @click="goToGroupExpenses(expense.id)"
             @swipeout:deleted="deleteExpense(expense.id)"
           >
             <template #subtitle>
@@ -467,6 +467,10 @@ async function deleteExpense(expenseId: string) {
 
 function editExpense(expense: any) {
   f7.dialog.alert("Edit expense feature coming soon!");
+}
+
+function goToGroupExpenses(expenseId: string) {
+  f7.views.main.router.navigate(`/group/${props.id}/${expenseId}`);
 }
 
 function viewExpenseDetails(expense: any) {

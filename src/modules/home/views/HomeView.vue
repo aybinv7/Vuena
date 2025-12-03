@@ -9,7 +9,7 @@
       :sliding="false"
     >
       <F7NavRight>
-        <F7Button
+        <F7Link
           class="text-center"
           icon-ios="f7:plus_circle_fill"
           icon-md="material:add_circle"
@@ -34,7 +34,7 @@
           @searchbar:search="handleSearch"
           @searchbar:clear="clearSearch"
         />
-        <F7Button
+        <F7Link
           class="text-center"
           icon-ios="f7:sort_down_circle_fill"
           icon-md="material:sort"

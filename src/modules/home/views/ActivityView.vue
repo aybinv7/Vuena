@@ -1,5 +1,5 @@
 <template>
-  <F7Page>
+  <F7Page infinite >
     <F7Navbar large transparent title="Activity" />
 
     <!-- Filter Chips -->

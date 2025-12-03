@@ -41,6 +41,15 @@ const homeRoutes: Router.RouteParameters[] = [
       });
     },
   },
+  {
+    name: "group-expenses",
+    path: "/group/:id/:expenseId",
+    async({ resolve }) {
+      import("@/modules/groups/views/GroupDetailExtra.vue").then((vc) => {
+        resolve({ component: vc.default });
+      });
+    },
+  },
 ];
 
 export default homeRoutes;
