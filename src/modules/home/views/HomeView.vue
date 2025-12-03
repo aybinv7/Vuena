@@ -132,7 +132,7 @@ onUnmounted(() => {
 <style lang="less">
 .home-page {
   .page-content {
-    padding-top: 72px;
+    padding-top: 80px;
   }
 }
 </style>
