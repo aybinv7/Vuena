@@ -1,26 +1,21 @@
 <template>
-  <F7Page infinite ptr @ptr:refresh="handleRefresh">
+  <F7Page
+    hide-toolbar-on-scroll
+    infinite
+    :ptr="!isSelectionMode"
+    @ptr:refresh="handleRefresh"
+    :class="{ 'home-page': isSelectionMode }"
+  >
     <F7Navbar
       @navbar:collapse="isNavbarCollapsed = true"
       @navbar:expand="isNavbarCollapsed = false"
-      large
-      transparent
-      title="FairShare"
+      :large="!isSelectionMode"
+      :transparent="!isSelectionMode"
+      :title="isSelectionMode ? `${selectedCount} Selected` : 'FairShare'"
       :sliding="false"
     >
-      <F7NavRight>
-        <F7Link
-          class="text-center"
-          icon-ios="f7:plus_circle_fill"
-          icon-md="material:add_circle"
-          color="primary"
-          round
-          icon-size="34"
-          @click="showCreateGroup = true"
-        />
-      </F7NavRight>
-
       <F7Subnavbar
+        v-if="!isSelectionMode"
         :bg-color="!isNavbarCollapsed ? 'transparent' : ''"
         :inner="false"
       >
@@ -34,30 +29,78 @@
           @searchbar:search="handleSearch"
           @searchbar:clear="clearSearch"
         />
-        <F7Link
-          class="text-center"
-          icon-ios="f7:sort_down_circle_fill"
-          icon-md="material:sort"
-          color="primary"
-          round
-          icon-size="34"
-          sortable-toggle=".sortable"
-        />
       </F7Subnavbar>
+
+      <F7NavRight>
+        <template v-if="!isSelectionMode">
+          <F7Link
+            class="!p-2"
+            :icon-size="33"
+            icon-ios="f7:sort_down_circle_fill"
+            icon-md="material:sort"
+            color="primary"
+            round
+            sortable-toggle=".sortable"
+          />
+          <F7Link
+            class="!p-2"
+            :icon-size="33"
+            icon-ios="f7:plus_circle_fill"
+            icon-md="material:add_circle"
+            color="primary"
+            round
+            @click="showCreateGroup = true"
+          />
+        </template>
+        <template v-else>
+          <F7Link icon-f7="xmark" @click="exitSelectionMode" />
+
+          <F7Link
+            icon-f7="trash"
+            color="red"
+            @click="deleteSelectedGroups"
+            v-if="selectedCount > 0"
+          />
+        </template>
+      </F7NavRight>
     </F7Navbar>
 
-    <GroupsList ref="groupsList" @create-group="showCreateGroup = true" />
+    <GroupsList
+      ref="groupsList"
+      @create-group="showCreateGroup = true"
+      @selection-change="handleSelectionChange"
+    />
     <CreateGroupSheet v-model:opened="showCreateGroup" />
   </F7Page>
 </template>
 
 <script setup lang="ts">
-import AppToolBar from "@/shared/components/app/AppToolBar.vue";
-
 const groupsStore = useGroupsStore();
 const showCreateGroup = ref(false);
 const groupsList = ref<any>(null);
 const isNavbarCollapsed = ref(false);
+const isSelectionMode = ref(false);
+const selectedCount = ref(0);
+
+function handleSelectionChange(state: {
+  isSelectionMode: boolean;
+  selectedCount: number;
+}) {
+  isSelectionMode.value = state.isSelectionMode;
+  selectedCount.value = state.selectedCount;
+}
+
+function exitSelectionMode() {
+  if (groupsList.value) {
+    groupsList.value.exitSelectionMode();
+  }
+}
+
+function deleteSelectedGroups() {
+  if (groupsList.value) {
+    groupsList.value.deleteSelectedGroups();
+  }
+}
 
 function handleSearch(searchbar: Element, query: string) {
   if (groupsList.value) {
@@ -85,3 +128,11 @@ onUnmounted(() => {
   groupsStore.stopWatching();
 });
 </script>
+
+<style lang="less">
+.home-page {
+  .page-content {
+    padding-top: 72px;
+  }
+}
+</style>

@@ -21,6 +21,7 @@ export const framework7 = (): Framework7Parameters => {
     touch: {
       tapHold: true, //enable tap hold events
       tapHoldDelay: 500,
+      tapHoldPreventClicks: true,
     },
 
     statusbar: {

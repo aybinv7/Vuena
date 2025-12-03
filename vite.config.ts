@@ -62,7 +62,7 @@ export default defineConfig({
         getFramework7AutoImports(),
       ],
 
-      dirs: ["src/**/**/**/**/**/**/**/**/**/**/**/**"],
+      dirs: ["src/**"],
 
       dts: "auto-imports.d.ts",
       vueTemplate: true,

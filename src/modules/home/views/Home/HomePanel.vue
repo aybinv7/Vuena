@@ -1,11 +1,11 @@
 <template>
-  <f7Popup
+  <F7Popup
     id="theme-popup"
     class="home-popup-swipe-handler"
     swipe-to-close="to-bottom"
     push
   >
-    <f7-page>
+    <F7Page>
       <template #fixed>
         <div class="swipe-handler"></div>
       </template>
@@ -45,13 +45,11 @@
           </div>
         </div>
       </div>
-    </f7-page>
-  </f7Popup>
+    </F7Page>
+  </F7Popup>
 </template>
 
 <script setup lang="ts">
-import { f7Popup } from "framework7-vue";
-
 const appTheme = useAppTheme();
 </script>
 

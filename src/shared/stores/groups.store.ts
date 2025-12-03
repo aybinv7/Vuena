@@ -1,9 +1,3 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import { db, powerSync } from "@/shared/database/index";
-import { useAuthStore } from "./auth.store";
-import type { GroupRecord } from "@/shared/database/schemas/AppSchema";
-
 export const useGroupsStore = defineStore("groups", () => {
   const groups = ref<GroupRecord[]>([]);
   const loading = ref(false);
@@ -33,7 +27,7 @@ export const useGroupsStore = defineStore("groups", () => {
       // @ts-ignore - db.watch is added by wrapPowerSyncWithKysely
       watchSubscription = db.watch(query, {
         onResult: (result) => {
-          groups.value = result as GroupRecord[];
+          groups.value = result;
         },
       });
     } catch (error: any) {

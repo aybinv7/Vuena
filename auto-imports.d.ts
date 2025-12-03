@@ -178,7 +178,7 @@ declare global {
   const useAsyncState: typeof import('@vueuse/core').useAsyncState
   const useAttrs: typeof import('vue').useAttrs
   const useAuthGuard: typeof import('./src/router/guards/useAuth.guard').useAuthGuard
-  const useAuthStore: typeof import('./src/stores/auth.store').useAuthStore
+  const useAuthStore: typeof import('./src/shared/stores/auth.store').useAuthStore
   const useBase64: typeof import('@vueuse/core').useBase64
   const useBattery: typeof import('@vueuse/core').useBattery
   const useBluetooth: typeof import('@vueuse/core').useBluetooth
@@ -219,7 +219,7 @@ declare global {
   const useEventBus: typeof import('@vueuse/core').useEventBus
   const useEventListener: typeof import('@vueuse/core').useEventListener
   const useEventSource: typeof import('@vueuse/core').useEventSource
-  const useExpensesStore: typeof import('./src/stores/expenses.store').useExpensesStore
+  const useExpensesStore: typeof import('./src/shared/stores/expenses.store').useExpensesStore
   const useEyeDropper: typeof import('@vueuse/core').useEyeDropper
   const useFavicon: typeof import('@vueuse/core').useFavicon
   const useFetch: typeof import('@vueuse/core').useFetch
@@ -231,7 +231,7 @@ declare global {
   const useFullscreen: typeof import('@vueuse/core').useFullscreen
   const useGamepad: typeof import('@vueuse/core').useGamepad
   const useGeolocation: typeof import('@vueuse/core').useGeolocation
-  const useGroupsStore: typeof import('./src/stores/groups.store').useGroupsStore
+  const useGroupsStore: typeof import('./src/shared/stores/groups.store').useGroupsStore
   const useI18n: typeof import('vue-i18n').useI18n
   const useId: typeof import('vue').useId
   const useIdle: typeof import('@vueuse/core').useIdle
@@ -550,7 +550,7 @@ declare module 'vue' {
     readonly useAsyncState: UnwrapRef<typeof import('@vueuse/core')['useAsyncState']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useAuthGuard: UnwrapRef<typeof import('./src/router/guards/useAuth.guard')['useAuthGuard']>
-    readonly useAuthStore: UnwrapRef<typeof import('./src/stores/auth.store')['useAuthStore']>
+    readonly useAuthStore: UnwrapRef<typeof import('./src/shared/stores/auth.store')['useAuthStore']>
     readonly useBase64: UnwrapRef<typeof import('@vueuse/core')['useBase64']>
     readonly useBattery: UnwrapRef<typeof import('@vueuse/core')['useBattery']>
     readonly useBluetooth: UnwrapRef<typeof import('@vueuse/core')['useBluetooth']>
@@ -591,7 +591,7 @@ declare module 'vue' {
     readonly useEventBus: UnwrapRef<typeof import('@vueuse/core')['useEventBus']>
     readonly useEventListener: UnwrapRef<typeof import('@vueuse/core')['useEventListener']>
     readonly useEventSource: UnwrapRef<typeof import('@vueuse/core')['useEventSource']>
-    readonly useExpensesStore: UnwrapRef<typeof import('./src/stores/expenses.store')['useExpensesStore']>
+    readonly useExpensesStore: UnwrapRef<typeof import('./src/shared/stores/expenses.store')['useExpensesStore']>
     readonly useEyeDropper: UnwrapRef<typeof import('@vueuse/core')['useEyeDropper']>
     readonly useFavicon: UnwrapRef<typeof import('@vueuse/core')['useFavicon']>
     readonly useFetch: UnwrapRef<typeof import('@vueuse/core')['useFetch']>
@@ -603,7 +603,7 @@ declare module 'vue' {
     readonly useFullscreen: UnwrapRef<typeof import('@vueuse/core')['useFullscreen']>
     readonly useGamepad: UnwrapRef<typeof import('@vueuse/core')['useGamepad']>
     readonly useGeolocation: UnwrapRef<typeof import('@vueuse/core')['useGeolocation']>
-    readonly useGroupsStore: UnwrapRef<typeof import('./src/stores/groups.store')['useGroupsStore']>
+    readonly useGroupsStore: UnwrapRef<typeof import('./src/shared/stores/groups.store')['useGroupsStore']>
     readonly useI18n: UnwrapRef<typeof import('vue-i18n')['useI18n']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
     readonly useIdle: UnwrapRef<typeof import('@vueuse/core')['useIdle']>

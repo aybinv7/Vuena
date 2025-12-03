@@ -128,14 +128,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { storeToRefs } from "pinia";
-import { useExpensesStore } from "@/stores/expenses.store";
-import { useAuthStore } from "@/stores/auth.store";
-import database from "@/shared/database/index";
-import { f7 } from "framework7-vue";
-
-const props = defineProps<{
+const { opened, groupId } = defineProps<{
   opened: boolean;
   groupId: string;
 }>();
@@ -190,7 +183,7 @@ async function fetchGroupMembers() {
   try {
     const result = await database.execute(
       "SELECT * FROM members WHERE group_id = ?",
-      [props.groupId]
+      [groupId]
     );
     groupMembers.value = Array.from(result.rows?._array || result.rows || []);
 
@@ -222,7 +215,7 @@ async function save() {
     }));
 
     await expensesStore.addExpense(
-      props.groupId,
+      groupId,
       totalAmount,
       description.value,
       splits,
@@ -253,9 +246,8 @@ async function save() {
   }
 }
 
-// Watch for sheet opening to fetch members
 watch(
-  () => props.opened,
+  () => opened,
   (isOpened) => {
     if (isOpened) {
       fetchGroupMembers();

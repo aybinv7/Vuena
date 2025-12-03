@@ -2,6 +2,12 @@
 
 @import "tailwindcss";
 
+body {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 .toolbar.tabbar .tab-link .icon.material-icons {
     font-family: "Material Icons Outlined";
 }

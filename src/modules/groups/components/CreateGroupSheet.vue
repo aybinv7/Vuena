@@ -42,10 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useGroupsStore } from "@/stores/groups.store";
-
-const props = defineProps<{
+const { opened } = defineProps<{
   opened: boolean;
 }>();
 

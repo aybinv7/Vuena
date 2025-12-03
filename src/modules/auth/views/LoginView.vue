@@ -87,10 +87,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useAuthStore } from "@/stores/auth.store";
-import { f7 } from "framework7-vue";
-
 const authStore = useAuthStore();
 const isLogin = ref(true);
 const email = ref("");

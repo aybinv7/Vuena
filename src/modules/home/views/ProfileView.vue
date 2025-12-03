@@ -100,16 +100,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { storeToRefs } from "pinia";
-import { useAuthStore } from "@/stores/auth.store";
-import { useGroupsStore } from "@/stores/groups.store";
-import { f7 } from "framework7-vue";
-import database from "@/shared/database/index";
-
 const authStore = useAuthStore();
-const { user } = storeToRefs(authStore);
 const groupsStore = useGroupsStore();
+
+const { user } = storeToRefs(authStore);
 
 const notificationsEnabled = ref(true);
 const currency = ref("USD");

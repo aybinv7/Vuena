@@ -1,6 +1,6 @@
 <template>
   <F7Page no-toolbar ptr @ptr:refresh="handleRefresh">
-    <F7Navbar :title="groupName" back-link="Back">
+    <F7Navbar v-if="!isSelectionMode" :title="groupName" back-link="Back">
       <F7NavRight>
         <F7Link
           icon-ios="f7:search"
@@ -11,6 +11,20 @@
           icon-ios="f7:ellipsis_circle"
           icon-md="material:more_vert"
           popup-open=".popup-menu"
+        />
+      </F7NavRight>
+    </F7Navbar>
+
+    <F7Navbar v-else :title="`${selectedExpenseIds.size} Selected`">
+      <F7NavLeft>
+        <F7Link icon-f7="xmark" @click="exitSelectionMode" />
+      </F7NavLeft>
+      <F7NavRight>
+        <F7Link
+          icon-f7="trash"
+          color="red"
+          @click="deleteSelectedExpenses"
+          v-if="selectedExpenseIds.size > 0"
         />
       </F7NavRight>
     </F7Navbar>
@@ -114,7 +128,6 @@
         <F7Fab
           position="right-bottom"
           color="primary"
-          class="mb-20"
           @click="showAddExpense = true"
         >
           <F7Icon f7="plus" />
@@ -130,8 +143,11 @@
             :key="expense.id"
             :title="expense.description || 'No description'"
             :after="formatCurrency(expense.amount)"
-            swipeout
-            @click="goToGroupExpenses(expense.id)"
+            :checkbox="isSelectionMode"
+            :checked="selectedExpenseIds.has(expense.id)"
+            :swipeout="!isSelectionMode"
+            @click="handleExpenseClick(expense)"
+            @taphold="onExpenseHold(expense)"
             @swipeout:deleted="deleteExpense(expense.id)"
           >
             <template #subtitle>
@@ -237,6 +253,7 @@
             :subtitle="`owes ${balance.toName}`"
             :after="formatCurrency(balance.amount)"
             swipeout
+            @taphold="onBalanceHold(balance)"
           >
             <template #media>
               <F7Icon
@@ -285,6 +302,7 @@
             :badge="member.user_id === user?.id ? 'You' : ''"
             badge-color="blue"
             swipeout
+            @taphold="onMemberHold(member)"
             @swipeout:deleted="removeMember(member.id)"
           >
             <template #media>
@@ -337,19 +355,18 @@
 </template>
 
 <script setup lang="ts">
-import { f7Fab } from "framework7-vue";
-
-const props = defineProps<{
+const { id } = defineProps<{
   id: string;
 }>();
 
-const groupId = computed(() => props.id);
+const groupId = computed(() => id);
 const expensesStore = useExpensesStore();
 const { expenses } = storeToRefs(expensesStore);
 const groupsStore = useGroupsStore();
 const { groups } = storeToRefs(groupsStore);
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
+import { db } from "@/shared/database";
 
 const showAddExpense = ref(false);
 const showAddMember = ref(false);
@@ -359,8 +376,12 @@ const expenseSearchQuery = ref("");
 const memberExpenseCounts = ref<Record<string, number>>({});
 const isSearchOpen = ref(false);
 
+// Selection Mode State
+const isSelectionMode = ref(false);
+const selectedExpenseIds = ref<Set<string>>(new Set());
+
 const groupName = computed(() => {
-  const group = groups.value.find((g) => g.id === props.id);
+  const group = groups.value.find((g) => g.id === id);
   return group?.name || "Group";
 });
 
@@ -388,10 +409,6 @@ const balancesSummary = computed(() => {
 
   return { youOwe, youAreOwed };
 });
-
-function searchExpenses(searchbar: any, query: string) {
-  expenseSearchQuery.value = query;
-}
 
 function formatCurrency(amount: number | null) {
   if (amount === null || amount === undefined) return "$0.00";
@@ -432,20 +449,23 @@ function getMemberExpenseCount(userId: string): number {
 }
 
 async function loadMembers() {
-  const result = await database.execute(
-    "SELECT * FROM members WHERE group_id = ?",
-    [props.id]
-  );
-  members.value = Array.from(result.rows?._array || result.rows || []);
+  const result = await db
+    .selectFrom("members")
+    .selectAll()
+    .where("group_id", "=", id)
+    .execute();
+  members.value = result;
 
   // Load expense counts per member
-  const countsResult = await database.execute(
-    "SELECT paid_by, COUNT(*) as count FROM expenses WHERE group_id = ? GROUP BY paid_by",
-    [props.id]
-  );
-  const countsArray = Array.from(countsResult.rows?._array || []);
+  const countsResult = await db
+    .selectFrom("expenses")
+    .select((eb) => ["paid_by", eb.fn.countAll().as("count")])
+    .where("group_id", "=", id)
+    .groupBy("paid_by")
+    .execute();
+
   memberExpenseCounts.value = Object.fromEntries(
-    countsArray.map((row: any) => [row.paid_by, row.count])
+    countsResult.map((row) => [row.paid_by, Number(row.count)])
   );
 }
 
@@ -455,7 +475,7 @@ async function calculateBalances() {
 }
 
 async function deleteExpense(expenseId: string) {
-  await database.execute("DELETE FROM expenses WHERE id = ?", [expenseId]);
+  await db.deleteFrom("expenses").where("id", "=", expenseId).execute();
   f7.toast
     .create({
       text: "✓ Expense deleted",
@@ -470,7 +490,10 @@ function editExpense(expense: any) {
 }
 
 function goToGroupExpenses(expenseId: string) {
-  f7.views.main.router.navigate(`/group/${props.id}/${expenseId}`);
+  f7.views.main.router.navigate(`/group/${id}/${expenseId}`, {
+    animate: true,
+    transition: "f7-parallax",
+  });
 }
 
 function viewExpenseDetails(expense: any) {
@@ -519,18 +542,18 @@ async function settleDebt(balance: any) {
   f7.dialog.confirm(
     `Mark ${formatCurrency(balance.amount)} as settled?`,
     async () => {
-      await database.writeTransaction(async (tx) => {
-        await tx.execute(
-          "INSERT INTO settlements (id, group_id, from_user, to_user, amount, settled_at) VALUES (?, ?, ?, ?, ?, ?)",
-          [
-            crypto.randomUUID(),
-            props.id,
-            balance.from,
-            balance.to,
-            balance.amount,
-            new Date().toISOString(),
-          ]
-        );
+      await db.transaction().execute(async (tx) => {
+        await tx
+          .insertInto("settlements")
+          .values({
+            id: crypto.randomUUID(),
+            group_id: id,
+            payer_id: balance.from,
+            receiver_id: balance.to,
+            amount: balance.amount,
+            date: new Date().toISOString(),
+          })
+          .execute();
       });
       f7.toast
         .create({
@@ -545,7 +568,7 @@ async function settleDebt(balance: any) {
 }
 
 async function removeMember(memberId: string) {
-  await database.execute("DELETE FROM members WHERE id = ?", [memberId]);
+  await db.deleteFrom("members").where("id", "=", memberId).execute();
   await loadMembers();
 }
 
@@ -553,10 +576,11 @@ function editGroupName() {
   const currentName = groupName.value;
   f7.dialog.prompt("Group Name", currentName, async (newName) => {
     if (newName) {
-      await database.execute("UPDATE groups SET name = ? WHERE id = ?", [
-        newName,
-        props.id,
-      ]);
+      await db
+        .updateTable("groups")
+        .set({ name: newName })
+        .where("id", "=", id)
+        .execute();
       f7.toast
         .create({
           text: "✓ Group renamed!",
@@ -581,10 +605,11 @@ function exportExpenses() {
 function leaveGroup() {
   f7.dialog.confirm("Are you sure you want to leave this group?", async () => {
     const userId = user.value?.id;
-    await database.execute(
-      "DELETE FROM members WHERE group_id = ? AND user_id = ?",
-      [props.id, userId]
-    );
+    await db
+      .deleteFrom("members")
+      .where("group_id", "=", id)
+      .where("user_id", "=", userId!)
+      .execute();
     f7.view.main.router.back();
   });
 }
@@ -598,8 +623,112 @@ async function handleRefresh(done: any) {
   }, 1000);
 }
 
+function onExpenseHold(expense: any) {
+  if (!isSelectionMode.value) {
+    isSelectionMode.value = true;
+    selectedExpenseIds.value.add(expense.id);
+    // Vibrate to indicate selection mode started
+    if (navigator.vibrate) navigator.vibrate(50);
+  }
+}
+
+function handleExpenseClick(expense: any) {
+  if (isSelectionMode.value) {
+    toggleExpenseSelection(expense.id);
+  } else {
+    goToGroupExpenses(expense.id);
+  }
+}
+
+function toggleExpenseSelection(id: string) {
+  if (selectedExpenseIds.value.has(id)) {
+    selectedExpenseIds.value.delete(id);
+    if (selectedExpenseIds.value.size === 0) {
+      isSelectionMode.value = false;
+    }
+  } else {
+    selectedExpenseIds.value.add(id);
+  }
+}
+
+function exitSelectionMode() {
+  isSelectionMode.value = false;
+  selectedExpenseIds.value.clear();
+}
+
+async function deleteSelectedExpenses() {
+  f7.dialog.confirm(
+    `Delete ${selectedExpenseIds.value.size} expenses?`,
+    async () => {
+      const ids = Array.from(selectedExpenseIds.value);
+      try {
+        await db.deleteFrom("expenses").where("id", "in", ids).execute();
+        f7.toast
+          .create({
+            text: "✓ Expenses deleted",
+            position: "center",
+            closeTimeout: 2000,
+          })
+          .open();
+        exitSelectionMode();
+      } catch (error) {
+        console.error("Error deleting expenses:", error);
+        f7.dialog.alert("Failed to delete expenses");
+      }
+    }
+  );
+}
+
+function onBalanceHold(balance: any) {
+  f7.dialog
+    .create({
+      title: "Balance Options",
+      text: `${balance.fromName} owes ${balance.toName} ${formatCurrency(
+        balance.amount
+      )}`,
+      buttons: [
+        {
+          text: "Settle Debt",
+          color: "green",
+          onClick: () => settleDebt(balance),
+        },
+        {
+          text: "Cancel",
+          color: "gray",
+        },
+      ],
+    })
+    .open();
+}
+
+function onMemberHold(member: any) {
+  if (member.user_id === user.value?.id) return;
+
+  f7.dialog
+    .create({
+      title: "Member Options",
+      text: getMemberName(member.user_id),
+      buttons: [
+        {
+          text: "Remove Member",
+          color: "red",
+          onClick: () => {
+            f7.dialog.confirm("Remove this member?", () =>
+              removeMember(member.id)
+            );
+          },
+        },
+        {
+          text: "Cancel",
+          color: "gray",
+        },
+      ],
+    })
+    .open();
+}
+
 onMounted(async () => {
-  expensesStore.watchGroupExpenses(props.id);
+  expensesStore.watchGroupExpenses(id);
   await loadMembers();
   await calculateBalances();
 });

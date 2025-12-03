@@ -47,12 +47,9 @@
 
 <script setup lang="ts">
 import type Framework7 from "framework7";
-import { onMounted } from "vue";
-import capacitorApp from "./plugins/capacitor.plugin";
-import { framework7 } from "./plugins/framework7.plugin";
-import databaseInitializer from "./shared/database/inittalizer.database";
-import { useAuthStore } from "@/stores/auth.store";
-import LoginView from "@/modules/auth/views/LoginView.vue";
+import capacitorApp from "@/plugins/capacitor.plugin";
+import databaseInitializer from "@/shared/database/inittalizer.database";
+
 const device = getDevice();
 const f7Params = framework7();
 const authStore = useAuthStore();

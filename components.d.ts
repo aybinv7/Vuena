@@ -30,6 +30,7 @@ declare module 'vue' {
     F7ListItem: typeof import('framework7-vue')['f7ListItem']
     F7LoginScreenTitle: typeof import('framework7-vue')['f7LoginScreenTitle']
     F7Navbar: typeof import('framework7-vue')['f7Navbar']
+    F7NavLeft: typeof import('framework7-vue')['f7NavLeft']
     F7NavRight: typeof import('framework7-vue')['f7NavRight']
     F7Page: typeof import('framework7-vue')['f7Page']
     F7PageContent: typeof import('framework7-vue')['f7PageContent']
