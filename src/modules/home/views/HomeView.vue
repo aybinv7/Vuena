@@ -1,7 +1,6 @@
 <template>
   <F7Page
     hide-toolbar-on-scroll
-    infinite
     :ptr="!isSelectionMode"
     @ptr:refresh="handleRefresh"
     :class="{ 'home-page': isSelectionMode }"
@@ -117,7 +116,10 @@ function clearSearch() {
 async function handleRefresh(done: any) {
   await groupsStore.refreshGroups();
 
-  done();
+  setTimeout(() => {
+    console.log("Refreshed", done);
+    done();
+  }, 1000);
 }
 
 onMounted(() => {

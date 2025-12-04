@@ -1,4 +1,3 @@
-import { createApp } from "vue";
 import Framework7 from "framework7/lite-bundle";
 import Framework7Vue from "framework7-vue";
 
@@ -14,6 +13,7 @@ import "./assets/css/app.css";
 Framework7.use(Framework7Vue);
 
 const app = createApp(App);
+
 app.use(powerSync);
 app.use(pinia);
 app.use(i18n);

@@ -2,7 +2,7 @@
 
 @import "tailwindcss";
 
-body {
+*{
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
@@ -14,4 +14,21 @@ body {
 
 .toolbar.tabbar .tab-link.tab-link-active .icon.material-icons {
     font-family: "Material Icons" !important;
+}
+
+/* ===================================================
+   Fix: Bottom Toolbar/Tabbar Overlap
+   ===================================================
+*/
+
+.page-content {
+    padding-bottom: 78px !important;
+}
+
+.ios .page-content {
+    padding-bottom: 90px !important;
+}
+
+.md .page-content {
+    padding-bottom: 78px !important;
 }

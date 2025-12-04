@@ -1,5 +1,5 @@
 <template>
-  <F7Page infinite>
+  <F7Page>
     <F7Navbar large transparent title="Profile" />
 
     <!-- User Card -->
