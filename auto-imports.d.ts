@@ -14,6 +14,8 @@ declare global {
   const EffectScope: typeof import('vue').EffectScope
   const Framework7VueResolver: typeof import('./src/shared/utils/resolvers/resolvers').Framework7VueResolver
   const SupabaseConnector: typeof import('./src/shared/database/config/connector.database').SupabaseConnector
+  const TaskModel: typeof import('./src/modules/examples/models/TaskModel').TaskModel
+  const aboutRoutes: typeof import('./src/modules/about/router/routes/about.routes').default
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
   const asyncComputed: typeof import('@vueuse/core').asyncComputed
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
@@ -48,6 +50,7 @@ declare global {
   const defineStore: typeof import('pinia').defineStore
   const eagerComputed: typeof import('@vueuse/core').eagerComputed
   const effectScope: typeof import('vue').effectScope
+  const examplesRoutes: typeof import('./src/modules/examples/router/routes/examples.routes').default
   const extendRef: typeof import('@vueuse/core').extendRef
   const f7: typeof import('framework7-vue').f7
   const f7ready: typeof import('framework7-vue').f7ready
@@ -137,6 +140,7 @@ declare global {
   const supabase: typeof import('./src/plugins/supabase.plugin').supabase
   const syncRef: typeof import('@vueuse/core').syncRef
   const syncRefs: typeof import('@vueuse/core').syncRefs
+  const taskModel: typeof import('./src/modules/examples/models/TaskModel').taskModel
   const templateRef: typeof import('@vueuse/core').templateRef
   const theme: typeof import('framework7-vue').theme
   const throttledRef: typeof import('@vueuse/core').throttledRef
@@ -362,6 +366,12 @@ declare global {
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
+  export type { Task } from './src/modules/examples/types'
+  import('./src/modules/examples/types')
+  // @ts-ignore
+  export type { TaskModel, TaskModel } from './src/modules/examples/models/TaskModel'
+  import('./src/modules/examples/models/TaskModel')
+  // @ts-ignore
   export type { AppTheme, AppMode, AppContext } from './src/shared/composables/theme/useAppTheme'
   import('./src/shared/composables/theme/useAppTheme')
   // @ts-ignore
@@ -386,6 +396,9 @@ declare global {
   export type { SupabaseConnector, SupabaseConfig, SupabaseConnectorListener } from './src/shared/database/config/connector.database'
   import('./src/shared/database/config/connector.database')
   // @ts-ignore
+  export type { TaskRecord } from './src/shared/database/schemas/DbSchema'
+  import('./src/shared/database/schemas/DbSchema')
+  // @ts-ignore
   export type { Database, KyselyDatabase } from './src/shared/database/types/index'
   import('./src/shared/database/types/index')
   // @ts-ignore
@@ -406,6 +419,8 @@ declare module 'vue' {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly Framework7VueResolver: UnwrapRef<typeof import('./src/shared/utils/resolvers/resolvers')['Framework7VueResolver']>
     readonly SupabaseConnector: UnwrapRef<typeof import('./src/shared/database/config/connector.database')['SupabaseConnector']>
+    readonly TaskModel: UnwrapRef<typeof import('./src/modules/examples/models/TaskModel')['TaskModel']>
+    readonly aboutRoutes: UnwrapRef<typeof import('./src/modules/about/router/routes/about.routes')['default']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
@@ -440,6 +455,7 @@ declare module 'vue' {
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
+    readonly examplesRoutes: UnwrapRef<typeof import('./src/modules/examples/router/routes/examples.routes')['default']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly f7: UnwrapRef<typeof import('framework7-vue')['f7']>
     readonly f7ready: UnwrapRef<typeof import('framework7-vue')['f7ready']>
@@ -529,6 +545,7 @@ declare module 'vue' {
     readonly supabase: UnwrapRef<typeof import('./src/plugins/supabase.plugin')['supabase']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
+    readonly taskModel: UnwrapRef<typeof import('./src/modules/examples/models/TaskModel')['taskModel']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly theme: UnwrapRef<typeof import('framework7-vue')['theme']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>

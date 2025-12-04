@@ -1,16 +1,15 @@
 import type { Router } from "framework7/types";
-import examplesRoutes from "@/modules/examples/router/routes/examples.routes";
 
 const homeRoutes: Router.RouteParameters[] = [
   {
-    name: "home",
-    path: "/",
-    routes: examplesRoutes,
+    name: "about",
+    path: "/about",
+    routes: [],
 
     // beforeEnter: (context) => useAuthGuard(context),
 
     async({ resolve }) {
-      import("@/modules/home/views/HomeView.vue").then((vc) => {
+      import("@/modules/about/views/AboutView.vue").then((vc) => {
         resolve({ component: vc.default });
       });
     },

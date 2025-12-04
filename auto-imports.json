@@ -1668,6 +1668,53 @@
   },
   {
     "name": "default",
+    "as": "aboutRoutes",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/modules/about/router/routes/about.routes.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "Task",
+    "as": "Task",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/modules/examples/types.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "TaskModel",
+    "as": "TaskModel",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/modules/examples/models/TaskModel.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "TaskModel",
+    "as": "TaskModel",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/modules/examples/models/TaskModel.ts",
+    "type": true,
+    "declarationType": "class",
+    "__source": "dir"
+  },
+  {
+    "name": "taskModel",
+    "as": "taskModel",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/modules/examples/models/TaskModel.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "TaskModel",
+    "as": "TaskModel",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/modules/examples/models/TaskModel.ts",
+    "type": true,
+    "declarationType": "class",
+    "__source": "dir"
+  },
+  {
+    "name": "default",
+    "as": "examplesRoutes",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/modules/examples/router/routes/examples.routes.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "default",
     "as": "homeRoutes",
     "from": "C:/Users/PC/code/ayb/Vuena/src/modules/home/router/routes/home.routes.ts",
     "__source": "dir"
@@ -1963,6 +2010,13 @@
     "name": "DbSchema",
     "as": "DbSchema",
     "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/schemas/DbSchema.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "TaskRecord",
+    "as": "TaskRecord",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/database/schemas/DbSchema.ts",
+    "type": true,
     "__source": "dir"
   },
   {

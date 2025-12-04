@@ -81,9 +81,10 @@ export default defineConfig({
       dts: "components.d.ts",
       dirs: [
         "src/components/**",
-        "src/views/**/**",
-        "src/modules/**/views/**/**/**",
-        "src/modules/**/components/**/**/**",
+        "src/views/**",
+        "src/modules/**/views/**",
+        "src/modules/**/components/**",
+        "src/shared/components/**",
       ],
       extensions: ["vue", "ts", "tsx"],
       deep: true,

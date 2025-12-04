@@ -4,6 +4,7 @@ import type {
   EntityCreate,
   EntityUpdate,
 } from "@/shared/database/base";
+import type { Task } from "@/modules/examples";
 
 export interface EntityOperations<
   T extends BaseEntity,
@@ -11,7 +12,7 @@ export interface EntityOperations<
   TUpdate = EntityUpdate<T>
 > {
   create: (data: TCreate) => Promise<T>;
-  update: (id: string, data: TUpdate) => Promise<void>;
+  update: (id: string, data: TUpdate) => Promise<Task | undefined>;
   delete: (id: string) => Promise<void>;
   fetchById?: (id: string) => Promise<T | undefined>;
 }

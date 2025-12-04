@@ -1,13 +1,40 @@
-# PowerSync Sync Rules for Vuenna App
+# PowerSync Sync Rules for Vuena ERP Template
+# Documentation: https://docs.powersync.com/usage/sync-rules
 
 config:
   edition: 1
 
 bucket_definitions:
-  # Sync all groups where the user is a member
-  user_groups:
-    # Simple parameter query - no DISTINCT, no aliases, single table
-    parameters: SELECT group_id FROM members WHERE user_id = request.user_id()
+  # ==================================================
+  # User's Personal Tasks Bucket
+  # ==================================================
+  # Syncs all tasks created by the authenticated user
+  user_tasks:
+    # Query parameters - identifies which tasks belong to this bucket
+    # Returns task IDs where the user is the creator
+    parameters: SELECT id as task_id FROM tasks WHERE created_by = request.user_id()
+
+    # Data to sync for each task in the bucket
     data:
-      # Sync all members of this group
-      - SELECT * FROM members WHERE group_id = bucket.group_id
+      # Sync the task record
+      - SELECT
+        id,
+        title,
+        description,
+        status,
+        priority,
+        due_date,
+        created_at,
+        updated_at,
+        created_by,
+        updated_by
+        FROM tasks
+        WHERE id = bucket.task_id
+
+  # ==================================================
+  # Global (Optional - if you want all users to see all tasks)
+  # ==================================================
+  # Uncomment this section if tasks should be visible to all authenticated users
+  # global_tasks:
+  #   data:
+  #     - SELECT * FROM tasks
