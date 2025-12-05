@@ -3,12 +3,15 @@
   "appName": "Vuena",
   "npmClient": "pnpm",
   "webDir": "dist",
+  "allowMixedContent": true,
+
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
     },
     "Keyboard": {
-      "resizeMode": "none"
+      "resizeMode": "native",
+      "resizeOnFullScreen": true
     }
   },
   "cordova": {}

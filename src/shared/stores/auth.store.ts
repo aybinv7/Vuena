@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { databaseConnector } from "@/shared/database/connector.database";
 import type { Session } from "@supabase/supabase-js";
 
 export const useAuthStore = defineStore(

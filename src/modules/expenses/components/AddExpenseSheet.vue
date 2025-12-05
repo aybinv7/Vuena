@@ -181,7 +181,7 @@ function toggleMember(userId: string) {
 
 async function fetchGroupMembers() {
   try {
-    const result = await database.execute(
+    const result = await powerSyncDatabase.execute(
       "SELECT * FROM members WHERE group_id = ?",
       [groupId]
     );

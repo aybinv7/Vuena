@@ -1,20 +1,13 @@
 import type { Kysely } from "kysely";
-import type { GroupRecord, MemberRecord } from "@/modules/groups/types";
-import type {
-  ExpenseRecord,
-  SplitRecord,
-  SettlementRecord,
-} from "@/modules/expenses/types";
-
-export interface Database {
-  groups: GroupRecord;
-  members: MemberRecord;
-  expenses: ExpenseRecord;
-  splits: SplitRecord;
-  settlements: SettlementRecord;
-}
 
 export type KyselyDatabase = Kysely<Database>;
+export type Database = (typeof AppSchema)["types"];
+
+type GroupRecord = Database["groups"];
+type MemberRecord = Database["members"];
+type ExpenseRecord = Database["expenses"];
+type SplitRecord = Database["splits"];
+type SettlementRecord = Database["settlements"];
 
 export type {
   GroupRecord,

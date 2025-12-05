@@ -60,22 +60,42 @@ export const useAndroidBackButton = (f7: Framework7) => {
       return;
     }
 
-    const currentView = f7.views.current;
-    if (
-      currentView &&
-      currentView.router &&
-      currentView.router.history.length > 1
-    ) {
-      currentView.router.back();
-      return;
-    }
-
     if ($(".panel.panel-in").length) {
       f7.panel.close(".panel.panel-in");
       return;
     }
 
-    // If none of the above, exit the app
-    App.exitApp();
+    if ($(".page-current .sortable").length) {
+      f7.sortable.disable(".page-current .sortable");
+      return;
+    }
+
+    console.log("we hereeeeee", f7.views.current);
+
+    const currentView = f7.views.current;
+
+    if (currentView && currentView.name === "home") {
+      console.log("currentView you want to exit on home ", currentView);
+      f7.dialog.confirm(
+        "Are you sure you want to exit the app?",
+        () => {
+          App.exitApp();
+        },
+        () => {
+          return;
+        }
+      );
+      return;
+    }
+
+    if (
+      currentView &&
+      currentView.router &&
+      currentView.router.history.length > 1
+    ) {
+      console.log("currentView you want to exit on home ", currentView);
+      currentView.router.back();
+      return;
+    }
   });
 };

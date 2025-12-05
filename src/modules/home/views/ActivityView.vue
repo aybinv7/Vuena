@@ -132,7 +132,7 @@ async function watchActivity() {
       LIMIT 50
     `;
 
-    for await (const result of database.watch(query, [userId], {
+    for await (const result of powerSyncDatabase.watch(query, [userId], {
       signal: watchAbort.signal,
     })) {
       const expenses = Array.from(result.rows?._array || result.rows || []);

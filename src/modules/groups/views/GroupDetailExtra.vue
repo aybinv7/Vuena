@@ -210,7 +210,7 @@ async function confirmDelete() {
 
 async function deleteExpense() {
   try {
-    await database.execute("DELETE FROM expenses WHERE id = ?", [
+    await powerSyncDatabase.execute("DELETE FROM expenses WHERE id = ?", [
       props.expenseId,
     ]);
     f7.toast

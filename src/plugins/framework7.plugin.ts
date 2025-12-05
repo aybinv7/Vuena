@@ -1,9 +1,8 @@
 import routes from "@/router";
-import { getDevice } from "framework7";
+import { Capacitor } from "@capacitor/core";
 import type { Framework7Parameters } from "framework7/types";
 
 export const framework7 = (): Framework7Parameters => {
-  const device = getDevice();
   const appTheme = useAppThemeProvider();
   return {
     name: "Vuena",
@@ -13,20 +12,19 @@ export const framework7 = (): Framework7Parameters => {
 
     routes: routes,
 
-    input: {
-      scrollIntoViewOnFocus: true,
-      scrollIntoViewCentered: true,
-    },
-
     touch: {
-      tapHold: true, //enable tap hold events
+      tapHold: true,
       tapHoldDelay: 500,
       tapHoldPreventClicks: true,
     },
 
+    input: {
+      scrollIntoViewOnFocus: true,
+      // scrollIntoViewCentered: false,
+    },
+
     statusbar: {
-      iosOverlaysWebView: true,
-      androidOverlaysWebView: true,
+      enabled: Capacitor.isNativePlatform(),
     },
 
     view: {

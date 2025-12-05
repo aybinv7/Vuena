@@ -17,15 +17,15 @@ export const useGroupsStore = defineStore("groups", () => {
       const userId = authStore.user?.id || "demo-user";
 
       // Watch for groups where the user is a member
-      const query = db
+      const query = database
         .selectFrom("groups as g")
         .innerJoin("members as m", "g.id", "m.group_id")
         .selectAll("g")
         .where("m.user_id", "=", userId)
         .orderBy("g.created_at", "desc");
 
-      // @ts-ignore - db.watch is added by wrapPowerSyncWithKysely
-      watchSubscription = db.watch(query, {
+      // @ts-ignore - database.watch is added by wrapPowerSyncWithKysely
+      watchSubscription = database.watch(query, {
         onResult: (result) => {
           groups.value = result;
         },
@@ -42,7 +42,7 @@ export const useGroupsStore = defineStore("groups", () => {
     const now = new Date().toISOString();
     const userId = authStore.user.id;
 
-    await db.transaction().execute(async (tx) => {
+    await database.transaction().execute(async (tx) => {
       // Create Group
       await tx
         .insertInto("groups")
@@ -78,7 +78,7 @@ export const useGroupsStore = defineStore("groups", () => {
   async function clearAndResync() {
     try {
       loading.value = true;
-      await powerSync.disconnectAndClear();
+      await powerSyncDatabase.disconnectAndClear();
       await watchGroups();
     } catch (error) {
       console.error("Error clearing and resyncing:", error);
@@ -92,7 +92,7 @@ export const useGroupsStore = defineStore("groups", () => {
     try {
       const userId = authStore.user?.id || "demo-user";
 
-      const result = await db
+      const result = await database
         .selectFrom("groups as g")
         .innerJoin("members as m", "g.id", "m.group_id")
         .selectAll("g")

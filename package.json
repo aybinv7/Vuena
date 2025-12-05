@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/ayb/presalio-2.0.git"
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "start": "pnpm run dev",
     "dev": "cross-env NODE_ENV=development vite",
@@ -17,10 +17,9 @@
     "build:ios": "cross-env NODE_ENV=production vite build && npx cap copy ios",
     "build:android": "cross-env NODE_ENV=production vite build && npx cap copy android",
     "preview": "vite preview --port 4173",
-    "ios": "vite build && npx cap copy ios",
-    "ios-open": "vite build && npx cap copy ios && npx cap open ios",
-    "android": "vite build && npx cap copy android",
-    "android-open": "vite build && npx cap copy android && npx cap open android",
+    "run:android": "vite build && npx cap run android",
+    "run:android:live": "vite build && npx cap run android -l ",
+    "run:ios": "vite build && npx cap run ios",
     "type-check": "vue-tsc --noEmit"
   },
   "browserslist": [
@@ -84,7 +83,8 @@
     "typescript": "^5.9.3",
     "unplugin-imagemin": "^0.6.9",
     "unplugin-turbo-console": "^2.3.0",
-    "vite": "npm:rolldown-vite@^7.2.8",
+    "vite": "8.0.0-beta.0",
+    "vite-plugin-mkcert": "^1.17.9",
     "vite-plugin-vue-devtools": "^8.0.5",
     "vue-tsc": "^3.1.5"
   }

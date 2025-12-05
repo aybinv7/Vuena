@@ -1,22 +1,21 @@
 import type Framework7 from "framework7";
-import { useAndroidBackButton } from "./capcitor/useAndroidBackButton";
-import { useKeyboard } from "./capcitor/useKeyboard";
-import { useSplashscreen } from "./capcitor/useSplashScreen";
 
-const capacitorApp = {
+const capacitor = {
   f7: null as Framework7 | null,
 
   handleSplashscreen: useSplashscreen,
   handleAndroidBackButton: useAndroidBackButton,
   handleKeyboard: useKeyboard,
+  handleStatusBar: useStatusBar,
 
   init: function (f7: Framework7) {
-    capacitorApp.f7 = f7;
+    capacitor.f7 = f7;
 
-    capacitorApp.handleAndroidBackButton(f7);
-    capacitorApp.handleSplashscreen();
-    capacitorApp.handleKeyboard(f7);
+    capacitor.handleAndroidBackButton(f7);
+    capacitor.handleSplashscreen();
+    capacitor.handleKeyboard(f7);
+    capacitor.handleStatusBar(f7);
   },
 };
 
-export default capacitorApp;
+export default capacitor;

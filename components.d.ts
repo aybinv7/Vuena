@@ -11,7 +11,6 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    About: typeof import('./src/modules/about/views/About.vue')['default']
     ActivityView: typeof import('./src/modules/home/views/ActivityView.vue')['default']
     AddExpenseSheet: typeof import('./src/modules/expenses/components/AddExpenseSheet.vue')['default']
     CreateGroupSheet: typeof import('./src/modules/groups/components/CreateGroupSheet.vue')['default']

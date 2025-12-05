@@ -366,7 +366,6 @@ const groupsStore = useGroupsStore();
 const { groups } = storeToRefs(groupsStore);
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
-import { db } from "@/shared/database";
 
 const showAddExpense = ref(false);
 const showAddMember = ref(false);
@@ -449,7 +448,7 @@ function getMemberExpenseCount(userId: string): number {
 }
 
 async function loadMembers() {
-  const result = await db
+  const result = await database
     .selectFrom("members")
     .selectAll()
     .where("group_id", "=", id)
@@ -457,7 +456,7 @@ async function loadMembers() {
   members.value = result;
 
   // Load expense counts per member
-  const countsResult = await db
+  const countsResult = await database
     .selectFrom("expenses")
     .select((eb) => ["paid_by", eb.fn.countAll().as("count")])
     .where("group_id", "=", id)
@@ -475,7 +474,7 @@ async function calculateBalances() {
 }
 
 async function deleteExpense(expenseId: string) {
-  await db.deleteFrom("expenses").where("id", "=", expenseId).execute();
+  await database.deleteFrom("expenses").where("id", "=", expenseId).execute();
   f7.toast
     .create({
       text: "✓ Expense deleted",
@@ -542,7 +541,7 @@ async function settleDebt(balance: any) {
   f7.dialog.confirm(
     `Mark ${formatCurrency(balance.amount)} as settled?`,
     async () => {
-      await db.transaction().execute(async (tx) => {
+      await database.transaction().execute(async (tx) => {
         await tx
           .insertInto("settlements")
           .values({
@@ -568,7 +567,7 @@ async function settleDebt(balance: any) {
 }
 
 async function removeMember(memberId: string) {
-  await db.deleteFrom("members").where("id", "=", memberId).execute();
+  await database.deleteFrom("members").where("id", "=", memberId).execute();
   await loadMembers();
 }
 
@@ -576,7 +575,7 @@ function editGroupName() {
   const currentName = groupName.value;
   f7.dialog.prompt("Group Name", currentName, async (newName) => {
     if (newName) {
-      await db
+      await database
         .updateTable("groups")
         .set({ name: newName })
         .where("id", "=", id)
@@ -605,7 +604,7 @@ function exportExpenses() {
 function leaveGroup() {
   f7.dialog.confirm("Are you sure you want to leave this group?", async () => {
     const userId = user.value?.id;
-    await db
+    await database
       .deleteFrom("members")
       .where("group_id", "=", id)
       .where("user_id", "=", userId!)
@@ -662,7 +661,7 @@ async function deleteSelectedExpenses() {
     async () => {
       const ids = Array.from(selectedExpenseIds.value);
       try {
-        await db.deleteFrom("expenses").where("id", "in", ids).execute();
+        await database.deleteFrom("expenses").where("id", "in", ids).execute();
         f7.toast
           .create({
             text: "✓ Expenses deleted",

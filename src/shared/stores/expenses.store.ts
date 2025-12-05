@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { db } from "@/shared/database/index";
 import type { ExpenseRecord } from "@/shared/database/types";
 import { useAuthStore } from "./auth.store";
 
@@ -18,15 +17,15 @@ export const useExpensesStore = defineStore("expenses", () => {
     }
 
     try {
-      const query = db
+      const query = database
         .selectFrom("expenses")
         .selectAll()
         .where("group_id", "=", groupId)
         .orderBy("date", "desc")
         .orderBy("created_at", "desc");
 
-      // @ts-ignore - db.watch is added by wrapPowerSyncWithKysely
-      watchSubscription = db.watch(query, {
+      // @ts-ignore - database.watch is added by wrapPowerSyncWithKysely
+      watchSubscription = database.watch(query, {
         onResult: (result) => {
           expenses.value = result as ExpenseRecord[];
         },
@@ -51,7 +50,7 @@ export const useExpensesStore = defineStore("expenses", () => {
     const userId = paidBy || authStore.user.id;
     const expenseDate = date || now;
 
-    await db.transaction().execute(async (tx) => {
+    await database.transaction().execute(async (tx) => {
       // 1. Create Expense
       await tx
         .insertInto("expenses")
@@ -92,7 +91,7 @@ export const useExpensesStore = defineStore("expenses", () => {
     const now = new Date().toISOString();
     const payerId = authStore.user.id;
 
-    await db
+    await database
       .insertInto("settlements")
       .values({
         id: settlementId,

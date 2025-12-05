@@ -1,5 +1,5 @@
 <template>
-  <F7App v-bind="f7Params">
+  <F7App class="safe-areas" v-bind="f7Params">
     <!-- Login Screen Overlay -->
     <LoginView v-if="!authStore.isAuthenticated" />
 
@@ -47,8 +47,6 @@
 
 <script setup lang="ts">
 import type Framework7 from "framework7";
-import capacitorApp from "@/plugins/capacitor.plugin";
-import databaseInitializer from "@/shared/database/inittalizer.database";
 
 const device = getDevice();
 const f7Params = framework7();
@@ -59,8 +57,8 @@ onMounted(() => {
 
   f7ready((f7: Framework7) => {
     if (device.capacitor) {
-      capacitorApp.init(f7);
-      databaseInitializer();
+      capacitorPlugin.init(f7);
+      inittalizerDatabase();
     }
   });
 });

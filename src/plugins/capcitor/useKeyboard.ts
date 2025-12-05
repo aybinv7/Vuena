@@ -21,11 +21,6 @@ export const useKeyboard = (f7: Framework7) => {
 
   Keyboard.addListener("keyboardWillShow", () => {
     if (document.activeElement) {
-      console.log(
-        "there is an active element on WillShow",
-        document.activeElement
-      );
-
       f7.toolbar.hide(".toolbar-main-app", true);
       f7.input.scrollIntoView(
         document.activeElement as HTMLElement,
@@ -38,10 +33,6 @@ export const useKeyboard = (f7: Framework7) => {
 
   Keyboard.addListener("keyboardWillHide", () => {
     if (document.activeElement) {
-      console.log(
-        "there is an active element on WillHide",
-        document.activeElement
-      );
       f7.toolbar.show("toolbar-main-app", true);
       f7.input.scrollIntoView(
         document.activeElement as HTMLElement,
@@ -58,10 +49,6 @@ export const useKeyboard = (f7: Framework7) => {
       $(document.activeElement).parents(".messagebar").length
     ) {
       f7.toolbar.show("toolbar-main-app", true);
-      console.log(
-        "there is an active element on DidHide",
-        document.activeElement
-      );
       return;
     }
 

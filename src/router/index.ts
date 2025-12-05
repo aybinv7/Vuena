@@ -1,5 +1,14 @@
-import aboutRoutes from "@/modules/about/router/routes/about.routes";
-import homeRoutes from "@/modules/home/router/routes/home.routes";
+import type { Router } from "framework7/types";
 
-const routes = [...homeRoutes, ...aboutRoutes, ...globalRoutes];
+const modules = import.meta.glob<Router.RouteParameters[]>(
+  "../modules/*/router/routes/*.routes.ts",
+  { eager: true, import: "default" }
+);
+
+const routes: Router.RouteParameters[] = [];
+
+Object.values(modules).forEach((moduleRoutes) => {
+  routes.push(...(moduleRoutes as unknown as Router.RouteParameters[]));
+});
+
 export default routes;

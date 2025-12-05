@@ -1,4 +1,6 @@
 import type { InjectionKey, ComputedRef } from "vue";
+import { StatusBar, Style } from "@capacitor/status-bar";
+import { Capacitor } from "@capacitor/core";
 
 export type AppTheme = "ios" | "md" | "auto";
 export type AppMode = "light" | "dark";
@@ -7,7 +9,7 @@ export interface AppContext {
   darkMode: AppMode;
   theme: AppTheme;
   setTheme: (t: AppTheme) => void;
-  setDarkMode: (t: AppMode) => void;
+  setDarkMode: (t: AppMode) => Promise<void>;
 }
 
 export const AppContextKey: InjectionKey<ComputedRef<AppContext>> =
@@ -27,9 +29,15 @@ export const useAppThemeProvider = () => {
     window.location.reload();
   };
 
-  const setDarkMode = (d: AppMode) => {
+  const setDarkMode = async (d: AppMode) => {
     darkMode.value = d;
     f7.setDarkMode(d === "dark");
+
+    if (Capacitor.isNativePlatform()) {
+      await StatusBar.setStyle({
+        style: d === "dark" ? Style.Dark : Style.Light,
+      });
+    }
   };
 
   const appContext = computed<AppContext>(() => ({
@@ -41,10 +49,10 @@ export const useAppThemeProvider = () => {
 
   provide(AppContextKey, appContext);
 
-  onMounted(() => {
+  onMounted(async () => {
     const windowF7: any = window;
     windowF7.setTheme = setTheme;
-    setDarkMode(darkMode.value);
+    await setDarkMode(darkMode.value);
   });
 
   return appContext;

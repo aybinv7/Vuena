@@ -86,8 +86,6 @@
 </template>
 
 <script setup lang="ts">
-import { db } from "@/shared/database";
-
 const emit = defineEmits(["create-group", "selection-change"]);
 
 const groupsStore = useGroupsStore();
@@ -156,7 +154,7 @@ function cycleSortOrder() {
   const currentIndex = orders.indexOf(sortBy.value);
   sortBy.value = orders[(currentIndex + 1) % orders.length] ?? "name";
 
-  // Haptic feedback
+  // Haptic feedatabaseack
   if (window.navigator.vibrate) {
     window.navigator.vibrate(10);
   }
@@ -240,7 +238,7 @@ async function deleteSelectedGroups() {
     async () => {
       const ids = Array.from(selectedGroupIds.value);
       try {
-        await db.deleteFrom("groups").where("id", "in", ids).execute();
+        await database.deleteFrom("groups").where("id", "in", ids).execute();
         f7.toast
           .create({
             text: "✓ Groups deleted",
@@ -261,7 +259,7 @@ async function deleteSelectedGroups() {
 function editGroup(group: any) {
   f7.dialog.prompt("Group Name", group.name || "", async (newName) => {
     if (newName) {
-      await db
+      await database
         .updateTable("groups")
         .set({ name: newName })
         .where("id", "=", group.id)
@@ -282,7 +280,7 @@ function shareGroup(group: any) {
 }
 
 async function deleteGroup(groupId: string) {
-  await db.deleteFrom("groups").where("id", "=", groupId).execute();
+  await database.deleteFrom("groups").where("id", "=", groupId).execute();
   f7.toast
     .create({
       text: "✓ Group deleted",
@@ -302,7 +300,7 @@ function getExpenseCount(groupId: string): number {
 
 async function loadCounts() {
   try {
-    const membersResult = await db
+    const membersResult = await database
       .selectFrom("members")
       .select((eb) => ["group_id", eb.fn.countAll().as("count")])
       .groupBy("group_id")
@@ -312,7 +310,7 @@ async function loadCounts() {
       membersResult.map((row) => [row.group_id, Number(row.count)])
     );
 
-    const expensesResult = await db
+    const expensesResult = await database
       .selectFrom("expenses")
       .select((eb) => ["group_id", eb.fn.countAll().as("count")])
       .groupBy("group_id")

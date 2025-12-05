@@ -19,5 +19,6 @@
 
     // Manifest files
     "manifest.json": "manifest.json, framework7.json,capacitor.config.json"
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "disabled"
 }

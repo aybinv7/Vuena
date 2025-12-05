@@ -10,6 +10,7 @@ import Components from "unplugin-vue-components/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Imagemin from "unplugin-imagemin/vite";
 import TurboConsole from "unplugin-turbo-console/vite";
+// import mkcert from "vite-plugin-mkcert";
 
 import {
   Framework7VueResolver,
@@ -31,10 +32,11 @@ export default defineConfig({
         },
       },
     }),
+    // mkcert(),
+    vueDevTools(),
 
     tailwindcss(),
 
-    vueDevTools({}),
     TurboConsole({
       launchEditor: {
         specifiedEditor: "antigravity",
@@ -43,7 +45,6 @@ export default defineConfig({
     VueI18nPlugin({
       include: SRC_LOCALES,
     }),
-
     AutoImport({
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -76,7 +77,6 @@ export default defineConfig({
         filepath: "./.biomelintrc-auto-import.json",
       },
     }),
-
     Components({
       dts: "components.d.ts",
       dirs: [
@@ -90,7 +90,6 @@ export default defineConfig({
 
       resolvers: [Framework7VueResolver()],
     }),
-
     Imagemin({
       cache: true,
       compress: {
@@ -116,43 +115,43 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // advancedChunks: {
-        //   groups: [
-        //     {
-        //       name: "vue-ecosystem",
-        //       test: /[\\/]node_modules[\\/](vue|pinia|vue-router|@vueuse)[\\/]/,
-        //     },
-        //     {
-        //       name: "f7-core",
-        //       test: /[\\/]node_modules[\\/]framework7[\\/](lite|shared|utils)/,
-        //     },
-        //     {
-        //       name: "f7-vue",
-        //       test: /[\\/]node_modules[\\/]framework7-vue[\\/]/,
-        //     },
-        //     {
-        //       name: "f7-heavy",
-        //       test: /[\\/]node_modules[\\/]framework7[\\/](components[\\/](calendar|color-picker|photo-browser|autocomplete)|modules[\\/](keyboard|mousewheel))/,
-        //     },
-        //     {
-        //       name: "styles",
-        //       test: /[\\/]node_modules[\\/](tailwind|@tailwindcss|vue-i18n)[\\/]/,
-        //     },
-        //     {
-        //       name: "vendor",
-        //       test: /[\\/]node_modules[\\/]/,
-        //     },
-        //     {
-        //       name: "shared",
-        //       test: /[\\/]src[\\/]shared[\\/]/,
-        //     },
-        //     {
-        //       name: "app-modules",
-        //       test: /[\\/]src[\\/]modules[\\/]/,
-        //       maxSize: 50 * 1024,
-        //     },
-        //   ],
-        // },
+        advancedChunks: {
+          groups: [
+            {
+              name: "vue-ecosystem",
+              test: /[\\/]node_modules[\\/](vue|pinia|vue-router|@vueuse)[\\/]/,
+            },
+            {
+              name: "f7-core",
+              test: /[\\/]node_modules[\\/]framework7[\\/](lite|shared|utils)/,
+            },
+            {
+              name: "f7-vue",
+              test: /[\\/]node_modules[\\/]framework7-vue[\\/]/,
+            },
+            {
+              name: "f7-heavy",
+              test: /[\\/]node_modules[\\/]framework7[\\/](components[\\/](calendar|color-picker|photo-browser|autocomplete)|modules[\\/](keyboard|mousewheel))/,
+            },
+            {
+              name: "styles",
+              test: /[\\/]node_modules[\\/](tailwind|@tailwindcss|vue-i18n)[\\/]/,
+            },
+            {
+              name: "vendor",
+              test: /[\\/]node_modules[\\/]/,
+            },
+            {
+              name: "shared",
+              test: /[\\/]src[\\/]shared[\\/]/,
+            },
+            {
+              name: "app-modules",
+              test: /[\\/]src[\\/]modules[\\/]/,
+              maxSize: 50 * 1024,
+            },
+          ],
+        },
       },
     },
     chunkSizeWarningLimit: 500,

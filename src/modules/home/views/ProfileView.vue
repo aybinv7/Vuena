@@ -135,14 +135,14 @@ async function loadStats() {
     if (!userId) return;
 
     // Count groups
-    const groupsResult = await database.execute(
+    const groupsResult = await powerSyncDatabase.execute(
       "SELECT COUNT(*) as count FROM members WHERE user_id = ?",
       [userId]
     );
     stats.value.totalGroups = groupsResult.rows?.item(0)?.count || 0;
 
     // Count expenses
-    const expensesResult = await database.execute(
+    const expensesResult = await powerSyncDatabase.execute(
       "SELECT COUNT(*) as count, SUM(amount) as total FROM expenses WHERE paid_by = ?",
       [userId]
     );
