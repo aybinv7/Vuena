@@ -4,7 +4,10 @@
   "npmClient": "pnpm",
   "webDir": "dist",
   "allowMixedContent": true,
-
+  "server": {
+    "url": "https://192.168.43.205:5173",
+    "cleartext": true
+  },
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
