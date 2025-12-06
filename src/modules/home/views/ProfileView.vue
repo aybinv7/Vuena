@@ -95,11 +95,13 @@
       <p class="text-color-gray">© 2025 FairShare</p>
     </F7Block>
 
-    <HomePanel />
+    <AppTheme />
   </F7Page>
 </template>
 
 <script setup lang="ts">
+import AppTheme from "@/shared/components/app/AppTheme.vue";
+
 const authStore = useAuthStore();
 const groupsStore = useGroupsStore();
 

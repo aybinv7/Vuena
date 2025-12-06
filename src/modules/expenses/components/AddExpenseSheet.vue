@@ -1,7 +1,6 @@
 <template>
   <F7Sheet
-    class="demo-sheet-swipe-to-close"
-    style="height: auto"
+    class="demo-sheet-swipe-to-close !h-auto"
     swipe-to-close
     backdrop
     :opened="opened"
@@ -14,116 +13,114 @@
       </div>
     </F7Toolbar>
 
-    <F7PageContent>
-      <F7BlockTitle large>Add Expense</F7BlockTitle>
+    <F7BlockTitle large>Add Expense</F7BlockTitle>
 
-      <F7List no-hairlines-md>
-        <F7ListInput
-          label="Description"
-          type="text"
-          placeholder="What was it for?"
-          :value="description"
-          @input="description = $event.target.value"
-          clear-button
-        >
-          <template #media>
-            <F7Icon f7="doc_text" />
-          </template>
-        </F7ListInput>
-
-        <F7ListInput
-          label="Amount"
-          type="number"
-          placeholder="0.00"
-          :value="amount"
-          @input="amount = $event.target.value"
-        >
-          <template #media>
-            <F7Icon f7="money_dollar_circle" />
-          </template>
-        </F7ListInput>
-
-        <F7ListInput
-          label="Date"
-          type="date"
-          :value="date"
-          @input="date = $event.target.value"
-        >
-          <template #media>
-            <F7Icon f7="calendar" />
-          </template>
-        </F7ListInput>
-      </F7List>
-
-      <F7BlockTitle>Who Paid?</F7BlockTitle>
-      <F7List>
-        <F7ListItem
-          v-for="member in groupMembers"
-          :key="member.id"
-          radio
-          :value="member.user_id"
-          name="payer"
-          :checked="paidBy === member.user_id"
-          :title="getMemberName(member.user_id)"
-          @change="paidBy = member.user_id"
-        >
-          <template #media>
-            <F7Icon
-              f7="person_circle_fill"
-              :color="paidBy === member.user_id ? 'blue' : 'gray'"
-            />
-          </template>
-        </F7ListItem>
-      </F7List>
-
-      <F7BlockTitle>Split Between</F7BlockTitle>
-      <F7List>
-        <F7ListItem
-          v-for="member in groupMembers"
-          :key="`split-${member.id}`"
-          checkbox
-          :value="member.user_id"
-          :checked="selectedMembers.includes(member.user_id)"
-          :title="getMemberName(member.user_id)"
-          @change="toggleMember(member.user_id)"
-        >
-          <template #media>
-            <F7Icon f7="person_circle_fill" color="blue" />
-          </template>
-          <template
-            #after
-            v-if="selectedMembers.includes(member.user_id) && amount"
-          >
-            <span class="text-color-gray">
-              {{ formatCurrency(parseFloat(amount) / selectedMembers.length) }}
-            </span>
-          </template>
-        </F7ListItem>
-      </F7List>
-
-      <F7Block
-        v-if="selectedMembers.length > 0"
-        class="text-align-center text-color-gray"
+    <F7List no-hairlines-md>
+      <F7ListInput
+        label="Description"
+        type="text"
+        placeholder="What was it for?"
+        :value="description"
+        @input="description = $event.target.value"
+        clear-button
       >
-        <p>
-          {{ selectedMembers.length }}
-          {{ selectedMembers.length === 1 ? "person" : "people" }} splitting
-          {{ formatCurrency(parseFloat(amount || "0")) }}
-        </p>
-      </F7Block>
+        <template #media>
+          <F7Icon f7="doc_text" />
+        </template>
+      </F7ListInput>
 
-      <F7Block>
-        <F7Button
-          fill
-          large
-          @click="save"
-          :disabled="!canSave"
-          :loading="loading"
+      <F7ListInput
+        label="Amount"
+        type="number"
+        placeholder="0.00"
+        :value="amount"
+        @input="amount = $event.target.value"
+      >
+        <template #media>
+          <F7Icon f7="money_dollar_circle" />
+        </template>
+      </F7ListInput>
+
+      <F7ListInput
+        label="Date"
+        type="date"
+        :value="date"
+        @input="date = $event.target.value"
+      >
+        <template #media>
+          <F7Icon f7="calendar" />
+        </template>
+      </F7ListInput>
+    </F7List>
+
+    <F7BlockTitle>Who Paid?</F7BlockTitle>
+    <F7List>
+      <F7ListItem
+        v-for="member in groupMembers"
+        :key="member.id"
+        radio
+        :value="member.user_id"
+        name="payer"
+        :checked="paidBy === member.user_id"
+        :title="getMemberName(member.user_id)"
+        @change="paidBy = member.user_id"
+      >
+        <template #media>
+          <F7Icon
+            f7="person_circle_fill"
+            :color="paidBy === member.user_id ? 'blue' : 'gray'"
+          />
+        </template>
+      </F7ListItem>
+    </F7List>
+
+    <F7BlockTitle>Split Between</F7BlockTitle>
+    <F7List>
+      <F7ListItem
+        v-for="member in groupMembers"
+        :key="`split-${member.id}`"
+        checkbox
+        :value="member.user_id"
+        :checked="selectedMembers.includes(member.user_id)"
+        :title="getMemberName(member.user_id)"
+        @change="toggleMember(member.user_id)"
+      >
+        <template #media>
+          <F7Icon f7="person_circle_fill" color="blue" />
+        </template>
+        <template
+          #after
+          v-if="selectedMembers.includes(member.user_id) && amount"
         >
-          Save Expense
-        </F7Button>
-      </F7Block>
-    </F7PageContent>
+          <span class="text-color-gray">
+            {{ formatCurrency(parseFloat(amount) / selectedMembers.length) }}
+          </span>
+        </template>
+      </F7ListItem>
+    </F7List>
+
+    <F7Block
+      v-if="selectedMembers.length > 0"
+      class="text-align-center text-color-gray"
+    >
+      <p>
+        {{ selectedMembers.length }}
+        {{ selectedMembers.length === 1 ? "person" : "people" }} splitting
+        {{ formatCurrency(parseFloat(amount || "0")) }}
+      </p>
+    </F7Block>
+
+    <F7Block>
+      <F7Button
+        fill
+        large
+        @click="save"
+        :disabled="!canSave"
+        :loading="loading"
+      >
+        Save Expense
+      </F7Button>
+    </F7Block>
   </F7Sheet>
 </template>
 
