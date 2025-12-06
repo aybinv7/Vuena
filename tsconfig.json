@@ -21,7 +21,8 @@
       "node",
       "@intlify/unplugin-vue-i18n/messages",
       "./auto-imports.d.ts",
-      "./components.d.ts"
+      "./components.d.ts",
+      "unplugin-icons/types/vue"
     ]
   }
 }

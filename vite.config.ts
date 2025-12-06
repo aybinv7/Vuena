@@ -8,6 +8,8 @@ import vueDevTools from "vite-plugin-vue-devtools";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import Components from "unplugin-vue-components/vite";
 import AutoImport from "unplugin-auto-import/vite";
+import Icons from "unplugin-icons/vite";
+import IconsResolver from "unplugin-icons/resolver";
 import Imagemin from "unplugin-imagemin/vite";
 import TurboConsole from "unplugin-turbo-console/vite";
 // import mkcert from "vite-plugin-mkcert";
@@ -41,6 +43,10 @@ export default defineConfig({
       launchEditor: {
         specifiedEditor: "antigravity",
       },
+    }),
+    Icons({
+      autoInstall: true,
+      compiler: "vue3",
     }),
     VueI18nPlugin({
       include: SRC_LOCALES,
@@ -88,7 +94,17 @@ export default defineConfig({
       extensions: ["vue", "ts", "tsx"],
       deep: true,
 
-      resolvers: [Framework7VueResolver()],
+      resolvers: [
+        Framework7VueResolver(),
+        IconsResolver({
+          prefix: "i",
+          alias: {
+            mt: "material-symbols",
+            f7: "framework7",
+          },
+          enabledCollections: ["material", "framework7"],
+        }),
+      ],
     }),
     Imagemin({
       cache: true,
