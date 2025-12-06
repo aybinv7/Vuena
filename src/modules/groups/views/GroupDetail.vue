@@ -1,5 +1,5 @@
 <template>
-  <F7Page no-toolbar ptr @ptr:refresh="handleRefresh">
+  <F7Page class="group-detail" no-toolbar ptr @ptr:refresh="handleRefresh">
     <F7Navbar v-if="!isSelectionMode" :title="groupName" back-link="Back">
       <F7NavRight>
         <F7Link
@@ -38,28 +38,30 @@
       @searchbar:clear="expenseSearchQuery = ''"
     /> -->
     <F7Toolbar tabbar top>
-      <F7Link
-        tab-link="#tab-expenses"
-        tab-link-active
-        icon-ios="f7:money_dollar_circle"
-        icon-md="material:attach_money"
-        ripple-color="transparent"
-      />
-      <F7Link
-        tab-link="#tab-balances"
-        icon-ios="f7:chart_pie"
-        icon-md="material:pie_chart"
-        ripple-color="transparent"
-      />
-      <F7Link
-        tab-link="#tab-members"
-        icon-ios="f7:person_3"
-        icon-md="material:people"
-        ripple-color="transparent"
-      />
+      <div class="toolbar-pane">
+        <F7Link
+          tab-link="#tab-expenses"
+          tab-link-active
+          icon-ios="f7:money_dollar_circle"
+          icon-md="material:attach_money"
+          ripple-color="transparent"
+        />
+        <F7Link
+          tab-link="#tab-balances"
+          icon-ios="f7:chart_pie"
+          icon-md="material:pie_chart"
+          ripple-color="transparent"
+        />
+        <F7Link
+          tab-link="#tab-members"
+          icon-ios="f7:person_3"
+          icon-md="material:people"
+          ripple-color="transparent"
+        />
+      </div>
     </F7Toolbar>
 
-    <F7Popup class="popup-menu" push>
+    <F7Popup class="popup-menu">
       <F7Page>
         <F7Navbar title="Group Options">
           <F7NavRight>
@@ -125,12 +127,10 @@
     <F7Tabs animated swipeable>
       <!-- Expenses Tab -->
       <F7Tab id="tab-expenses" tab-active>
-        <F7Fab
-          position="right-bottom"
-          color="primary"
-          @click="showAddExpense = true"
-        >
-          <F7Icon f7="plus" />
+        <F7Fab position="right-bottom" color="primary">
+          <F7Link sheet-open="#add-expense-sheet">
+            <F7Icon color="white" f7="plus" />
+          </F7Link>
         </F7Fab>
         <F7List
           v-if="filteredExpenses.length > 0"
@@ -206,7 +206,7 @@
             v-if="!expenseSearchQuery"
             fill
             large
-            @click="showAddExpense = true"
+            sheet-open="#add-expense-sheet"
           >
             Add Expense
           </F7Button>
@@ -350,7 +350,7 @@
       </F7Tab>
     </F7Tabs>
 
-    <AddExpenseSheet v-model:opened="showAddExpense" :group-id="groupId" />
+    <AddExpenseSheet :group-id="groupId" />
   </F7Page>
 </template>
 
@@ -367,7 +367,6 @@ const { groups } = storeToRefs(groupsStore);
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
-const showAddExpense = ref(false);
 const showAddMember = ref(false);
 const members = ref<any[]>([]);
 const balances = ref<any[]>([]);
@@ -736,3 +735,11 @@ onUnmounted(() => {
   expensesStore.stopWatching();
 });
 </script>
+
+<style lang="less">
+.group-detail {
+  .page-content {
+    padding-bottom: 0 !important;
+  }
+}
+</style>
