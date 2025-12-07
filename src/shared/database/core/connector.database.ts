@@ -147,7 +147,7 @@ export class SupabaseConnector
       return null;
     }
 
-    console.debug("session expires at", session.expires_at);
+    // console.debug("session expires at", session.expires_at);
 
     return {
       endpoint: this.config.powersyncUrl,

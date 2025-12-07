@@ -4,7 +4,7 @@ import { WASQLiteOpenFactory, WASQLiteVFS } from "@powersync/web";
 export const powerSyncDatabase = new PowerSyncDatabase({
   schema: AppSchema,
   database: new WASQLiteOpenFactory({
-    dbFilename: "exampleVFS.db",
+    dbFilename: import.meta.env.VITE_DB_FILENAME,
     vfs: WASQLiteVFS.OPFSCoopSyncVFS,
     flags: {
       enableMultiTabs: typeof SharedWorker !== "undefined",

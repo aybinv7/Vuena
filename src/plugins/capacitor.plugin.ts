@@ -8,13 +8,13 @@ const capacitor = {
   handleKeyboard: useKeyboard,
   handleStatusBar: useStatusBar,
 
-  init: function (f7: Framework7) {
+  init: async function (f7: Framework7) {
     capacitor.f7 = f7;
 
     capacitor.handleAndroidBackButton(f7);
     capacitor.handleSplashscreen();
     capacitor.handleKeyboard(f7);
-    capacitor.handleStatusBar(f7);
+    await capacitor.handleStatusBar(f7);
   },
 };
 

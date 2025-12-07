@@ -1,5 +1,5 @@
 <template>
-  <F7App class="safe-areas" v-bind="f7Params">
+  <F7App v-bind="f7Params">
     <!-- Login Screen Overlay -->
     <LoginView v-if="!authStore.isAuthenticated" />
 
@@ -15,7 +15,7 @@
       <F7View id="view-profile" tab url="/profile"></F7View>
 
       <!-- Main Tabbar -->
-      <F7Toolbar tabbar icons bottom class="safe-area-bottom toolbar-main-app">
+      <F7Toolbar tabbar icons bottom class="toolbar-main-app">
         <div class="toolbar-pane">
           <F7Link
             tab-link="#view-groups"
@@ -52,12 +52,12 @@ const device = getDevice();
 const f7Params = framework7();
 const authStore = useAuthStore();
 
-onMounted(() => {
+onMounted(async () => {
   authStore.init();
 
-  f7ready((f7: Framework7) => {
+  f7ready(async (f7: Framework7) => {
     if (device.capacitor) {
-      capacitorPlugin.init(f7);
+      await capacitorPlugin.init(f7);
       inittalizerDatabase();
     }
   });

@@ -1,6 +1,5 @@
 <template>
   <F7Page
-    hide-toolbar-on-scroll
     :ptr="!isSelectionMode"
     @ptr:refresh="handleRefresh"
     :class="{ 'home-page': isSelectionMode }"
@@ -74,6 +73,8 @@
 </template>
 
 <script setup lang="ts">
+import { Keyboard } from "@capacitor/keyboard";
+
 const groupsStore = useGroupsStore();
 const showCreateGroup = ref(false);
 const groupsList = ref<any>(null);

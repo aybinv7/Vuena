@@ -12,7 +12,6 @@ import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import Imagemin from "unplugin-imagemin/vite";
 import TurboConsole from "unplugin-turbo-console/vite";
-// import mkcert from "vite-plugin-mkcert";
 
 import {
   Framework7VueResolver,
@@ -34,7 +33,6 @@ export default defineConfig({
         },
       },
     }),
-    // mkcert(),
     vueDevTools(),
 
     tailwindcss(),

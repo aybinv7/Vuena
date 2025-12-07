@@ -20,8 +20,20 @@ export const useKeyboard = (f7: Framework7) => {
   }
 
   Keyboard.addListener("keyboardWillShow", () => {
+    f7.toolbar.hide(".toolbar-main-app", false);
+
     if (document.activeElement) {
-      f7.toolbar.hide(".toolbar-main-app", true);
+      f7.input.scrollIntoView(
+        document.activeElement as HTMLElement,
+        0,
+        true,
+        true
+      );
+    }
+  });
+
+  Keyboard.addListener("keyboardDidShow", () => {
+    if (document.activeElement) {
       f7.input.scrollIntoView(
         document.activeElement as HTMLElement,
         0,
@@ -33,7 +45,6 @@ export const useKeyboard = (f7: Framework7) => {
 
   Keyboard.addListener("keyboardWillHide", () => {
     if (document.activeElement) {
-      f7.toolbar.show("toolbar-main-app", true);
       f7.input.scrollIntoView(
         document.activeElement as HTMLElement,
         0,
@@ -44,11 +55,12 @@ export const useKeyboard = (f7: Framework7) => {
   });
 
   Keyboard.addListener("keyboardDidHide", () => {
+    f7.toolbar.show(".toolbar-main-app", true);
+
     if (
       document.activeElement &&
       $(document.activeElement).parents(".messagebar").length
     ) {
-      f7.toolbar.show("toolbar-main-app", true);
       return;
     }
 
