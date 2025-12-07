@@ -6,13 +6,20 @@
     <!-- Main App Structure -->
     <F7Views tabs animated class="safe-areas" v-else>
       <!-- Tab 1: Groups (Home) -->
-      <F7View id="view-groups" main tab tab-active url="/"></F7View>
+      <F7View
+        name="groups"
+        id="view-groups"
+        main
+        tab
+        tab-active
+        url="/"
+      ></F7View>
 
       <!-- Tab 2: Activity -->
-      <F7View id="view-activity" tab url="/activity"></F7View>
+      <F7View name="activity" id="view-activity" tab url="/activity"></F7View>
 
       <!-- Tab 3: Profile -->
-      <F7View id="view-profile" tab url="/profile"></F7View>
+      <F7View name="profile" id="view-profile" tab url="/profile"></F7View>
 
       <!-- Main Tabbar -->
       <F7Toolbar tabbar icons bottom class="toolbar-main-app">
@@ -54,11 +61,11 @@ const authStore = useAuthStore();
 
 onMounted(async () => {
   authStore.init();
+  inittalizerDatabase();
 
   f7ready(async (f7: Framework7) => {
     if (device.capacitor) {
       await capacitorPlugin.init(f7);
-      inittalizerDatabase();
     }
   });
 });

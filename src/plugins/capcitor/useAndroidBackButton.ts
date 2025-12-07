@@ -65,26 +65,33 @@ export const useAndroidBackButton = (f7: Framework7) => {
       return;
     }
 
-    if ($(".page-current .sortable").length) {
+    if ($(".page-current .sortable-enabled").length) {
       f7.sortable.disable(".page-current .sortable");
       return;
     }
 
-    console.log("we hereeeeee", f7.views.current);
+    if ($(".page-current .swipeout-opened").length) {
+      f7.swipeout.close(".page-current .swipeout-opened");
+      return;
+    }
 
     const currentView = f7.views.current;
 
-    if (currentView && currentView.name === "home") {
-      console.log("currentView you want to exit on home ", currentView);
-      f7.dialog.confirm(
-        "Are you sure you want to exit the app?",
-        () => {
-          App.exitApp();
-        },
-        () => {
-          return;
-        }
-      );
+    if (
+      currentView &&
+      currentView.name === "groups" &&
+      currentView.router.history.length === 1
+    ) {
+      const toast = f7.toast.create({
+        text: "Exit the app ?",
+        closeTimeout: 2700,
+        closeButton: true,
+        cssClass: "toast-click-to-exist-app",
+      });
+      toast.open();
+      toast.on("closeButtonClick", () => {
+        App.exitApp();
+      });
       return;
     }
 
@@ -93,7 +100,6 @@ export const useAndroidBackButton = (f7: Framework7) => {
       currentView.router &&
       currentView.router.history.length > 1
     ) {
-      console.log("currentView you want to exit on home ", currentView);
       currentView.router.back();
       return;
     }
