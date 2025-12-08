@@ -1727,6 +1727,12 @@
     "__source": "dir"
   },
   {
+    "name": "default",
+    "as": "useAppUpdater",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/capcitor/useAppUpdater.ts",
+    "__source": "dir"
+  },
+  {
     "name": "useKeyboard",
     "as": "useKeyboard",
     "from": "C:/Users/PC/code/ayb/Vuena/src/plugins/capcitor/useKeyboard.ts",
@@ -1968,6 +1974,230 @@
     "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/auth/auth.service.ts",
     "type": true,
     "declarationType": "class",
+    "__source": "dir"
+  },
+  {
+    "name": "getPlatform",
+    "as": "getPlatform",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/api.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "DEFAULT_CONFIG",
+    "as": "DEFAULT_CONFIG",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/config.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "getUpdaterConfig",
+    "as": "getUpdaterConfig",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/config.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "UpdaterConfig",
+    "as": "UpdaterConfig",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/config.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "deleteApk",
+    "as": "deleteApk",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/download.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "getApkSize",
+    "as": "getApkSize",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/download.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "checkNativeUpdate",
+    "as": "checkNativeUpdate",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/index.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "getCurrentVersionCode",
+    "as": "getCurrentVersionCode",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/index.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "logUpdateEvent",
+    "as": "logUpdateEvent",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/index.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "downloadApk",
+    "as": "downloadApk",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/index.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "getCachedApk",
+    "as": "getCachedApk",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/index.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "cleanupOldApks",
+    "as": "cleanupOldApks",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/index.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "UPDATE_CHANNELS",
+    "as": "UPDATE_CHANNELS",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/types.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "UPDATE_ENVIRONMENTS",
+    "as": "UPDATE_ENVIRONMENTS",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/types.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "OTAUpdateResponse",
+    "as": "OTAUpdateResponse",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/types.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "UpdateType",
+    "as": "UpdateType",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/types.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "UpdateInfo",
+    "as": "UpdateInfo",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/types.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "DownloadProgress",
+    "as": "DownloadProgress",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/types.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "UpdateState",
+    "as": "UpdateState",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/types.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "UpdateChannel",
+    "as": "UpdateChannel",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/types.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "UpdateEnvironment",
+    "as": "UpdateEnvironment",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/types.ts",
+    "type": true,
+    "__source": "dir"
+  },
+  {
+    "name": "openApkInstaller",
+    "as": "openApkInstaller",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/install.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "verifyInstallation",
+    "as": "verifyInstallation",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/install.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "getInstallInstructions",
+    "as": "getInstallInstructions",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/install.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "checkInstallPermission",
+    "as": "checkInstallPermission",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/install.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "notifyAppReady",
+    "as": "notifyAppReady",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/ota.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "checkOTAUpdate",
+    "as": "checkOTAUpdate",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/ota.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "downloadOTAUpdate",
+    "as": "downloadOTAUpdate",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/ota.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "showOptionalUpdateDialog",
+    "as": "showOptionalUpdateDialog",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/ui.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "showMandatoryUpdateDialog",
+    "as": "showMandatoryUpdateDialog",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/ui.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "showDownloadProgress",
+    "as": "showDownloadProgress",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/ui.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "showInstallPrompt",
+    "as": "showInstallPrompt",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/ui.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "showBlockedScreen",
+    "as": "showBlockedScreen",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/ui.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "showToast",
+    "as": "showToast",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/ui.service.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "useNativeUpdater",
+    "as": "useNativeUpdater",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/useNativeUpdater.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "useUpdater",
+    "as": "useUpdater",
+    "from": "C:/Users/PC/code/ayb/Vuena/src/shared/services/updater/useUpdater.ts",
     "__source": "dir"
   },
   {

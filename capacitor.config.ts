@@ -18,7 +18,7 @@ const getLiveReloadUrl = (): string | undefined => {
 };
 
 const config: CapacitorConfig = {
-  appId: process.env.VITE_APP_ID ?? "io.ionic.starter",
+  appId: process.env.VITE_APP_ID ?? "io.aybinv7.vuena",
   appName: process.env.VITE_APP_NAME ?? "Vuena",
   webDir: "dist",
   server: {
@@ -36,6 +36,24 @@ const config: CapacitorConfig = {
     Keyboard: {
       resize: "body",
       resizeOnFullScreen: true,
+    },
+
+    CapacitorUpdater: {
+      autoUpdate: false,
+      allowModifyUrl: true,
+      updateUrl: process.env.VITE_UPDATE_API_URL
+        ? `${process.env.VITE_UPDATE_API_URL}/api/update`
+        : "",
+      statsUrl: process.env.VITE_UPDATE_API_URL
+        ? `${process.env.VITE_UPDATE_API_URL}/api/stats`
+        : "",
+      channelUrl: process.env.VITE_UPDATE_API_URL
+        ? `${process.env.VITE_UPDATE_API_URL}/api/channel`
+        : "",
+      defaultChannel: "staging",
+      directUpdate: "always",
+      appReadyTimeout: 10000,
+      maxVersions: 3,
     },
   },
 

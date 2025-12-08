@@ -1,0 +1,33 @@
+vars:
+  VITE_APP_ID:
+  VITE_APP_NAME:
+  VITE_APP_VERSION:
+  VERSION_CODE:
+  BUILD_NUMBER:
+
+platforms:
+  android:
+    versionName: $VITE_APP_VERSION
+    versionCode: $VERSION_CODE
+
+    manifest:
+      - file: AndroidManifest.xml
+        target: manifest/application
+        attrs:
+          android:allowBackup: "false"
+
+  ios:
+    version: $VITE_APP_VERSION
+    buildNumber: $BUILD_NUMBER
+    bundleId: $VITE_APP_ID
+    displayName: $VITE_APP_NAME
+    productName: $VITE_APP_NAME
+
+    plist:
+      - replace: true
+        entries:
+          NSCameraUsageDescription: "Cette application utilise la caméra pour capturer des photos."
+          NSLocationWhenInUseUsageDescription: "Cette application utilise votre position pour améliorer l'expérience."
+    buildSettings:
+      IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+      SWIFT_VERSION: "5.0"

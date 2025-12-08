@@ -1,0 +1,70 @@
+vars:
+  VITE_APP_ID:
+  VITE_APP_NAME:
+  VITE_APP_VERSION:
+  VERSION_CODE:
+  BUILD_NUMBER:
+
+platforms:
+  android:
+    versionName: $VITE_APP_VERSION
+    versionCode: $VERSION_CODE
+
+    manifest:
+      - file: AndroidManifest.xml
+        target: manifest/application
+        attrs:
+          android:allowBackup: "false"
+
+      - file: AndroidManifest.xml
+        target: manifest
+        merge: |
+          <manifest xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+            <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+            <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+            <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+          </manifest>
+
+    xml:
+      - resFile: values/strings.xml
+        target: resources/string[@name="app_name"]
+        replace: |
+          <string name="app_name">$VITE_APP_NAME Staging</string>
+
+      - resFile: values/strings.xml
+        target: resources/string[@name="title_activity_main"]
+        replace: |
+          <string name="title_activity_main">$VITE_APP_NAME</string>
+
+      - resFile: values/strings.xml
+        target: resources/string[@name="package_name"]
+        replace: |
+          <string name="package_name">$VITE_APP_ID</string>
+
+      - resFile: values/strings.xml
+        target: resources/string[@name="custom_url_scheme"]
+        replace: |
+          <string name="custom_url_scheme">$VITE_APP_ID</string>
+
+  ios:
+    version: $VITE_APP_VERSION
+    buildNumber: $BUILD_NUMBER
+    bundleId: $VITE_APP_ID
+    displayName: $VITE_APP_NAME
+    productName: $VITE_APP_NAME
+
+    plist:
+      - replace: true
+        entries:
+          NSCameraUsageDescription: "Cette application utilise la caméra pour capturer des photos."
+          NSLocationWhenInUseUsageDescription: "Cette application utilise votre position pour améliorer l'expérience."
+    buildSettings:
+      IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+      SWIFT_VERSION: "5.0"

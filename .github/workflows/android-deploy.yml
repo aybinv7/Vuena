@@ -1,0 +1,221 @@
+name: Android Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy"
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+        default: "dev"
+      version:
+        description: "Version (leave empty to use package.json version)"
+        required: false
+        type: string
+      track:
+        description: "Play Store track (production only)"
+        required: false
+        type: choice
+        options:
+          - internal
+          - beta
+          - production
+        default: "beta"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version from package.json
+        id: package
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Package version: $VERSION"
+
+      - name: Set version
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+            echo "✅ Using manual version: ${{ github.event.inputs.version }}"
+          else
+            echo "version=${{ steps.package.outputs.version }}" >> $GITHUB_OUTPUT
+            echo "✅ Using package.json version: ${{ steps.package.outputs.version }}"
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Configure native projects
+        run: pnpm trapeze:${{ github.event.inputs.environment }}
+        env:
+          VITE_APP_VERSION: ${{ steps.version.outputs.version }}
+          VERSION_CODE: ${{ github.run_number }}
+          VITE_SUPABASE_URL: ${{ secrets[format('{0}_SUPABASE_URL', github.event.inputs.environment == 'production' && 'PROD' || github.event.inputs.environment == 'staging' && 'STAGING' || 'DEV')] }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets[format('{0}_SUPABASE_ANON_KEY', github.event.inputs.environment == 'production' && 'PROD' || github.event.inputs.environment == 'staging' && 'STAGING' || 'DEV')] }}
+          VITE_POWERSYNC_URL: ${{ secrets[format('{0}_POWERSYNC_URL', github.event.inputs.environment == 'production' && 'PROD' || github.event.inputs.environment == 'staging' && 'STAGING' || 'DEV')] }}
+
+      - name: Build web assets
+        run: pnpm build
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      # Build APK for all environments
+      - name: Build APK
+        run: cd android && ./gradlew assembleRelease
+
+      - name: Upload to Supabase Storage
+        run: |
+          CHANNEL="${{ github.event.inputs.environment }}"
+          VERSION="${{ steps.version.outputs.version }}"
+          VERSION_CODE="${{ github.run_number }}"
+
+          # Determine APK name based on channel
+          if [ "$CHANNEL" == "production" ]; then
+            APK_NAME="vuena-${VERSION}.apk"
+          else
+            APK_NAME="vuena-${VERSION}-${CHANNEL}.${VERSION_CODE}.apk"
+          fi
+
+          # Get file size
+          FILE_SIZE=$(stat -c%s android/app/build/outputs/apk/release/app-release.apk 2>/dev/null || stat -f%z android/app/build/outputs/apk/release/app-release.apk)
+
+          # Upload to Supabase Storage
+          curl -X POST \
+            "${{ secrets.SUPABASE_URL }}/storage/v1/object/vuena-storage/apk/$CHANNEL/$APK_NAME" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+            -H "Content-Type: application/vnd.android.package-archive" \
+            --data-binary "@android/app/build/outputs/apk/release/app-release.apk"
+
+          # Get public URL
+          PUBLIC_URL="${{ secrets.SUPABASE_URL }}/storage/v1/object/public/vuena-storage/apk/$CHANNEL/$APK_NAME"
+
+          # Insert metadata into database
+          curl -X POST \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/app_versions" \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: return=minimal" \
+            -d "{
+              \"version\": \"$VERSION\",
+              \"version_code\": VITE_VERSION_CODE,
+              \"channel\": \"$CHANNEL\",
+              \"apk_url\": \"$PUBLIC_URL\",
+              \"release_notes\": \"$CHANNEL release $VERSION (build VITE_VERSION_CODE)\",
+              \"file_size\": $FILE_SIZE,
+              \"min_sdk_version\": 24,
+              \"mandatory\": false
+            }"
+
+          echo "✅ Uploaded $APK_NAME to Supabase ($CHANNEL channel)"
+          echo "📦 Size: $(($FILE_SIZE / 1024 / 1024)) MB"
+          echo "🔗 URL: $PUBLIC_URL"
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{ github.event.inputs.environment }}-${{ github.run_number }}.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 30
+
+      # Production deployment (self-hosted server)
+      - name: Decode keystore
+        if: steps.env.outputs.deploy_target == 'playstore'
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/release.keystore
+
+      - name: Build signed APK
+        if: steps.env.outputs.deploy_target == 'playstore'
+        run: cd android && ./gradlew assembleRelease
+        env:
+          KEYSTORE_FILE: release.keystore
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Upload to Server
+        if: steps.env.outputs.deploy_target == 'playstore'
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "android/app/build/outputs/apk/release/app-release.apk"
+          target: "/var/www/downloads/vuena/"
+          strip_components: 5
+
+      - name: Generate download manifest
+        if: steps.env.outputs.deploy_target == 'playstore'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /var/www/downloads/vuena
+            mv app-release.apk vuena-${{ steps.version.outputs.version }}.apk
+
+            # Create version manifest
+            cat > version.json << EOF
+            {
+              "version": "${{ steps.version.outputs.version }}",
+              "versionCode": ${{ github.run_number }},
+              "downloadUrl": "https://your-domain.com/downloads/vuena/vuena-${{ steps.version.outputs.version }}.apk",
+              "releaseNotes": "Production release ${{ steps.version.outputs.version }}",
+              "buildDate": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+              "minSdkVersion": 24,
+              "targetSdkVersion": 34
+            }
+            EOF
+
+            # Keep latest.apk symlink
+            ln -sf vuena-${{ steps.version.outputs.version }}.apk latest.apk
+
+            echo "✅ Deployed version ${{ steps.version.outputs.version }} to server"
+
+      - name: Upload APK artifact
+        if: steps.env.outputs.deploy_target == 'playstore'
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-production-${{ steps.version.outputs.version }}.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 90
+
+      - name: Create GitHub Release
+        if: steps.env.outputs.deploy_target == 'playstore'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Release ${{ steps.version.outputs.version }}
+          body: |
+            Production release ${{ steps.version.outputs.version }}
+            Track: ${{ github.event.inputs.track }}
+            Build: ${{ github.run_number }}
+          files: android/app/build/outputs/bundle/release/app-release.aab

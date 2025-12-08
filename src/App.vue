@@ -49,6 +49,9 @@
         </div>
       </F7Toolbar>
     </F7Views>
+
+    <!-- Unified Update Prompt -->
+    <UpdatePrompt />
   </F7App>
 </template>
 

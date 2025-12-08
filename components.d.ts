@@ -52,5 +52,6 @@ declare module 'vue' {
     HomeView: typeof import('./src/modules/home/views/HomeView.vue')['default']
     LoginView: typeof import('./src/modules/auth/views/LoginView.vue')['default']
     ProfileView: typeof import('./src/modules/home/views/ProfileView.vue')['default']
+    UpdatePrompt: typeof import('./src/components/updater/UpdatePrompt.vue')['default']
   }
 }
