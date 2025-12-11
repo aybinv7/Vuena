@@ -64,6 +64,25 @@
       </F7ListItem>
     </F7List>
 
+    <!-- Updates -->
+    <F7BlockTitle>Updates</F7BlockTitle>
+    <F7List>
+      <F7ListItem
+        link
+        title="Check for Updates"
+        :footer="updateStatus"
+        @click="handleCheckUpdate"
+      >
+        <template #media>
+          <F7Icon f7="arrow_down_circle_fill" color="blue" />
+        </template>
+        <template #after>
+          <F7Preloader v-if="isCheckingUpdate" size="20" />
+          <F7Badge v-else-if="updateAvailable" color="red">New</F7Badge>
+        </template>
+      </F7ListItem>
+    </F7List>
+
     <!-- Debug Tools -->
     <F7BlockTitle>Debug Tools</F7BlockTitle>
     <F7List>
@@ -91,8 +110,14 @@
     </F7List>
 
     <F7Block class="text-align-center">
-      <p class="text-color-gray">Version 1.0.0</p>
-      <p class="text-color-gray">© 2025 FairShare</p>
+      <p class="text-color-gray">
+        Version {{ appVersion }}
+        <span v-if="bundleVersion && bundleVersion !== 'builtin'">
+          ({{ bundleVersion }})</span
+        >
+      </p>
+      <p class="text-color-gray">{{ appEnvironment }} • {{ appChannel }}</p>
+      <p class="text-color-gray">© 2025 Vuena</p>
     </F7Block>
 
     <AppTheme />
@@ -101,11 +126,15 @@
 
 <script setup lang="ts">
 import AppTheme from "@/shared/components/app/AppTheme.vue";
+import { App } from "@capacitor/app";
+import { Capacitor } from "@capacitor/core";
+import { useUpdater } from "@/shared/services/updater/useUpdater";
 
 const authStore = useAuthStore();
 const groupsStore = useGroupsStore();
 
 const { user } = storeToRefs(authStore);
+const { check, isChecking, updateAvailable, currentUpdate } = useUpdater();
 
 const notificationsEnabled = ref(true);
 const currency = ref("USD");
@@ -114,6 +143,22 @@ const stats = ref({
   totalGroups: 0,
   totalExpenses: 0,
   totalSpent: 0,
+});
+
+// App version info
+const appVersion = ref("1.0.0");
+const bundleVersion = ref("");
+const appEnvironment = ref(import.meta.env.VITE_ENVIRONMENT || "dev");
+const appChannel = ref(import.meta.env.VITE_UPDATE_CHANNEL || "stable");
+
+// Update status
+const isCheckingUpdate = computed(() => isChecking.value);
+const updateStatus = computed(() => {
+  if (isChecking.value) return "Checking...";
+  if (updateAvailable.value && currentUpdate.value) {
+    return `Update available: v${currentUpdate.value.version}`;
+  }
+  return "Tap to check for updates";
 });
 
 const memberSince = computed(() => {
@@ -129,6 +174,25 @@ function formatCurrency(amount: number) {
     style: "currency",
     currency: "USD",
   }).format(amount);
+}
+
+async function loadAppVersion() {
+  try {
+    if (Capacitor.isNativePlatform()) {
+      const info = await App.getInfo();
+      appVersion.value = info.version;
+
+      // Get current OTA bundle version
+      const { CapacitorUpdater } = await import("@capgo/capacitor-updater");
+      const current = await CapacitorUpdater.current();
+      bundleVersion.value = current.bundle.version;
+    } else {
+      // Web: use package.json version via env
+      appVersion.value = import.meta.env.VITE_APP_VERSION || "1.0.0";
+    }
+  } catch (error) {
+    console.error("Error getting app version:", error);
+  }
 }
 
 async function loadStats() {
@@ -152,6 +216,33 @@ async function loadStats() {
     stats.value.totalSpent = expensesResult.rows?.item(0)?.total || 0;
   } catch (error) {
     console.error("Error loading stats:", error);
+  }
+}
+
+async function handleCheckUpdate() {
+  if (isChecking.value) return;
+
+  try {
+    await check(false); // false = not silent, will show dialog if update found
+
+    if (!updateAvailable.value) {
+      f7.toast
+        .create({
+          text: "You're on the latest version!",
+          position: "center",
+          closeTimeout: 2000,
+        })
+        .open();
+    }
+  } catch (error) {
+    console.error("Error checking for updates:", error);
+    f7.toast
+      .create({
+        text: "Failed to check for updates",
+        position: "center",
+        closeTimeout: 2000,
+      })
+      .open();
   }
 }
 
@@ -200,5 +291,6 @@ function handleSignOut() {
 
 onMounted(() => {
   loadStats();
+  loadAppVersion();
 });
 </script>

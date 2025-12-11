@@ -1,15 +1,14 @@
-// OTA Service Wrapper
-// Encapsulates interaction with @capgo/capacitor-updater
+/**
+ * OTA Service
+ * Wrapper for @capgo/capacitor-updater plugin
+ * Plugin handles ALL API communication internally
+ */
 import { CapacitorUpdater } from "@capgo/capacitor-updater";
-import { App } from "@capacitor/app";
-import { Device } from "@capacitor/device";
-import { getUpdaterConfig } from "./config";
 import type { OTAUpdateResponse } from "./types";
-import axios from "axios";
 
 /**
  * Notify plugin that app is ready
- * Critical for rollback protection
+ * Critical for rollback protection - must be called after app loads
  */
 export async function notifyAppReady(): Promise<void> {
   try {
@@ -21,40 +20,27 @@ export async function notifyAppReady(): Promise<void> {
 }
 
 /**
- * Check for OTA updates via backend
+ * Check for OTA updates via plugin's internal method
+ * Plugin calls configured updateUrl with correct headers/body
+ * @returns Update response if available, null otherwise
  */
 export async function checkOTAUpdate(): Promise<OTAUpdateResponse | null> {
-  const config = getUpdaterConfig();
-
   try {
-    // 1. Get Device Info
-    const appInfo = await App.getInfo();
-    const deviceInfo = await Device.getInfo();
-    const deviceId = (await Device.getId()).identifier;
+    const result = await CapacitorUpdater.getLatest();
 
-    // 2. Call Backend API (POST /api/update)
-    console.log("[OTA] Checking for updates...", {
-      url: `${config.otaApiUrl}/api/update`,
-      version: appInfo.version,
-      channel: config.channel,
-    });
+    if (result.url && result.version) {
+      console.log(`[OTA] Update found: v${result.version}`);
+      return {
+        version: result.version,
+        url: result.url,
+        checksum: result.checksum,
+        sessionKey: result.sessionKey,
+      };
+    }
 
-    const { data } = await axios.post<OTAUpdateResponse>(
-      `${config.otaApiUrl}/api/update`,
-      {
-        appId: appInfo.id,
-        platform: deviceInfo.platform,
-        version: appInfo.version,
-        deviceId: deviceId,
-        channel: config.channel,
-        // custom_id: ... if needed
-      }
-    );
-
-    // 3. Validate Response
-    if (data.version && data.url) {
-      console.log(`[OTA] Update found: v${data.version}`);
-      return data;
+    if (result.error) {
+      console.log("[OTA] Server response:", result.message || result.error);
+      return null;
     }
 
     console.log("[OTA] No update available");
@@ -66,7 +52,10 @@ export async function checkOTAUpdate(): Promise<OTAUpdateResponse | null> {
 }
 
 /**
- * Download and Schedule OTA Update
+ * Download and schedule OTA update
+ * Plugin handles checksums, encryption, etc.
+ * @param update - Update info from checkOTAUpdate
+ * @param onProgress - Optional progress callback (0-100)
  */
 export async function downloadOTAUpdate(
   update: OTAUpdateResponse,
@@ -75,21 +64,68 @@ export async function downloadOTAUpdate(
   try {
     console.log("[OTA] Starting download:", update.version);
 
-    // Download via plugin
-    const version = await CapacitorUpdater.download({
+    const bundle = await CapacitorUpdater.download({
       url: update.url,
       version: update.version,
       checksum: update.checksum,
+      sessionKey: update.sessionKey,
     });
 
-    console.log("[OTA] Download complete:", version);
+    console.log("[OTA] Download complete:", bundle);
     if (onProgress) onProgress(100);
 
-    // Schedule install for next restart
-    await CapacitorUpdater.set(version);
+    await CapacitorUpdater.set(bundle);
     console.log("[OTA] Update scheduled for next restart");
   } catch (error) {
     console.error("[OTA] Download failed:", error);
     throw error;
+  }
+}
+
+/**
+ * Get currently active bundle info
+ */
+export async function getCurrentBundle() {
+  try {
+    return await CapacitorUpdater.current();
+  } catch (error) {
+    console.error("[OTA] Failed to get current bundle:", error);
+    return null;
+  }
+}
+
+/**
+ * List all downloaded bundles
+ */
+export async function listBundles() {
+  try {
+    return await CapacitorUpdater.list();
+  } catch (error) {
+    console.error("[OTA] Failed to list bundles:", error);
+    return { bundles: [] };
+  }
+}
+
+/**
+ * Delete a specific bundle by ID
+ */
+export async function deleteBundle(id: string) {
+  try {
+    await CapacitorUpdater.delete({ id });
+    console.log("[OTA] Bundle deleted:", id);
+  } catch (error) {
+    console.error("[OTA] Failed to delete bundle:", error);
+  }
+}
+
+/**
+ * Reset to the built-in bundle
+ */
+export async function resetToBuiltin() {
+  try {
+    await CapacitorUpdater.reset();
+    console.log("[OTA] Reset to builtin bundle");
+  } catch (error) {
+    console.error("[OTA] Failed to reset:", error);
   }
 }

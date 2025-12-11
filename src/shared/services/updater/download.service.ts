@@ -1,4 +1,7 @@
-// APK Download Service
+/**
+ * APK Download Service
+ * Handles downloading native APK files with caching and progress tracking
+ */
 import type { UpdateInfo, DownloadProgress } from "./types";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 import { FileTransfer } from "@capacitor/file-transfer";
@@ -6,13 +9,14 @@ import { Network } from "@capacitor/network";
 
 /**
  * Download APK to device cache using FileTransfer plugin
+ * @param update - Update info with download_url and version_code
+ * @param onProgress - Optional progress callback
  * @returns File URI or null if failed
  */
 export async function downloadApk(
   update: UpdateInfo,
   onProgress?: (progress: DownloadProgress) => void
 ): Promise<string | null> {
-  // Check network
   const status = await Network.getStatus();
   if (!status.connected) {
     throw new Error("No internet connection");
@@ -21,7 +25,6 @@ export async function downloadApk(
   const versionCode = update.version_code ?? 0;
   const fileName = `native-update-${versionCode}.apk`;
 
-  // Check if already cached
   const cached = await getCachedApk(versionCode);
   if (cached) {
     console.log("[Download] Using cached APK:", cached);
@@ -33,15 +36,11 @@ export async function downloadApk(
   try {
     if (!update.download_url) throw new Error("Missing download URL");
 
-    // Get the file URI where we want to save the APK
     const fileInfo = await Filesystem.getUri({
       directory: Directory.Cache,
       path: fileName,
     });
 
-    console.log("[Download] Saving to:", fileInfo.uri);
-
-    // Set up progress listener
     let progressListener: any = null;
     if (onProgress) {
       progressListener = await FileTransfer.addListener(
@@ -62,16 +61,14 @@ export async function downloadApk(
       );
     }
 
-    // Download the file
     const result = await FileTransfer.downloadFile({
       url: update.download_url,
       path: fileInfo.uri,
       progress: !!onProgress,
-      connectTimeout: 60000, // 1 minute
-      readTimeout: 300000, // 5 minutes for large files
+      connectTimeout: 60000,
+      readTimeout: 300000,
     });
 
-    // Clean up progress listener
     if (progressListener) {
       await progressListener.remove();
     }
@@ -81,23 +78,18 @@ export async function downloadApk(
   } catch (error: any) {
     console.error("[Download] Failed:", error);
 
-    // Handle specific FileTransfer errors
     if (error.code) {
       switch (error.code) {
         case "OS-PLUG-FLTR-0008":
-          throw new Error(
-            "Failed to connect to download server. Check your internet connection."
-          );
+          throw new Error("Failed to connect to download server");
         case "OS-PLUG-FLTR-0010":
           throw new Error(
-            `Download failed with HTTP error: ${error.httpStatus || "Unknown"}`
+            `Download failed: HTTP ${error.httpStatus || "error"}`
           );
         case "OS-PLUG-FLTR-0006":
-          throw new Error(
-            "Permission denied. Please grant storage permissions."
-          );
+          throw new Error("Permission denied. Grant storage permissions.");
         case "OS-PLUG-FLTR-0007":
-          throw new Error("File does not exist at the specified location.");
+          throw new Error("File does not exist");
         default:
           throw new Error(
             `Download failed: ${error.message || "Unknown error"}`
@@ -111,6 +103,8 @@ export async function downloadApk(
 
 /**
  * Check if APK is already downloaded
+ * @param versionCode - Version code to check
+ * @returns File URI if cached, null otherwise
  */
 export async function getCachedApk(
   versionCode: number
@@ -118,13 +112,11 @@ export async function getCachedApk(
   try {
     const fileName = `native-update-${versionCode}.apk`;
 
-    // First check if file exists
-    const stat = await Filesystem.stat({
+    await Filesystem.stat({
       path: fileName,
       directory: Directory.Cache,
     });
 
-    // If it exists, get the full URI
     const { uri } = await Filesystem.getUri({
       directory: Directory.Cache,
       path: fileName,
@@ -138,6 +130,7 @@ export async function getCachedApk(
 
 /**
  * Delete old cached APKs
+ * @param currentVersionCode - Current version to keep
  */
 export async function cleanupOldApks(
   currentVersionCode: number

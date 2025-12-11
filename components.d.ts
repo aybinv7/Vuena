@@ -34,6 +34,8 @@ declare module 'vue' {
     F7Page: typeof import('framework7-vue')['f7Page']
     F7PageContent: typeof import('framework7-vue')['f7PageContent']
     F7Popup: typeof import('framework7-vue')['f7Popup']
+    F7Preloader: typeof import('framework7-vue')['f7Preloader']
+    F7Progressbar: typeof import('framework7-vue')['f7Progressbar']
     F7Searchbar: typeof import('framework7-vue')['f7Searchbar']
     F7Segmented: typeof import('framework7-vue')['f7Segmented']
     F7Sheet: typeof import('framework7-vue')['f7Sheet']

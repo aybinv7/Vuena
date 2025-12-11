@@ -22,9 +22,9 @@ declare global {
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
   const capacitorPlugin: typeof import('./src/plugins/capacitor.plugin').default
   const checkInstallPermission: typeof import('./src/shared/services/updater/install.service').checkInstallPermission
-  const checkNativeUpdate: typeof import('./src/shared/services/updater/index').checkNativeUpdate
+  const checkNativeUpdate: typeof import('./src/shared/services/updater/api.service').checkNativeUpdate
   const checkOTAUpdate: typeof import('./src/shared/services/updater/ota.service').checkOTAUpdate
-  const cleanupOldApks: typeof import('./src/shared/services/updater/index').cleanupOldApks
+  const cleanupOldApks: typeof import('./src/shared/services/updater/download.service').cleanupOldApks
   const computed: typeof import('vue').computed
   const computedAsync: typeof import('@vueuse/core').computedAsync
   const computedEager: typeof import('@vueuse/core').computedEager
@@ -54,7 +54,8 @@ declare global {
   const defineComponent: typeof import('vue').defineComponent
   const defineStore: typeof import('pinia').defineStore
   const deleteApk: typeof import('./src/shared/services/updater/download.service').deleteApk
-  const downloadApk: typeof import('./src/shared/services/updater/index').downloadApk
+  const deleteBundle: typeof import('./src/shared/services/updater/ota.service').deleteBundle
+  const downloadApk: typeof import('./src/shared/services/updater/download.service').downloadApk
   const downloadOTAUpdate: typeof import('./src/shared/services/updater/ota.service').downloadOTAUpdate
   const eagerComputed: typeof import('@vueuse/core').eagerComputed
   const effectScope: typeof import('vue').effectScope
@@ -67,10 +68,11 @@ declare global {
   const framework7: typeof import('./src/plugins/framework7.plugin').framework7
   const getActivePinia: typeof import('pinia').getActivePinia
   const getApkSize: typeof import('./src/shared/services/updater/download.service').getApkSize
-  const getCachedApk: typeof import('./src/shared/services/updater/index').getCachedApk
+  const getCachedApk: typeof import('./src/shared/services/updater/download.service').getCachedApk
+  const getCurrentBundle: typeof import('./src/shared/services/updater/ota.service').getCurrentBundle
   const getCurrentInstance: typeof import('vue').getCurrentInstance
   const getCurrentScope: typeof import('vue').getCurrentScope
-  const getCurrentVersionCode: typeof import('./src/shared/services/updater/index').getCurrentVersionCode
+  const getCurrentVersionCode: typeof import('./src/shared/services/updater/api.service').getCurrentVersionCode
   const getCurrentWatcher: typeof import('vue').getCurrentWatcher
   const getDevice: typeof import('framework7/lite').getDevice
   const getFramework7AutoImports: typeof import('./src/shared/utils/resolvers/resolvers').getFramework7AutoImports
@@ -93,7 +95,8 @@ declare global {
   const isReadonly: typeof import('vue').isReadonly
   const isRef: typeof import('vue').isRef
   const isShallow: typeof import('vue').isShallow
-  const logUpdateEvent: typeof import('./src/shared/services/updater/index').logUpdateEvent
+  const listBundles: typeof import('./src/shared/services/updater/ota.service').listBundles
+  const logUpdateEvent: typeof import('./src/shared/services/updater/api.service').logUpdateEvent
   const makeDestructurable: typeof import('@vueuse/core').makeDestructurable
   const mapActions: typeof import('pinia').mapActions
   const mapGetters: typeof import('pinia').mapGetters
@@ -146,6 +149,7 @@ declare global {
   const refThrottled: typeof import('@vueuse/core').refThrottled
   const refWithControl: typeof import('@vueuse/core').refWithControl
   const request: typeof import('framework7/lite').request
+  const resetToBuiltin: typeof import('./src/shared/services/updater/ota.service').resetToBuiltin
   const resolveComponent: typeof import('vue').resolveComponent
   const resolveRef: typeof import('@vueuse/core').resolveRef
   const resolveUnref: typeof import('@vueuse/core').resolveUnref
@@ -436,9 +440,9 @@ declare module 'vue' {
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly capacitorPlugin: UnwrapRef<typeof import('./src/plugins/capacitor.plugin')['default']>
     readonly checkInstallPermission: UnwrapRef<typeof import('./src/shared/services/updater/install.service')['checkInstallPermission']>
-    readonly checkNativeUpdate: UnwrapRef<typeof import('./src/shared/services/updater/index')['checkNativeUpdate']>
+    readonly checkNativeUpdate: UnwrapRef<typeof import('./src/shared/services/updater/api.service')['checkNativeUpdate']>
     readonly checkOTAUpdate: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['checkOTAUpdate']>
-    readonly cleanupOldApks: UnwrapRef<typeof import('./src/shared/services/updater/index')['cleanupOldApks']>
+    readonly cleanupOldApks: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['cleanupOldApks']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -468,7 +472,8 @@ declare module 'vue' {
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
     readonly deleteApk: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['deleteApk']>
-    readonly downloadApk: UnwrapRef<typeof import('./src/shared/services/updater/index')['downloadApk']>
+    readonly deleteBundle: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['deleteBundle']>
+    readonly downloadApk: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['downloadApk']>
     readonly downloadOTAUpdate: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['downloadOTAUpdate']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
@@ -481,10 +486,11 @@ declare module 'vue' {
     readonly framework7: UnwrapRef<typeof import('./src/plugins/framework7.plugin')['framework7']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
     readonly getApkSize: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['getApkSize']>
-    readonly getCachedApk: UnwrapRef<typeof import('./src/shared/services/updater/index')['getCachedApk']>
+    readonly getCachedApk: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['getCachedApk']>
+    readonly getCurrentBundle: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['getCurrentBundle']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
-    readonly getCurrentVersionCode: UnwrapRef<typeof import('./src/shared/services/updater/index')['getCurrentVersionCode']>
+    readonly getCurrentVersionCode: UnwrapRef<typeof import('./src/shared/services/updater/api.service')['getCurrentVersionCode']>
     readonly getCurrentWatcher: UnwrapRef<typeof import('vue')['getCurrentWatcher']>
     readonly getDevice: UnwrapRef<typeof import('framework7/lite')['getDevice']>
     readonly getFramework7AutoImports: UnwrapRef<typeof import('./src/shared/utils/resolvers/resolvers')['getFramework7AutoImports']>
@@ -507,7 +513,8 @@ declare module 'vue' {
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
     readonly isShallow: UnwrapRef<typeof import('vue')['isShallow']>
-    readonly logUpdateEvent: UnwrapRef<typeof import('./src/shared/services/updater/index')['logUpdateEvent']>
+    readonly listBundles: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['listBundles']>
+    readonly logUpdateEvent: UnwrapRef<typeof import('./src/shared/services/updater/api.service')['logUpdateEvent']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
@@ -560,6 +567,7 @@ declare module 'vue' {
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
     readonly request: UnwrapRef<typeof import('framework7/lite')['request']>
+    readonly resetToBuiltin: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['resetToBuiltin']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
@@ -701,7 +709,6 @@ declare module 'vue' {
     readonly useMouseInElement: UnwrapRef<typeof import('@vueuse/core')['useMouseInElement']>
     readonly useMousePressed: UnwrapRef<typeof import('@vueuse/core')['useMousePressed']>
     readonly useMutationObserver: UnwrapRef<typeof import('@vueuse/core')['useMutationObserver']>
-    readonly useNativeUpdater: UnwrapRef<typeof import('./src/shared/services/updater/useNativeUpdater')['useNativeUpdater']>
     readonly useNavigatorLanguage: UnwrapRef<typeof import('@vueuse/core')['useNavigatorLanguage']>
     readonly useNetwork: UnwrapRef<typeof import('@vueuse/core')['useNetwork']>
     readonly useNow: UnwrapRef<typeof import('@vueuse/core')['useNow']>

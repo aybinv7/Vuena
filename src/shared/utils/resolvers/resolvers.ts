@@ -105,8 +105,8 @@ export function Framework7VueResolver(): ComponentResolver {
     "f7-badge",
 
     // Progress & Loading
-    // "f7-preloader",
-    // "f7-progressbar",
+    "f7-preloader",
+    "f7-progressbar",
     // "f7-skeleton-block",
     // "f7-skeleton-text",
 

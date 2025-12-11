@@ -24,7 +24,7 @@ export const DEFAULT_CONFIG: UpdaterConfig = {
   channel: import.meta.env.VITE_UPDATE_CHANNEL || "stable",
   environment:
     import.meta.env.VITE_ENVIRONMENT ||
-    (import.meta.env.PROD ? "production" : "dev"),
+    (import.meta.env.PROD ? "production" : "staging"),
   checkInterval: 60 * 60 * 1000,
   autoCheck: true,
   showDialogs: true,

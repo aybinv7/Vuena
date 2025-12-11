@@ -1,7 +1,10 @@
-// Unified Updater Composable
-// Orchestrates Native First strategy: Native Check -> (fallback) -> OTA Check
-import { ref, computed, onMounted, onUnmounted } from "vue";
+/**
+ * Unified Updater Composable
+ * Implements "Native First" strategy: Native Check -> (fallback) -> OTA Check
+ */
+import { ref, computed } from "vue";
 import { Capacitor } from "@capacitor/core";
+import { CapacitorUpdater } from "@capgo/capacitor-updater";
 import { FileTransfer } from "@capacitor/file-transfer";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 import type {
@@ -21,11 +24,11 @@ import {
   notifyAppReady,
 } from "./ota.service";
 import { cleanupOldApks } from "./download.service";
-import { openApkInstaller, verifyInstallation } from "./install.service";
+import { openApkInstaller } from "./install.service";
 import * as UI from "./ui.service";
 import { getUpdaterConfig } from "./config";
+import type { PluginListenerHandle } from "@capacitor/core";
 
-// Global State
 const state = ref<UpdateState>({
   checking: false,
   downloading: false,
@@ -38,8 +41,8 @@ const state = ref<UpdateState>({
 });
 
 let checkInterval: ReturnType<typeof setInterval> | null = null;
+let pluginListeners: PluginListenerHandle[] = [];
 
-// Getters
 const isChecking = computed(() => state.value.checking);
 const isDownloading = computed(() => state.value.downloading);
 const isBlocked = computed(() => state.value.blocked);
@@ -48,26 +51,98 @@ const progress = computed(() => state.value.progress);
 const currentUpdate = computed(() => state.value.currentUpdate);
 
 /**
- * Main Check Function
- * Implements "Native First" logic
+ * Setup Capgo plugin event listeners
+ */
+async function setupPluginListeners(): Promise<void> {
+  for (const listener of pluginListeners) {
+    await listener.remove();
+  }
+  pluginListeners = [];
+
+  const updateAvailableListener = await CapacitorUpdater.addListener(
+    "updateAvailable",
+    (event) => {
+      console.log("[Updater] Plugin found update:", event.bundle);
+      state.value.currentUpdate = {
+        type: "ota",
+        version: event.bundle.version,
+        download_url: undefined,
+        required: false,
+      };
+      (state.value.currentUpdate as any)._bundleId = event.bundle.id;
+      state.value.updateAvailable = true;
+      showUpdateDialog();
+    }
+  );
+  pluginListeners.push(updateAvailableListener);
+
+  const downloadListener = await CapacitorUpdater.addListener(
+    "download",
+    (event) => {
+      state.value.downloading = true;
+      state.value.progress = {
+        loaded: event.percent,
+        total: 100,
+        percent: event.percent,
+      };
+    }
+  );
+  pluginListeners.push(downloadListener);
+
+  const downloadCompleteListener = await CapacitorUpdater.addListener(
+    "downloadComplete",
+    () => {
+      state.value.downloading = false;
+      state.value.progress = { loaded: 100, total: 100, percent: 100 };
+      UI.showToast("Update ready. Restarting...");
+    }
+  );
+  pluginListeners.push(downloadCompleteListener);
+
+  const downloadFailedListener = await CapacitorUpdater.addListener(
+    "downloadFailed",
+    () => {
+      state.value.downloading = false;
+      state.value.error = "Download failed";
+      UI.showToast("Update download failed");
+    }
+  );
+  pluginListeners.push(downloadFailedListener);
+
+  const updateFailedListener = await CapacitorUpdater.addListener(
+    "updateFailed",
+    () => {
+      state.value.error = "Update failed, reverted";
+      UI.showToast("Update failed, reverted to previous version");
+    }
+  );
+  pluginListeners.push(updateFailedListener);
+
+  const appReadyListener = await CapacitorUpdater.addListener(
+    "appReady",
+    () => {
+      console.log("[Updater] App ready confirmed");
+    }
+  );
+  pluginListeners.push(appReadyListener);
+}
+
+/**
+ * Check for updates (Native first, then OTA fallback)
+ * @param silent - If true, don't show dialogs
  */
 async function check(silent = false): Promise<void> {
-  if (!Capacitor.isNativePlatform()) {
-    console.log("[Updater] Skipping check on web");
-    return;
-  }
+  if (!Capacitor.isNativePlatform()) return;
 
   state.value.checking = true;
   state.value.error = null;
   state.value.statusMessage = "Checking for updates...";
 
   try {
-    // 1. Check Native Update first
     const nativeUpdate = await checkNativeUpdate();
 
     if (nativeUpdate) {
       console.log("[Updater] Native update found:", nativeUpdate.version);
-
       state.value.currentUpdate = {
         type: "native",
         version: nativeUpdate.version,
@@ -77,38 +152,27 @@ async function check(silent = false): Promise<void> {
         required: nativeUpdate.required,
         platform: nativeUpdate.platform,
       };
-
       state.value.updateAvailable = true;
       await logUpdateEvent("check", nativeUpdate);
-
       if (!silent) showUpdateDialog();
-      return; // STOP here if native update found
+      return;
     }
 
-    // 2. Fallback to OTA
-    // Notify plugin first (vital for rollback protection)
     await notifyAppReady();
-
     const otaUpdate = await checkOTAUpdate();
 
     if (otaUpdate) {
       console.log("[Updater] OTA update found:", otaUpdate.version);
-
       state.value.currentUpdate = {
         type: "ota",
         version: otaUpdate.version,
         download_url: otaUpdate.url,
-        required: false, // OTA usually not mandatory in this context, or add logic
+        required: false,
       };
-
-      // Store full response for download
       (state.value.currentUpdate as any)._rawOTA = otaUpdate;
-
       state.value.updateAvailable = true;
-
       if (!silent) showUpdateDialog();
     } else {
-      console.log("[Updater] No updates available");
       state.value.currentUpdate = null;
       state.value.updateAvailable = false;
     }
@@ -121,117 +185,58 @@ async function check(silent = false): Promise<void> {
   }
 }
 
-/**
- * Show Dialog
- */
 function showUpdateDialog(): void {
-  // Logic to trigger UI component (e.g. set a flag that App.vue watches)
-  // For now we rely on the reactive state being used by <UpdatePrompt />
+  // Reactive state is used by <UpdatePrompt /> component
 }
 
 /**
- * Download APK using FileTransfer plugin
+ * Download APK with progress tracking
  */
-async function downloadApk(
+async function downloadApkWithProgress(
   update: UpdateInfo,
   onProgress?: (progress: DownloadProgress) => void
 ): Promise<string> {
   if (!Capacitor.isNativePlatform()) {
-    throw new Error("APK downloads are only supported on native platforms");
+    throw new Error("APK downloads only supported on native");
   }
 
-  try {
-    console.log(`[Download] Starting download: ${update.download_url}`);
+  const fileName = `app-v${update.version}-${update.version_code}.apk`;
 
-    const fileName = `app-v${update.version}-${update.version_code}.apk`;
+  const fileInfo = await Filesystem.getUri({
+    directory: Directory.Cache,
+    path: fileName,
+  });
 
-    // Get the file URI where we want to save the APK
-    const fileInfo = await Filesystem.getUri({
-      directory: Directory.Cache,
-      path: fileName,
-    });
-
-    console.log(`[Download] Saving to: ${fileInfo.uri}`);
-
-    // Set up progress listener
-    let progressListener: any = null;
-    if (onProgress) {
-      progressListener = await FileTransfer.addListener(
-        "progress",
-        (progress) => {
-          if (progress.url === update.download_url) {
-            const percentage = progress.lengthComputable
-              ? Math.round((progress.bytes / progress.contentLength) * 100)
-              : 0;
-
-            onProgress({
-              loaded: progress.bytes,
-              total: progress.contentLength,
-              percent: percentage,
-            });
-          }
-        }
-      );
-    }
-
-    if (!update.download_url) throw new Error("Missing download URL");
-
-    // Download the file
-    const result = await FileTransfer.downloadFile({
-      url: update.download_url,
-      path: fileInfo.uri,
-      progress: !!onProgress,
-      connectTimeout: 60000, // 1 minute
-      readTimeout: 300000, // 5 minutes for large files
-    });
-
-    // Clean up progress listener
-    if (progressListener) {
-      await progressListener.remove();
-    }
-
-    console.log(`[Download] Completed: ${result.path}`);
-    await logUpdateEvent("download", update, { path: result.path });
-
-    return result.path ?? "";
-  } catch (error: any) {
-    console.error("[Download] Failed:", error);
-
-    await logUpdateEvent("error", update, {
-      error: error.message,
-      code: error.code,
-    });
-
-    // Handle specific FileTransfer errors
-    if (error.code) {
-      switch (error.code) {
-        case "OS-PLUG-FLTR-0008":
-          throw new Error(
-            "Failed to connect to download server. Check your internet connection."
-          );
-        case "OS-PLUG-FLTR-0010":
-          throw new Error(
-            `Download failed with HTTP error: ${error.httpStatus || "Unknown"}`
-          );
-        case "OS-PLUG-FLTR-0006":
-          throw new Error(
-            "Permission denied. Please grant storage permissions."
-          );
-        case "OS-PLUG-FLTR-0007":
-          throw new Error("File does not exist at the specified location.");
-        default:
-          throw new Error(
-            `Download failed: ${error.message || "Unknown error"}`
-          );
+  let progressListener: any = null;
+  if (onProgress) {
+    progressListener = await FileTransfer.addListener("progress", (p) => {
+      if (p.url === update.download_url) {
+        const percent = p.lengthComputable
+          ? Math.round((p.bytes / p.contentLength) * 100)
+          : 0;
+        onProgress({ loaded: p.bytes, total: p.contentLength, percent });
       }
-    }
-
-    throw error;
+    });
   }
+
+  if (!update.download_url) throw new Error("Missing download URL");
+
+  const result = await FileTransfer.downloadFile({
+    url: update.download_url,
+    path: fileInfo.uri,
+    progress: !!onProgress,
+    connectTimeout: 60000,
+    readTimeout: 300000,
+  });
+
+  if (progressListener) await progressListener.remove();
+
+  await logUpdateEvent("download", update, { path: result.path });
+  return result.path ?? "";
 }
 
 /**
- * Start Download
+ * Start download based on update type
  */
 async function startDownload(): Promise<void> {
   const update = state.value.currentUpdate;
@@ -244,40 +249,35 @@ async function startDownload(): Promise<void> {
 
   try {
     if (update.type === "native") {
-      const nativeUpdate: UpdateInfo = {
-        type: "native",
-        version: update.version,
-        version_code: update.version_code!,
-        download_url: update.download_url!,
-        required: update.required,
-        platform: update.platform!,
-      };
-
-      const path = await downloadApk(nativeUpdate, (p) => {
+      const path = await downloadApkWithProgress(update, (p) => {
         state.value.progress = p;
       });
 
       if (path) {
         UI.showInstallPrompt(
-          () => installNative(path, nativeUpdate),
+          () => installNative(path, update),
           () => {
             if (update.required) state.value.blocked = true;
           }
         );
       }
     } else {
-      // OTA Download
-      const rawOTA = (update as any)._rawOTA as OTAUpdateResponse;
-      await downloadOTAUpdate(rawOTA, (percent) => {
-        state.value.progress = { loaded: percent, total: 100, percent };
-      });
+      const bundleId = (update as any)._bundleId;
+      const rawOTA = (update as any)._rawOTA as OTAUpdateResponse | undefined;
 
-      // OTA is simpler - plugin handles reload on restart
-      UI.showToast("Update ready. Restarting...");
-      setTimeout(() => {
-        // Reload app to apply OTA
-        window.location.reload();
-      }, 1000);
+      if (bundleId) {
+        await CapacitorUpdater.set({ id: bundleId });
+        UI.showToast("Update ready. Restarting...");
+        setTimeout(() => window.location.reload(), 1000);
+      } else if (rawOTA) {
+        await downloadOTAUpdate(rawOTA, (percent) => {
+          state.value.progress = { loaded: percent, total: 100, percent };
+        });
+        UI.showToast("Update ready. Restarting...");
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        throw new Error("No OTA update data available");
+      }
     }
   } catch (error) {
     state.value.error = (error as Error).message;
@@ -288,10 +288,7 @@ async function startDownload(): Promise<void> {
   }
 }
 
-/**
- * Install Native APK
- */
-async function installNative(path: string, update: any): Promise<void> {
+async function installNative(path: string, update: UpdateInfo): Promise<void> {
   try {
     await openApkInstaller(path);
     await logUpdateEvent("install", update);
@@ -302,16 +299,19 @@ async function installNative(path: string, update: any): Promise<void> {
 }
 
 /**
- * Initialize
+ * Initialize updater on app start
  */
 async function init(): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
 
-  // Cleanup old APKs
+  await setupPluginListeners();
+  await notifyAppReady();
+
   const code = await getCurrentVersionCode();
   await cleanupOldApks(code);
 
   const config = getUpdaterConfig();
+
   if (config.autoCheck) {
     await check(true);
   }
@@ -321,14 +321,15 @@ async function init(): Promise<void> {
   }
 }
 
-function cleanup() {
+async function cleanup() {
   if (checkInterval) clearInterval(checkInterval);
+  for (const listener of pluginListeners) {
+    await listener.remove();
+  }
+  pluginListeners = [];
 }
 
-// Composition
 export function useUpdater() {
-  // Single instance init if needed, or call init() from App.vue
-
   return {
     state,
     isChecking,

@@ -91,19 +91,6 @@
   </f7-popup>
 </template>
 <script setup lang="ts">
-import { computed } from "vue";
-import {
-  f7Popup,
-  f7Page,
-  f7Navbar,
-  f7Block,
-  f7BlockTitle,
-  f7Button,
-  f7Progressbar,
-  f7Icon,
-} from "framework7-vue";
-import { useUpdater } from "@/shared/services/updater";
-
 const {
   updateAvailable,
   currentUpdate,
