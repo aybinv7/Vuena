@@ -98,15 +98,19 @@ const {
   progress,
   startDownload,
   isBlocked,
+  dismissUpdate,
+  nativeUpdatePending,
 } = useUpdater();
 
 const show = computed(() => updateAvailable.value);
 const isMandatory = computed(() => currentUpdate.value?.required ?? false);
+const isNativeUpdate = computed(() => currentUpdate.value?.type === "native");
 
 const updateTypeLabel = computed(() => {
-  return currentUpdate.value?.type === "native"
-    ? "App Update"
-    : "Update Available";
+  if (isNativeUpdate.value) {
+    return nativeUpdatePending.value ? "Required App Update" : "App Update";
+  }
+  return "Update Available";
 });
 
 const versionLabel = computed(() => {
@@ -116,7 +120,6 @@ const versionLabel = computed(() => {
 // Format bytes
 const totalSize = computed(() => {
   if (!currentUpdate.value || currentUpdate.value.type !== "native") return "";
-  // Native updates usually don't have file_size in UpdateInfo yet unless we add it strictly
   return "";
 });
 
@@ -132,12 +135,10 @@ function handleUpdate() {
 }
 
 function handleLater() {
-  // Only if not mandatory
-  // Implementation depends on how we want to dismiss.
-  // Since state is global, we might need a dismiss action in useUpdater or just hide locally?
-  // For now, assume strict state: if available, show it.
-  // Real "Later" implies setting a flag to ignore this version temporarily.
-  // For this MVP, we might hide the modal but the state remains "available".
+  // Only dismiss if not mandatory
+  if (!isMandatory.value) {
+    dismissUpdate();
+  }
 }
 
 const showDismiss = computed(() => !isMandatory.value && !isDownloading.value);

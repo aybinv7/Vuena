@@ -26,8 +26,6 @@ const getLiveReloadUrl = (): string | undefined => {
 };
 
 const config: CapacitorConfig = {
-  appId: process.env.VITE_APP_ID ?? "io.aybinv7.vuena",
-  appName: process.env.VITE_APP_NAME ?? "Vuena",
   webDir: "dist",
   server: {
     url: getLiveReloadUrl(),
@@ -49,6 +47,7 @@ const config: CapacitorConfig = {
     CapacitorUpdater: {
       autoUpdate: true,
       allowModifyUrl: true,
+      disableAutoUpdateUnderNative: true, // Prevent OTA if native update needed
       updateUrl: process.env.VITE_UPDATE_API_URL
         ? `${process.env.VITE_UPDATE_API_URL}/api/update`
         : "",
@@ -56,12 +55,13 @@ const config: CapacitorConfig = {
         ? `${process.env.VITE_UPDATE_API_URL}/api/stats`
         : "",
       channelUrl: process.env.VITE_UPDATE_API_URL
-        ? `${process.env.VITE_UPDATE_API_URL}/api/channel`
+        ? `${process.env.VITE_UPDATE_API_URL}/api/channel_self`
         : "",
       defaultChannel: process.env.VITE_UPDATE_CHANNEL ?? "staging",
       version: appVersion,
-      directUpdate: "always",
+      directUpdate: false, // Changed: Show dialog instead of auto-apply
       appReadyTimeout: 10000,
+      responseTimeout: 30000,
       maxVersions: 3,
     },
   },

@@ -1,34 +1,32 @@
 /**
  * Unified Updater Composable
- * Implements "Native First" strategy: Native Check -> (fallback) -> OTA Check
+ * Implements "Native First" strategy:
+ * 1. Check for native updates first (APK/IPA) - BLOCKS OTA if found
+ * 2. OTA updates are handled automatically by Capgo plugin
+ *
+ * Key behaviors:
+ * - Native updates must be installed before OTA updates proceed
+ * - Plugin's auto-update is blocked until notifyAppReady() is called
+ * - We only call notifyAppReady() when no native update is pending
  */
 import { ref, computed } from "vue";
 import { Capacitor } from "@capacitor/core";
 import { CapacitorUpdater } from "@capgo/capacitor-updater";
 import { FileTransfer } from "@capacitor/file-transfer";
 import { Filesystem, Directory } from "@capacitor/filesystem";
-import type {
-  UpdateState,
-  UpdateInfo,
-  OTAUpdateResponse,
-  DownloadProgress,
-} from "./types";
+import type { UpdateState, UpdateInfo, DownloadProgress } from "./types";
 import {
   checkNativeUpdate,
   logUpdateEvent,
   getCurrentVersionCode,
 } from "./api.service";
-import {
-  checkOTAUpdate,
-  downloadOTAUpdate,
-  notifyAppReady,
-} from "./ota.service";
+import { notifyAppReady, getCurrentBundle } from "./ota.service";
 import { cleanupOldApks } from "./download.service";
 import { openApkInstaller } from "./install.service";
 import * as UI from "./ui.service";
-import { getUpdaterConfig } from "./config";
 import type { PluginListenerHandle } from "@capacitor/core";
 
+// Global state
 const state = ref<UpdateState>({
   checking: false,
   downloading: false,
@@ -40,9 +38,12 @@ const state = ref<UpdateState>({
   statusMessage: "",
 });
 
-let checkInterval: ReturnType<typeof setInterval> | null = null;
+// Track if native update is pending (blocks OTA)
+const nativeUpdatePending = ref(false);
+
 let pluginListeners: PluginListenerHandle[] = [];
 
+// Computed properties
 const isChecking = computed(() => state.value.checking);
 const isDownloading = computed(() => state.value.downloading);
 const isBlocked = computed(() => state.value.blocked);
@@ -51,31 +52,43 @@ const progress = computed(() => state.value.progress);
 const currentUpdate = computed(() => state.value.currentUpdate);
 
 /**
- * Setup Capgo plugin event listeners
+ * Setup Capgo plugin event listeners for OTA updates
+ * These fire when the plugin auto-detects updates
  */
 async function setupPluginListeners(): Promise<void> {
+  // Clean up existing listeners
   for (const listener of pluginListeners) {
     await listener.remove();
   }
   pluginListeners = [];
 
+  // Plugin found an OTA update
   const updateAvailableListener = await CapacitorUpdater.addListener(
     "updateAvailable",
     (event) => {
-      console.log("[Updater] Plugin found update:", event.bundle);
-      state.value.currentUpdate = {
-        type: "ota",
-        version: event.bundle.version,
-        download_url: undefined,
-        required: false,
-      };
-      (state.value.currentUpdate as any)._bundleId = event.bundle.id;
-      state.value.updateAvailable = true;
-      showUpdateDialog();
-    },
+      console.log(
+        "[Updater] Plugin detected OTA update:",
+        event.bundle.version
+      );
+
+      // Only process if no native update is pending
+      if (!nativeUpdatePending.value) {
+        state.value.currentUpdate = {
+          type: "ota",
+          version: event.bundle.version,
+          download_url: undefined,
+          required: false,
+        };
+        (state.value.currentUpdate as any)._bundleId = event.bundle.id;
+        state.value.updateAvailable = true;
+      } else {
+        console.log("[Updater] Ignoring OTA - native update pending");
+      }
+    }
   );
   pluginListeners.push(updateAvailableListener);
 
+  // Download progress
   const downloadListener = await CapacitorUpdater.addListener(
     "download",
     (event) => {
@@ -85,55 +98,59 @@ async function setupPluginListeners(): Promise<void> {
         total: 100,
         percent: event.percent,
       };
-    },
+    }
   );
   pluginListeners.push(downloadListener);
 
+  // Download completed
   const downloadCompleteListener = await CapacitorUpdater.addListener(
     "downloadComplete",
-    () => {
+    (bundle) => {
+      console.log("[Updater] OTA download complete:", bundle);
       state.value.downloading = false;
       state.value.progress = { loaded: 100, total: 100, percent: 100 };
-      UI.showToast("Update ready. Restarting...");
-    },
+      UI.showToast("Update downloaded. Restarting...");
+    }
   );
   pluginListeners.push(downloadCompleteListener);
 
+  // Download failed
   const downloadFailedListener = await CapacitorUpdater.addListener(
     "downloadFailed",
-    () => {
+    (info) => {
+      console.error("[Updater] OTA download failed:", info);
       state.value.downloading = false;
       state.value.error = "Download failed";
-      if (state.value.downloading) {
-        UI.showToast("Update download failed");
-      }
-    },
+      UI.showToast("Update download failed");
+    }
   );
   pluginListeners.push(downloadFailedListener);
 
+  // Update failed (rollback happened)
   const updateFailedListener = await CapacitorUpdater.addListener(
     "updateFailed",
-    () => {
-      state.value.error = "Update failed, reverted";
-      if (state.value.downloading || state.value.checking) {
-        UI.showToast("Update failed, reverted to previous version");
-      }
-    },
+    (info) => {
+      console.error("[Updater] Update failed, rolled back:", info);
+      state.value.error = "Update failed, reverted to previous version";
+      UI.showToast("Update failed, reverted to previous version");
+    }
   );
   pluginListeners.push(updateFailedListener);
 
+  // App ready confirmed
   const appReadyListener = await CapacitorUpdater.addListener(
     "appReady",
     () => {
-      console.log("[Updater] App ready confirmed");
-    },
+      console.log("[Updater] App ready confirmed by plugin");
+    }
   );
   pluginListeners.push(appReadyListener);
 }
 
 /**
- * Check for updates (Native first, then OTA fallback)
- * @param silent - If true, don't show dialogs
+ * Check for updates - Native First strategy
+ * Only checks for native updates; OTA is handled by plugin automatically
+ * @param silent - If true, don't show dialogs for "no updates"
  */
 async function check(silent = false): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
@@ -143,10 +160,15 @@ async function check(silent = false): Promise<void> {
   state.value.statusMessage = "Checking for updates...";
 
   try {
+    // Step 1: Check for NATIVE updates (APK/IPA)
     const nativeUpdate = await checkNativeUpdate();
 
     if (nativeUpdate) {
       console.log("[Updater] Native update found:", nativeUpdate.version);
+
+      // Mark native update as pending - this BLOCKS OTA auto-updates
+      nativeUpdatePending.value = true;
+
       state.value.currentUpdate = {
         type: "native",
         version: nativeUpdate.version,
@@ -157,28 +179,27 @@ async function check(silent = false): Promise<void> {
         platform: nativeUpdate.platform,
       };
       state.value.updateAvailable = true;
+
       await logUpdateEvent("check", nativeUpdate);
-      if (!silent) showUpdateDialog();
+
+      if (!silent) {
+        // UpdatePrompt component will show automatically via reactive state
+      }
       return;
     }
 
-    await notifyAppReady();
-    const otaUpdate = await checkOTAUpdate();
+    // Step 2: No native update - OTA is handled by plugin
+    // Now safe to enable OTA auto-updates
+    nativeUpdatePending.value = false;
 
-    if (otaUpdate) {
-      console.log("[Updater] OTA update found:", otaUpdate.version);
-      state.value.currentUpdate = {
-        type: "ota",
-        version: otaUpdate.version,
-        download_url: otaUpdate.url,
-        required: false,
-      };
-      (state.value.currentUpdate as any)._rawOTA = otaUpdate;
-      state.value.updateAvailable = true;
-      if (!silent) showUpdateDialog();
-    } else {
+    if (!silent) {
+      // User manually checked, inform them
+      console.log("[Updater] No native update. OTA handled by plugin.");
+    }
+
+    // Reset state if no updates
+    if (!state.value.updateAvailable) {
       state.value.currentUpdate = null;
-      state.value.updateAvailable = false;
     }
   } catch (error) {
     state.value.error = (error as Error).message;
@@ -189,12 +210,8 @@ async function check(silent = false): Promise<void> {
   }
 }
 
-function showUpdateDialog(): void {
-  // Reactive state is used by <UpdatePrompt /> component
-}
-
 /**
- * Clean all APK files from cache directory
+ * Clean APK cache
  */
 async function cleanApkCache(): Promise<void> {
   try {
@@ -221,7 +238,7 @@ async function cleanApkCache(): Promise<void> {
  */
 async function downloadApkWithProgress(
   update: UpdateInfo,
-  onProgress?: (progress: DownloadProgress) => void,
+  onProgress?: (progress: DownloadProgress) => void
 ): Promise<string> {
   if (!Capacitor.isNativePlatform()) {
     throw new Error("APK downloads only supported on native");
@@ -274,14 +291,13 @@ async function startDownload(): Promise<void> {
   state.value.downloading = true;
   state.value.error = null;
   state.value.statusMessage =
-    update.type === "native" ? "Downloading APK..." : "Downloading Bundle...";
-
-  if (update.type === "native") {
-    await cleanApkCache();
-  }
+    update.type === "native" ? "Downloading APK..." : "Installing update...";
 
   try {
     if (update.type === "native") {
+      // Native APK download
+      await cleanApkCache();
+
       const path = await downloadApkWithProgress(update, (p) => {
         state.value.progress = p;
       });
@@ -291,25 +307,21 @@ async function startDownload(): Promise<void> {
           () => installNative(path, update),
           () => {
             if (update.required) state.value.blocked = true;
-          },
+          }
         );
       }
     } else {
+      // OTA update - plugin already downloaded, just apply
       const bundleId = (update as any)._bundleId;
-      const rawOTA = (update as any)._rawOTA as OTAUpdateResponse | undefined;
 
       if (bundleId) {
         await CapacitorUpdater.set({ id: bundleId });
         UI.showToast("Update ready. Restarting...");
         setTimeout(() => window.location.reload(), 1000);
-      } else if (rawOTA) {
-        await downloadOTAUpdate(rawOTA, (percent) => {
-          state.value.progress = { loaded: percent, total: 100, percent };
-        });
-        UI.showToast("Update ready. Restarting...");
-        setTimeout(() => window.location.reload(), 1000);
       } else {
-        throw new Error("No OTA update data available");
+        // Fallback: trigger plugin to download and apply
+        UI.showToast("Applying update...");
+        await CapacitorUpdater.reload();
       }
     }
   } catch (error) {
@@ -321,11 +333,15 @@ async function startDownload(): Promise<void> {
   }
 }
 
+/**
+ * Install native APK
+ */
 async function installNative(path: string, update: UpdateInfo): Promise<void> {
   try {
     await openApkInstaller(path);
     await logUpdateEvent("install", update);
 
+    // Cleanup APK after install attempt
     try {
       const cleanPath = path.replace("file://", "").replace("content://", "");
       const pathParts = cleanPath.split("/").filter((part) => part.length > 0);
@@ -339,7 +355,7 @@ async function installNative(path: string, update: UpdateInfo): Promise<void> {
     } catch (cleanupError) {
       console.warn(
         "[Cleanup] Failed to delete APK after installation:",
-        cleanupError,
+        cleanupError
       );
     }
   } catch (error) {
@@ -350,33 +366,77 @@ async function installNative(path: string, update: UpdateInfo): Promise<void> {
 
 /**
  * Initialize updater on app start
+ * Key: Only enable OTA if no native update pending
  */
 async function init(): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
 
+  console.log("[Updater] Initializing...");
+
+  // Step 1: Check for native updates FIRST (before enabling OTA)
+  const nativeUpdate = await checkNativeUpdate();
+
+  if (nativeUpdate) {
+    console.log("[Updater] Native update required:", nativeUpdate.version);
+    nativeUpdatePending.value = true;
+
+    state.value.currentUpdate = {
+      type: "native",
+      version: nativeUpdate.version,
+      version_code: nativeUpdate.version_code,
+      download_url: nativeUpdate.download_url,
+      release_notes: nativeUpdate.release_notes,
+      required: nativeUpdate.required,
+      platform: nativeUpdate.platform,
+    };
+    state.value.updateAvailable = true;
+
+    // DO NOT call notifyAppReady() - this blocks OTA auto-updates
+    console.log("[Updater] OTA blocked until native update installed");
+    return;
+  }
+
+  // Step 2: No native update - enable OTA auto-updates
+  nativeUpdatePending.value = false;
+
+  // Setup plugin listeners for OTA events
   await setupPluginListeners();
+
+  // Call notifyAppReady - this enables OTA auto-updates and prevents rollback
   await notifyAppReady();
 
+  // Cleanup old APKs
   const code = await getCurrentVersionCode();
   await cleanupOldApks(code);
 
-  const config = getUpdaterConfig();
-
-  if (config.autoCheck) {
-    await check(true);
-  }
-
-  if (config.checkInterval) {
-    checkInterval = setInterval(() => check(true), config.checkInterval);
-  }
+  console.log("[Updater] Initialized. OTA auto-update enabled.");
 }
 
-async function cleanup() {
-  if (checkInterval) clearInterval(checkInterval);
+/**
+ * Cleanup on unmount
+ */
+async function cleanup(): Promise<void> {
   for (const listener of pluginListeners) {
     await listener.remove();
   }
   pluginListeners = [];
+}
+
+/**
+ * Dismiss update dialog (for non-required updates)
+ */
+function dismissUpdate(): void {
+  if (!state.value.currentUpdate?.required) {
+    state.value.updateAvailable = false;
+    state.value.currentUpdate = null;
+  }
+}
+
+/**
+ * Get current bundle info for display
+ */
+async function getBundleInfo() {
+  return await getCurrentBundle();
 }
 
 export function useUpdater() {
@@ -388,9 +448,12 @@ export function useUpdater() {
     updateAvailable,
     currentUpdate,
     progress,
+    nativeUpdatePending,
     check,
     startDownload,
     init,
     cleanup,
+    dismissUpdate,
+    getBundleInfo,
   };
 }

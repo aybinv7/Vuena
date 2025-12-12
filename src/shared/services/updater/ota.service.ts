@@ -1,84 +1,23 @@
 /**
  * OTA Service
  * Wrapper for @capgo/capacitor-updater plugin
- * Plugin handles ALL API communication internally
+ * 
+ * With autoUpdate enabled, the plugin handles most operations automatically.
+ * This service provides utility functions for manual control and debugging.
  */
 import { CapacitorUpdater } from "@capgo/capacitor-updater";
-import type { OTAUpdateResponse } from "./types";
 
 /**
  * Notify plugin that app is ready
- * Critical for rollback protection - must be called after app loads
+ * CRITICAL: This enables OTA auto-updates and prevents rollback
+ * Only call this AFTER confirming no native update is pending
  */
 export async function notifyAppReady(): Promise<void> {
   try {
     await CapacitorUpdater.notifyAppReady();
-    console.log("[OTA] App marked as ready");
+    console.log("[OTA] App marked as ready - auto-updates enabled");
   } catch (error) {
     console.warn("[OTA] Failed to notify app ready:", error);
-  }
-}
-
-/**
- * Check for OTA updates via plugin's internal method
- * Plugin calls configured updateUrl with correct headers/body
- * @returns Update response if available, null otherwise
- */
-export async function checkOTAUpdate(): Promise<OTAUpdateResponse | null> {
-  try {
-    const result = await CapacitorUpdater.getLatest();
-
-    if (result.url && result.version) {
-      console.log(`[OTA] Update found: v${result.version}`);
-      return {
-        version: result.version,
-        url: result.url,
-        checksum: result.checksum,
-        sessionKey: result.sessionKey,
-      };
-    }
-
-    if (result.error) {
-      console.log("[OTA] Server response:", result.message || result.error);
-      return null;
-    }
-
-    console.log("[OTA] No update available");
-    return null;
-  } catch (error) {
-    console.error("[OTA] Check failed:", error);
-    return null;
-  }
-}
-
-/**
- * Download and schedule OTA update
- * Plugin handles checksums, encryption, etc.
- * @param update - Update info from checkOTAUpdate
- * @param onProgress - Optional progress callback (0-100)
- */
-export async function downloadOTAUpdate(
-  update: OTAUpdateResponse,
-  onProgress?: (percent: number) => void
-): Promise<void> {
-  try {
-    console.log("[OTA] Starting download:", update.version);
-
-    const bundle = await CapacitorUpdater.download({
-      url: update.url,
-      version: update.version,
-      checksum: update.checksum,
-      sessionKey: update.sessionKey,
-    });
-
-    console.log("[OTA] Download complete:", bundle);
-    if (onProgress) onProgress(100);
-
-    await CapacitorUpdater.set(bundle);
-    console.log("[OTA] Update scheduled for next restart");
-  } catch (error) {
-    console.error("[OTA] Download failed:", error);
-    throw error;
   }
 }
 
@@ -120,6 +59,7 @@ export async function deleteBundle(id: string) {
 
 /**
  * Reset to the built-in bundle
+ * Use for emergency recovery or testing
  */
 export async function resetToBuiltin() {
   try {
@@ -127,5 +67,54 @@ export async function resetToBuiltin() {
     console.log("[OTA] Reset to builtin bundle");
   } catch (error) {
     console.error("[OTA] Failed to reset:", error);
+  }
+}
+
+/**
+ * Force reload the app with current bundle
+ */
+export async function reloadApp() {
+  try {
+    await CapacitorUpdater.reload();
+  } catch (error) {
+    console.error("[OTA] Failed to reload:", error);
+  }
+}
+
+/**
+ * Get device ID for channel management
+ */
+export async function getDeviceId(): Promise<string> {
+  try {
+    const result = await CapacitorUpdater.getDeviceId();
+    return result.deviceId;
+  } catch (error) {
+    console.error("[OTA] Failed to get device ID:", error);
+    return "unknown";
+  }
+}
+
+/**
+ * Set channel for this device
+ */
+export async function setChannel(channel: string): Promise<void> {
+  try {
+    await CapacitorUpdater.setChannel({ channel, triggerAutoUpdate: true });
+    console.log("[OTA] Channel set to:", channel);
+  } catch (error) {
+    console.error("[OTA] Failed to set channel:", error);
+  }
+}
+
+/**
+ * Get current channel
+ */
+export async function getChannel(): Promise<string> {
+  try {
+    const result = await CapacitorUpdater.getChannel();
+    return result.channel || "production";
+  } catch (error) {
+    console.error("[OTA] Failed to get channel:", error);
+    return "production";
   }
 }

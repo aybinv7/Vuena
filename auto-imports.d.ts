@@ -69,12 +69,14 @@ declare global {
   const getActivePinia: typeof import('pinia').getActivePinia
   const getApkSize: typeof import('./src/shared/services/updater/download.service').getApkSize
   const getCachedApk: typeof import('./src/shared/services/updater/download.service').getCachedApk
+  const getChannel: typeof import('./src/shared/services/updater/ota.service').getChannel
   const getCurrentBundle: typeof import('./src/shared/services/updater/ota.service').getCurrentBundle
   const getCurrentInstance: typeof import('vue').getCurrentInstance
   const getCurrentScope: typeof import('vue').getCurrentScope
   const getCurrentVersionCode: typeof import('./src/shared/services/updater/api.service').getCurrentVersionCode
   const getCurrentWatcher: typeof import('vue').getCurrentWatcher
   const getDevice: typeof import('framework7/lite').getDevice
+  const getDeviceId: typeof import('./src/shared/services/updater/ota.service').getDeviceId
   const getFramework7AutoImports: typeof import('./src/shared/utils/resolvers/resolvers').getFramework7AutoImports
   const getInstallInstructions: typeof import('./src/shared/services/updater/install.service').getInstallInstructions
   const getPlatform: typeof import('./src/shared/services/updater/api.service').getPlatform
@@ -148,6 +150,7 @@ declare global {
   const refDefault: typeof import('@vueuse/core').refDefault
   const refThrottled: typeof import('@vueuse/core').refThrottled
   const refWithControl: typeof import('@vueuse/core').refWithControl
+  const reloadApp: typeof import('./src/shared/services/updater/ota.service').reloadApp
   const request: typeof import('framework7/lite').request
   const resetToBuiltin: typeof import('./src/shared/services/updater/ota.service').resetToBuiltin
   const resolveComponent: typeof import('vue').resolveComponent
@@ -155,6 +158,7 @@ declare global {
   const resolveUnref: typeof import('@vueuse/core').resolveUnref
   const router: typeof import('./src/router/index').default
   const setActivePinia: typeof import('pinia').setActivePinia
+  const setChannel: typeof import('./src/shared/services/updater/ota.service').setChannel
   const setMapStoreSuffix: typeof import('pinia').setMapStoreSuffix
   const settlements: typeof import('./src/modules/expenses/database/expenses.schema').settlements
   const shallowReactive: typeof import('vue').shallowReactive
@@ -441,7 +445,6 @@ declare module 'vue' {
     readonly capacitorPlugin: UnwrapRef<typeof import('./src/plugins/capacitor.plugin')['default']>
     readonly checkInstallPermission: UnwrapRef<typeof import('./src/shared/services/updater/install.service')['checkInstallPermission']>
     readonly checkNativeUpdate: UnwrapRef<typeof import('./src/shared/services/updater/api.service')['checkNativeUpdate']>
-    readonly checkOTAUpdate: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['checkOTAUpdate']>
     readonly cleanupOldApks: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['cleanupOldApks']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
@@ -474,7 +477,6 @@ declare module 'vue' {
     readonly deleteApk: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['deleteApk']>
     readonly deleteBundle: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['deleteBundle']>
     readonly downloadApk: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['downloadApk']>
-    readonly downloadOTAUpdate: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['downloadOTAUpdate']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly expenses: UnwrapRef<typeof import('./src/modules/expenses/database/expenses.schema')['expenses']>
@@ -487,12 +489,14 @@ declare module 'vue' {
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
     readonly getApkSize: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['getApkSize']>
     readonly getCachedApk: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['getCachedApk']>
+    readonly getChannel: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['getChannel']>
     readonly getCurrentBundle: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['getCurrentBundle']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getCurrentVersionCode: UnwrapRef<typeof import('./src/shared/services/updater/api.service')['getCurrentVersionCode']>
     readonly getCurrentWatcher: UnwrapRef<typeof import('vue')['getCurrentWatcher']>
     readonly getDevice: UnwrapRef<typeof import('framework7/lite')['getDevice']>
+    readonly getDeviceId: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['getDeviceId']>
     readonly getFramework7AutoImports: UnwrapRef<typeof import('./src/shared/utils/resolvers/resolvers')['getFramework7AutoImports']>
     readonly getInstallInstructions: UnwrapRef<typeof import('./src/shared/services/updater/install.service')['getInstallInstructions']>
     readonly getPlatform: UnwrapRef<typeof import('./src/shared/services/updater/api.service')['getPlatform']>
@@ -566,6 +570,7 @@ declare module 'vue' {
     readonly refDefault: UnwrapRef<typeof import('@vueuse/core')['refDefault']>
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
+    readonly reloadApp: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['reloadApp']>
     readonly request: UnwrapRef<typeof import('framework7/lite')['request']>
     readonly resetToBuiltin: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['resetToBuiltin']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
@@ -573,6 +578,7 @@ declare module 'vue' {
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
     readonly router: UnwrapRef<typeof import('./src/router/index')['default']>
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
+    readonly setChannel: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['setChannel']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
     readonly settlements: UnwrapRef<typeof import('./src/modules/expenses/database/expenses.schema')['settlements']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>

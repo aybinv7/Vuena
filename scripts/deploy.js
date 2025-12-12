@@ -102,6 +102,10 @@ function parseArgs() {
                 params.active = value !== 'false';
                 i++;
                 break;
+            case '-sa':
+            case '--skip-asset':
+                params.skipAsset = true;
+                break;
         }
     }
 
@@ -257,6 +261,14 @@ async function deploy() {
     log(`  Required:    ${params.required} | Active: ${params.active}`, 'yellow');
     if (params.note) log(`  Note:        ${params.note}`, 'yellow');
     log('');
+
+    // Step 1.5: Asset Generation
+    if (!params.skipAsset) {
+        log(`[1.5] Generating assets for ${params.environment}...`, 'green');
+        exec(`npm run assets:${params.environment}`);
+    } else {
+        log('[1.5] Skipping asset generation...', 'yellow');
+    }
 
     // Step 2: Build
     log(`[2] Building for ${params.environment}...`, 'green');
