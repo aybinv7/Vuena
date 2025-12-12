@@ -56,3 +56,6 @@ dist
 docs
 .idea
 resources/android/**/*
+Qwen.md
+.env.local
+.env.staging

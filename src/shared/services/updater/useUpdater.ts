@@ -72,7 +72,7 @@ async function setupPluginListeners(): Promise<void> {
       (state.value.currentUpdate as any)._bundleId = event.bundle.id;
       state.value.updateAvailable = true;
       showUpdateDialog();
-    }
+    },
   );
   pluginListeners.push(updateAvailableListener);
 
@@ -85,7 +85,7 @@ async function setupPluginListeners(): Promise<void> {
         total: 100,
         percent: event.percent,
       };
-    }
+    },
   );
   pluginListeners.push(downloadListener);
 
@@ -95,7 +95,7 @@ async function setupPluginListeners(): Promise<void> {
       state.value.downloading = false;
       state.value.progress = { loaded: 100, total: 100, percent: 100 };
       UI.showToast("Update ready. Restarting...");
-    }
+    },
   );
   pluginListeners.push(downloadCompleteListener);
 
@@ -104,8 +104,10 @@ async function setupPluginListeners(): Promise<void> {
     () => {
       state.value.downloading = false;
       state.value.error = "Download failed";
-      UI.showToast("Update download failed");
-    }
+      if (state.value.downloading) {
+        UI.showToast("Update download failed");
+      }
+    },
   );
   pluginListeners.push(downloadFailedListener);
 
@@ -113,8 +115,10 @@ async function setupPluginListeners(): Promise<void> {
     "updateFailed",
     () => {
       state.value.error = "Update failed, reverted";
-      UI.showToast("Update failed, reverted to previous version");
-    }
+      if (state.value.downloading || state.value.checking) {
+        UI.showToast("Update failed, reverted to previous version");
+      }
+    },
   );
   pluginListeners.push(updateFailedListener);
 
@@ -122,7 +126,7 @@ async function setupPluginListeners(): Promise<void> {
     "appReady",
     () => {
       console.log("[Updater] App ready confirmed");
-    }
+    },
   );
   pluginListeners.push(appReadyListener);
 }
@@ -190,15 +194,40 @@ function showUpdateDialog(): void {
 }
 
 /**
+ * Clean all APK files from cache directory
+ */
+async function cleanApkCache(): Promise<void> {
+  try {
+    const { files } = await Filesystem.readdir({
+      path: "",
+      directory: Directory.Cache,
+    });
+
+    for (const file of files) {
+      if (file.name.endsWith(".apk")) {
+        await Filesystem.deleteFile({
+          path: file.name,
+          directory: Directory.Cache,
+        });
+      }
+    }
+  } catch (error) {
+    console.error("[Cleanup] Failed to clean APK cache:", error);
+  }
+}
+
+/**
  * Download APK with progress tracking
  */
 async function downloadApkWithProgress(
   update: UpdateInfo,
-  onProgress?: (progress: DownloadProgress) => void
+  onProgress?: (progress: DownloadProgress) => void,
 ): Promise<string> {
   if (!Capacitor.isNativePlatform()) {
     throw new Error("APK downloads only supported on native");
   }
+
+  await cleanApkCache();
 
   const fileName = `app-v${update.version}-${update.version_code}.apk`;
 
@@ -247,6 +276,10 @@ async function startDownload(): Promise<void> {
   state.value.statusMessage =
     update.type === "native" ? "Downloading APK..." : "Downloading Bundle...";
 
+  if (update.type === "native") {
+    await cleanApkCache();
+  }
+
   try {
     if (update.type === "native") {
       const path = await downloadApkWithProgress(update, (p) => {
@@ -258,7 +291,7 @@ async function startDownload(): Promise<void> {
           () => installNative(path, update),
           () => {
             if (update.required) state.value.blocked = true;
-          }
+          },
         );
       }
     } else {
@@ -292,6 +325,23 @@ async function installNative(path: string, update: UpdateInfo): Promise<void> {
   try {
     await openApkInstaller(path);
     await logUpdateEvent("install", update);
+
+    try {
+      const cleanPath = path.replace("file://", "").replace("content://", "");
+      const pathParts = cleanPath.split("/").filter((part) => part.length > 0);
+      const fileName = pathParts[pathParts.length - 1];
+      if (fileName && fileName.endsWith(".apk")) {
+        await Filesystem.deleteFile({
+          path: fileName,
+          directory: Directory.Cache,
+        });
+      }
+    } catch (cleanupError) {
+      console.warn(
+        "[Cleanup] Failed to delete APK after installation:",
+        cleanupError,
+      );
+    }
   } catch (error) {
     state.value.error = "Installation failed";
     UI.showToast("Installation failed: " + (error as Error).message);
