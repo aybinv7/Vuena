@@ -17,6 +17,7 @@
  *   -n, --note        : release notes (optional)
  *   -r, --required    : mandatory update (default: true)
  *   -a, --active      : activate immediately (default: true)
+ *   -sa,--skip-asset  : skip generating assets
  */
 
 import { execSync } from 'child_process';
