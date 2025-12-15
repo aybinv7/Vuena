@@ -1,0 +1,2 @@
+overrides:
+  capucho-cli: link:../../../../AppData/Local/pnpm/global/5/node_modules/capucho-cli

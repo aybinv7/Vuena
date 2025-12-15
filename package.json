@@ -2,7 +2,7 @@
   "name": "vuena",
   "private": true,
   "type": "module",
-  "version": "49.0.0",
+  "version": "54.0.0",
   "description": "A scalable, modular ERP template built with Vue 3, Framework7, PowerSync, and Capacitor. Features offline-first architecture, real-time sync, and mobile-first design. Includes example modules and comprehensive developer tools.",
   "repository": {
     "type": "git",
@@ -81,6 +81,7 @@
     "@vue/tsconfig": "^0.8.1",
     "@vueuse/core": "^13.9.0",
     "axios": "^1.13.2",
+    "capucho-cli": "link:../../../../AppData/Local/pnpm/global/5/node_modules/capucho-cli",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dom7": "^4.0.6",

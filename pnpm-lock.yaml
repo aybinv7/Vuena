@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  capucho-cli: link:../../../../AppData/Local/pnpm/global/5/node_modules/capucho-cli
+
 importers:
 
   .:
@@ -89,6 +92,9 @@ importers:
       axios:
         specifier: ^1.13.2
         version: 1.13.2
+      capucho-cli:
+        specifier: link:../../../../AppData/Local/pnpm/global/5/node_modules/capucho-cli
+        version: link:../../../../AppData/Local/pnpm/global/5/node_modules/capucho-cli
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1

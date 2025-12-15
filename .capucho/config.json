@@ -1,0 +1,23 @@
+{
+  "appId": "io.aybinv.vuena.com",
+  "appName": "vuena",
+  "defaultEnvironment": "staging",
+  "environments": {
+    "dev": {
+      "appId": "io.aybinv.vuena.com.dev",
+      "channel": "development"
+    },
+    "prod": {
+      "appId": "io.aybinv.vuena.com",
+      "channel": "stable"
+    },
+    "staging": {
+      "appId": "io.aybinv.vuena.com.staging",
+      "channel": "beta"
+    }
+  },
+  "platforms": [
+    "android",
+    "ios"
+  ]
+}

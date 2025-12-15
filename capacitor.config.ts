@@ -2,12 +2,11 @@ import type { CapacitorConfig } from "@capacitor/cli";
 import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
+import { KeyboardResize } from "@capacitor/keyboard";
 
-// Load environment files
 dotenv.config({ path: path.join(__dirname, ".env.local") });
 dotenv.config({ path: path.join(__dirname, ".env") });
 
-// Read version from package.json (single source of truth)
 const packageJson = JSON.parse(
   fs.readFileSync(path.join(__dirname, "package.json"), "utf8")
 );
@@ -26,6 +25,8 @@ const getLiveReloadUrl = (): string | undefined => {
 };
 
 const config: CapacitorConfig = {
+  appId: process.env.VITE_APP_ID,
+  appName: process.env.VITE_APP_NAME,
   webDir: "dist",
   server: {
     url: getLiveReloadUrl(),
@@ -40,14 +41,13 @@ const config: CapacitorConfig = {
     },
 
     Keyboard: {
-      resize: "body",
+      resize: KeyboardResize.Native,
       resizeOnFullScreen: true,
     },
 
     CapacitorUpdater: {
       autoUpdate: true,
       allowModifyUrl: true,
-      disableAutoUpdateUnderNative: true, // Prevent OTA if native update needed
       updateUrl: process.env.VITE_UPDATE_API_URL
         ? `${process.env.VITE_UPDATE_API_URL}/api/update`
         : "",
@@ -59,10 +59,10 @@ const config: CapacitorConfig = {
         : "",
       defaultChannel: process.env.VITE_UPDATE_CHANNEL ?? "staging",
       version: appVersion,
-      directUpdate: false, // Changed: Show dialog instead of auto-apply
+      directUpdate: false,
       appReadyTimeout: 10000,
       responseTimeout: 30000,
-      maxVersions: 3,
+      shakeMenu: true,
     },
   },
 
