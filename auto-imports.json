@@ -1769,8 +1769,20 @@
     "__source": "dir"
   },
   {
-    "name": "openReplayTracker",
-    "as": "openReplayTracker",
+    "name": "getOpenReplayTracker",
+    "as": "getOpenReplayTracker",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/openreplay.plugin.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "trackEvent",
+    "as": "trackEvent",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/openreplay.plugin.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "identifyUser",
+    "as": "identifyUser",
     "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/openreplay.plugin.ts",
     "__source": "dir"
   },
