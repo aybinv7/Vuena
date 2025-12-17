@@ -73,8 +73,6 @@
 </template>
 
 <script setup lang="ts">
-import { Keyboard } from "@capacitor/keyboard";
-
 const groupsStore = useGroupsStore();
 const showCreateGroup = ref(false);
 const groupsList = ref<any>(null);

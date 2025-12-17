@@ -100,7 +100,7 @@ export default defineConfig({
             mt: "material-symbols",
             f7: "framework7",
           },
-          enabledCollections: ["material", "framework7"],
+          enabledCollections: ["material", "framework7", "lucide"],
         }),
       ],
     }),
@@ -127,6 +127,7 @@ export default defineConfig({
 
   base: "",
   build: {
+    sourcemap: true,
     rollupOptions: {
       output: {
         advancedChunks: {

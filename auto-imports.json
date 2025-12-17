@@ -1669,202 +1669,221 @@
   {
     "name": "default",
     "as": "authRoutes",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/modules/auth/router/routes/auth.routes.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/modules/auth/router/routes/auth.routes.ts",
     "__source": "dir"
   },
   {
     "name": "expenses",
     "as": "expenses",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/modules/expenses/database/expenses.schema.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/modules/expenses/database/expenses.schema.ts",
     "__source": "dir"
   },
   {
     "name": "splits",
     "as": "splits",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/modules/expenses/database/expenses.schema.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/modules/expenses/database/expenses.schema.ts",
     "__source": "dir"
   },
   {
     "name": "settlements",
     "as": "settlements",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/modules/expenses/database/expenses.schema.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/modules/expenses/database/expenses.schema.ts",
     "__source": "dir"
   },
   {
     "name": "groups",
     "as": "groups",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/modules/groups/database/groups.schema.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/modules/groups/database/groups.schema.ts",
     "__source": "dir"
   },
   {
     "name": "members",
     "as": "members",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/modules/groups/database/groups.schema.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/modules/groups/database/groups.schema.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "groupsRoutes",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/modules/groups/router/routes/groups.routes.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/modules/groups/router/routes/groups.routes.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "homeRoutes",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/modules/home/router/routes/home.routes.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/modules/home/router/routes/home.routes.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "capacitorPlugin",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/capacitor.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/capacitor.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "useAndroidBackButton",
     "as": "useAndroidBackButton",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/capcitor/useAndroidBackButton.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/capcitor/useAndroidBackButton.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "useAppUpdater",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/capcitor/useAppUpdater.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/capcitor/useAppUpdater.ts",
     "__source": "dir"
   },
   {
     "name": "useKeyboard",
     "as": "useKeyboard",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/capcitor/useKeyboard.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/capcitor/useKeyboard.ts",
     "__source": "dir"
   },
   {
     "name": "useSplashscreen",
     "as": "useSplashscreen",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/capcitor/useSplashScreen.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/capcitor/useSplashScreen.ts",
     "__source": "dir"
   },
   {
     "name": "useStatusBar",
     "as": "useStatusBar",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/capcitor/useStatusBar.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/capcitor/useStatusBar.ts",
     "__source": "dir"
   },
   {
     "name": "framework7",
     "as": "framework7",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/framework7.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/framework7.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "i18nPlugin",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/i18n.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/i18n.plugin.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "default",
+    "as": "openreplayPlugin",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/openreplay.plugin.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "openReplayTracker",
+    "as": "openReplayTracker",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/openreplay.plugin.ts",
+    "__source": "dir"
+  },
+  {
+    "name": "OpenReplayOptions",
+    "as": "OpenReplayOptions",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/openreplay.plugin.ts",
+    "type": true,
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "piniaPlugin",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/pinia.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/pinia.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "powersyncPlugin",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/powersync.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/powersync.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "supabase",
     "as": "supabase",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/plugins/supabase.plugin.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/plugins/supabase.plugin.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "globalRoutes",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/router/global/global.routes.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/router/global/global.routes.ts",
     "__source": "dir"
   },
   {
     "name": "useAuthGuard",
     "as": "useAuthGuard",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/router/guards/useAuth.guard.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/router/guards/useAuth.guard.ts",
     "__source": "dir"
   },
   {
     "name": "usePermissionGuard",
     "as": "usePermissionGuard",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/router/guards/usePermission.guard.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/router/guards/usePermission.guard.ts",
     "__source": "dir"
   },
   {
     "name": "useRoleGuard",
     "as": "useRoleGuard",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/router/guards/useRole.guard.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/router/guards/useRole.guard.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "router",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/router/index.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/router/index.ts",
     "__source": "dir"
   },
   {
     "name": "AppContextKey",
     "as": "AppContextKey",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/composables/theme/useAppTheme.ts",
     "__source": "dir"
   },
   {
     "name": "useAppThemeProvider",
     "as": "useAppThemeProvider",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/composables/theme/useAppTheme.ts",
     "__source": "dir"
   },
   {
     "name": "useAppTheme",
     "as": "useAppTheme",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/composables/theme/useAppTheme.ts",
     "__source": "dir"
   },
   {
     "name": "AppTheme",
     "as": "AppTheme",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/composables/theme/useAppTheme.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "AppMode",
     "as": "AppMode",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/composables/theme/useAppTheme.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "AppContext",
     "as": "AppContext",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/composables/theme/useAppTheme.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/composables/theme/useAppTheme.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "powerSyncDatabase",
     "as": "powerSyncDatabase",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/core/config.database.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/core/config.database.ts",
     "__source": "dir"
   },
   {
     "name": "SupabaseConnector",
     "as": "SupabaseConnector",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/core/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/core/connector.database.ts",
     "__source": "dir"
   },
   {
     "name": "SupabaseConnector",
     "as": "SupabaseConnector",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/core/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/core/connector.database.ts",
     "type": true,
     "declarationType": "class",
     "__source": "dir"
@@ -1872,106 +1891,106 @@
   {
     "name": "databaseConnector",
     "as": "databaseConnector",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/core/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/core/connector.database.ts",
     "__source": "dir"
   },
   {
     "name": "SupabaseConfig",
     "as": "SupabaseConfig",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/core/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/core/connector.database.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "SupabaseConnectorListener",
     "as": "SupabaseConnectorListener",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/core/connector.database.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/core/connector.database.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "inittalizerDatabase",
     "as": "inittalizerDatabase",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/core/inittalizer.database.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/core/inittalizer.database.ts",
     "__source": "dir"
   },
   {
     "name": "databaseLogger",
     "as": "databaseLogger",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/core/logger.database.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/core/logger.database.ts",
     "__source": "dir"
   },
   {
     "name": "default",
     "as": "database",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/index.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/index.ts",
     "__source": "dir"
   },
   {
     "name": "AppSchema",
     "as": "AppSchema",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/schemas/AppSchema.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/schemas/AppSchema.ts",
     "__source": "dir"
   },
   {
     "name": "KyselyDatabase",
     "as": "KyselyDatabase",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "Database",
     "as": "Database",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "GroupRecord",
     "as": "GroupRecord",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "MemberRecord",
     "as": "MemberRecord",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "ExpenseRecord",
     "as": "ExpenseRecord",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "SplitRecord",
     "as": "SplitRecord",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "SettlementRecord",
     "as": "SettlementRecord",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/database/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/database/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "Auth",
     "as": "Auth",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/auth/auth.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/auth/auth.service.ts",
     "__source": "dir"
   },
   {
     "name": "Auth",
     "as": "Auth",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/auth/auth.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/auth/auth.service.ts",
     "type": true,
     "declarationType": "class",
     "__source": "dir"
@@ -1979,291 +1998,291 @@
   {
     "name": "getCurrentVersionCode",
     "as": "getCurrentVersionCode",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/api.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/api.service.ts",
     "__source": "dir"
   },
   {
     "name": "getPlatform",
     "as": "getPlatform",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/api.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/api.service.ts",
     "__source": "dir"
   },
   {
     "name": "checkNativeUpdate",
     "as": "checkNativeUpdate",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/api.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/api.service.ts",
     "__source": "dir"
   },
   {
     "name": "logUpdateEvent",
     "as": "logUpdateEvent",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/api.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/api.service.ts",
     "__source": "dir"
   },
   {
     "name": "DEFAULT_CONFIG",
     "as": "DEFAULT_CONFIG",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/config.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/config.ts",
     "__source": "dir"
   },
   {
     "name": "getUpdaterConfig",
     "as": "getUpdaterConfig",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/config.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/config.ts",
     "__source": "dir"
   },
   {
     "name": "UpdaterConfig",
     "as": "UpdaterConfig",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/config.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/config.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "downloadApk",
     "as": "downloadApk",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/download.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/download.service.ts",
     "__source": "dir"
   },
   {
     "name": "getCachedApk",
     "as": "getCachedApk",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/download.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/download.service.ts",
     "__source": "dir"
   },
   {
     "name": "cleanupOldApks",
     "as": "cleanupOldApks",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/download.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/download.service.ts",
     "__source": "dir"
   },
   {
     "name": "deleteApk",
     "as": "deleteApk",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/download.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/download.service.ts",
     "__source": "dir"
   },
   {
     "name": "getApkSize",
     "as": "getApkSize",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/download.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/download.service.ts",
     "__source": "dir"
   },
   {
     "name": "openApkInstaller",
     "as": "openApkInstaller",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/install.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/install.service.ts",
     "__source": "dir"
   },
   {
     "name": "verifyInstallation",
     "as": "verifyInstallation",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/install.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/install.service.ts",
     "__source": "dir"
   },
   {
     "name": "getInstallInstructions",
     "as": "getInstallInstructions",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/install.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/install.service.ts",
     "__source": "dir"
   },
   {
     "name": "checkInstallPermission",
     "as": "checkInstallPermission",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/install.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/install.service.ts",
     "__source": "dir"
   },
   {
     "name": "notifyAppReady",
     "as": "notifyAppReady",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ota.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ota.service.ts",
     "__source": "dir"
   },
   {
     "name": "getCurrentBundle",
     "as": "getCurrentBundle",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ota.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ota.service.ts",
     "__source": "dir"
   },
   {
     "name": "listBundles",
     "as": "listBundles",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ota.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ota.service.ts",
     "__source": "dir"
   },
   {
     "name": "deleteBundle",
     "as": "deleteBundle",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ota.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ota.service.ts",
     "__source": "dir"
   },
   {
     "name": "resetToBuiltin",
     "as": "resetToBuiltin",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ota.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ota.service.ts",
     "__source": "dir"
   },
   {
     "name": "reloadApp",
     "as": "reloadApp",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ota.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ota.service.ts",
     "__source": "dir"
   },
   {
     "name": "getDeviceId",
     "as": "getDeviceId",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ota.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ota.service.ts",
     "__source": "dir"
   },
   {
     "name": "setChannel",
     "as": "setChannel",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ota.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ota.service.ts",
     "__source": "dir"
   },
   {
     "name": "getChannel",
     "as": "getChannel",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ota.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ota.service.ts",
     "__source": "dir"
   },
   {
     "name": "UPDATE_CHANNELS",
     "as": "UPDATE_CHANNELS",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/types.ts",
     "__source": "dir"
   },
   {
     "name": "UPDATE_ENVIRONMENTS",
     "as": "UPDATE_ENVIRONMENTS",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/types.ts",
     "__source": "dir"
   },
   {
     "name": "OTAUpdateResponse",
     "as": "OTAUpdateResponse",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "UpdateType",
     "as": "UpdateType",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "UpdateInfo",
     "as": "UpdateInfo",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "DownloadProgress",
     "as": "DownloadProgress",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "UpdateState",
     "as": "UpdateState",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "UpdateChannel",
     "as": "UpdateChannel",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "UpdateEnvironment",
     "as": "UpdateEnvironment",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/types.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/types.ts",
     "type": true,
     "__source": "dir"
   },
   {
     "name": "showOptionalUpdateDialog",
     "as": "showOptionalUpdateDialog",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ui.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ui.service.ts",
     "__source": "dir"
   },
   {
     "name": "showMandatoryUpdateDialog",
     "as": "showMandatoryUpdateDialog",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ui.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ui.service.ts",
     "__source": "dir"
   },
   {
     "name": "showDownloadProgress",
     "as": "showDownloadProgress",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ui.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ui.service.ts",
     "__source": "dir"
   },
   {
     "name": "showInstallPrompt",
     "as": "showInstallPrompt",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ui.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ui.service.ts",
     "__source": "dir"
   },
   {
     "name": "showBlockedScreen",
     "as": "showBlockedScreen",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ui.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ui.service.ts",
     "__source": "dir"
   },
   {
     "name": "showToast",
     "as": "showToast",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/ui.service.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/ui.service.ts",
     "__source": "dir"
   },
   {
     "name": "useUpdater",
     "as": "useUpdater",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/services/updater/useUpdater.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/useUpdater.ts",
     "__source": "dir"
   },
   {
     "name": "useAuthStore",
     "as": "useAuthStore",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/stores/auth.store.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/stores/auth.store.ts",
     "__source": "dir"
   },
   {
     "name": "useExpensesStore",
     "as": "useExpensesStore",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/stores/expenses.store.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/stores/expenses.store.ts",
     "__source": "dir"
   },
   {
     "name": "useGroupsStore",
     "as": "useGroupsStore",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/stores/groups.store.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/stores/groups.store.ts",
     "__source": "dir"
   },
   {
     "name": "useLanguageStore",
     "as": "useLanguageStore",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/stores/useLanguage.stores.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/stores/useLanguage.stores.ts",
     "__source": "dir"
   },
   {
     "name": "Framework7VueResolver",
     "as": "Framework7VueResolver",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/utils/resolvers/resolvers.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/utils/resolvers/resolvers.ts",
     "__source": "dir"
   },
   {
     "name": "getFramework7AutoImports",
     "as": "getFramework7AutoImports",
-    "from": "C:/Users/PC/code/ayb/capgo-updater/Vuena/src/shared/utils/resolvers/resolvers.ts",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/utils/resolvers/resolvers.ts",
     "__source": "dir"
   }
 ]

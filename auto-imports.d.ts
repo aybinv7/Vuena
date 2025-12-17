@@ -13,6 +13,7 @@ declare global {
   const Dom7: typeof import('framework7/lite').Dom7
   const EffectScope: typeof import('vue').EffectScope
   const Framework7VueResolver: typeof import('./src/shared/utils/resolvers/resolvers').Framework7VueResolver
+  const OPEN_REPLAY_DEFAULT_CONFIG: typeof import('./src/shared/services/openreplay/config').OPEN_REPLAY_DEFAULT_CONFIG
   const SupabaseConnector: typeof import('./src/shared/database/core/connector.database').SupabaseConnector
   const UPDATE_CHANNELS: typeof import('./src/shared/services/updater/types').UPDATE_CHANNELS
   const UPDATE_ENVIRONMENTS: typeof import('./src/shared/services/updater/types').UPDATE_ENVIRONMENTS
@@ -79,6 +80,7 @@ declare global {
   const getDeviceId: typeof import('./src/shared/services/updater/ota.service').getDeviceId
   const getFramework7AutoImports: typeof import('./src/shared/utils/resolvers/resolvers').getFramework7AutoImports
   const getInstallInstructions: typeof import('./src/shared/services/updater/install.service').getInstallInstructions
+  const getOpenReplayConfig: typeof import('./src/shared/services/openreplay/config').getOpenReplayConfig
   const getPlatform: typeof import('./src/shared/services/updater/api.service').getPlatform
   const getUpdaterConfig: typeof import('./src/shared/services/updater/config').getUpdaterConfig
   const globalRoutes: typeof import('./src/router/global/global.routes').default
@@ -131,6 +133,8 @@ declare global {
   const onUpdated: typeof import('vue').onUpdated
   const onWatcherCleanup: typeof import('vue').onWatcherCleanup
   const openApkInstaller: typeof import('./src/shared/services/updater/install.service').openApkInstaller
+  const openReplayTracker: typeof import('./src/plugins/openreplay.plugin').openReplayTracker
+  const openreplayPlugin: typeof import('./src/plugins/openreplay.plugin').default
   const pausableWatch: typeof import('@vueuse/core').pausableWatch
   const piniaPlugin: typeof import('./src/plugins/pinia.plugin').default
   const powerSyncDatabase: typeof import('./src/shared/database/core/config.database').powerSyncDatabase
@@ -404,6 +408,9 @@ declare global {
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
+  export type { OpenReplayOptions } from './src/plugins/openreplay.plugin'
+  import('./src/plugins/openreplay.plugin')
+  // @ts-ignore
   export type { AppTheme, AppMode, AppContext } from './src/shared/composables/theme/useAppTheme'
   import('./src/shared/composables/theme/useAppTheme')
   // @ts-ignore
@@ -551,6 +558,8 @@ declare module 'vue' {
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
     readonly openApkInstaller: UnwrapRef<typeof import('./src/shared/services/updater/install.service')['openApkInstaller']>
+    readonly openReplayTracker: UnwrapRef<typeof import('./src/plugins/openreplay.plugin')['openReplayTracker']>
+    readonly openreplayPlugin: UnwrapRef<typeof import('./src/plugins/openreplay.plugin')['default']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly piniaPlugin: UnwrapRef<typeof import('./src/plugins/pinia.plugin')['default']>
     readonly powerSyncDatabase: UnwrapRef<typeof import('./src/shared/database/core/config.database')['powerSyncDatabase']>

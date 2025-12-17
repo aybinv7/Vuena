@@ -109,7 +109,7 @@ async function setupPluginListeners(): Promise<void> {
       console.log("[Updater] OTA download complete:", bundle);
       state.value.downloading = false;
       state.value.progress = { loaded: 100, total: 100, percent: 100 };
-      UI.showToast("Update downloaded. Restarting...");
+      // UI.showToast("Update downloaded. Restarting...");
     }
   );
   pluginListeners.push(downloadCompleteListener);
@@ -121,7 +121,7 @@ async function setupPluginListeners(): Promise<void> {
       console.error("[Updater] OTA download failed:", info);
       state.value.downloading = false;
       state.value.error = "Download failed";
-      UI.showToast("Update download failed");
+      // UI.showToast("Update download failed");
     }
   );
   pluginListeners.push(downloadFailedListener);
@@ -132,7 +132,7 @@ async function setupPluginListeners(): Promise<void> {
     (info) => {
       console.error("[Updater] Update failed, rolled back:", info);
       state.value.error = "Update failed, reverted to previous version";
-      UI.showToast("Update failed, reverted to previous version");
+      // UI.showToast("Update failed, reverted to previous version");
     }
   );
   pluginListeners.push(updateFailedListener);
@@ -316,17 +316,17 @@ async function startDownload(): Promise<void> {
 
       if (bundleId) {
         await CapacitorUpdater.set({ id: bundleId });
-        UI.showToast("Update ready. Restarting...");
+        // UI.showToast("Update ready. Restarting...");
         setTimeout(() => window.location.reload(), 1000);
       } else {
         // Fallback: trigger plugin to download and apply
-        UI.showToast("Applying update...");
+        // UI.showToast("Applying update...");
         await CapacitorUpdater.reload();
       }
     }
   } catch (error) {
     state.value.error = (error as Error).message;
-    UI.showToast("Download failed: " + (error as Error).message);
+    // UI.showToast("Download failed: " + (error as Error).message);
   } finally {
     state.value.downloading = false;
     state.value.statusMessage = "";
@@ -360,7 +360,7 @@ async function installNative(path: string, update: UpdateInfo): Promise<void> {
     }
   } catch (error) {
     state.value.error = "Installation failed";
-    UI.showToast("Installation failed: " + (error as Error).message);
+    // UI.showToast("Installation failed: " + (error as Error).message);
   }
 }
 
