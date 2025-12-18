@@ -1,0 +1,1 @@
+import{z as e}from"./vendor-Dj-Vf5uX.js";export{e as CapacitorUpdaterWeb};
