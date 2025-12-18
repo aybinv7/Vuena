@@ -17,7 +17,8 @@
  *   -n, --note        : release notes (optional)
  *   -r, --required    : mandatory update (default: true)
  *   -a, --active      : activate immediately (default: true)
- *   -sa,--skip-asset  : skip generating assets
+ *   -sa,--skip-asset  : skip generating assets for native updates
+ *   -sr,--skip-remote : skip pushing assets to GitHub CDN (default: false, pushes by default)
  */
 
 import { execSync } from 'child_process';
@@ -55,7 +56,8 @@ function parseArgs() {
         version: null,
         note: null,
         required: true,
-        active: true
+        active: true,
+        deployAssets: true
     };
 
     for (let i = 0; i < args.length; i++) {
@@ -106,6 +108,10 @@ function parseArgs() {
             case '-sa':
             case '--skip-asset':
                 params.skipAsset = true;
+                break;
+            case '-sr':
+            case '--skip-remote':
+                params.deployAssets = false;
                 break;
         }
     }
@@ -287,6 +293,22 @@ async function deploy() {
 
     // Step 5: Deploy
     log('', 'reset');
+
+    // Step 5.5: Deploy Assets to CDN 
+    if (params.deployAssets) {
+        log('[5.5] Deploying assets to CDN (GitHub "assets" branch)...', 'green');
+        const repoUrl = 'https://github.com/inventor7/Vuena.git';
+        const cmd = `npx gh-pages -d dist -b assets -r ${repoUrl} -u "github-actions-bot <support+actions@github.com>" --dotfiles`;
+
+        try {
+            exec(cmd, { silent: false });
+            log('  Assets deployed successfully!', 'green');
+            log('  CDN URL: https://cdn.statically.io/gh/inventor7/Vuena/assets/', 'cyan');
+        } catch (e) {
+            log('  Asset deployment failed!', 'red');
+            console.error(e);
+        }
+    }
 
     if (params.type === 'ota') {
         // OTA deployment

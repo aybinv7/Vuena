@@ -31,9 +31,6 @@ const config: CapacitorConfig = {
   server: {
     url: getLiveReloadUrl(),
     cleartext: isLiveReload,
-
-    androidScheme: "https",
-    hostname: "vuena.onrender.com",
   },
 
   plugins: {
@@ -65,7 +62,6 @@ const config: CapacitorConfig = {
       directUpdate: false,
       appReadyTimeout: 10000,
       responseTimeout: 30000,
-      shakeMenu: true,
     },
   },
 

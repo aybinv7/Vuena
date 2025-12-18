@@ -509,7 +509,6 @@ declare module 'vue' {
     readonly getDeviceId: UnwrapRef<typeof import('./src/shared/services/updater/ota.service')['getDeviceId']>
     readonly getFramework7AutoImports: UnwrapRef<typeof import('./src/shared/utils/resolvers/resolvers')['getFramework7AutoImports']>
     readonly getInstallInstructions: UnwrapRef<typeof import('./src/shared/services/updater/install.service')['getInstallInstructions']>
-    readonly getOpenReplayTracker: UnwrapRef<typeof import('./src/plugins/openreplay.plugin')['getOpenReplayTracker']>
     readonly getPlatform: UnwrapRef<typeof import('./src/shared/services/updater/api.service')['getPlatform']>
     readonly getUpdaterConfig: UnwrapRef<typeof import('./src/shared/services/updater/config')['getUpdaterConfig']>
     readonly globalRoutes: UnwrapRef<typeof import('./src/router/global/global.routes')['default']>
@@ -518,7 +517,6 @@ declare module 'vue' {
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly homeRoutes: UnwrapRef<typeof import('./src/modules/home/router/routes/home.routes')['default']>
     readonly i18nPlugin: UnwrapRef<typeof import('./src/plugins/i18n.plugin')['default']>
-    readonly identifyUser: UnwrapRef<typeof import('./src/plugins/openreplay.plugin')['identifyUser']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inittalizerDatabase: UnwrapRef<typeof import('./src/shared/database/core/inittalizer.database')['inittalizerDatabase']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -563,6 +561,7 @@ declare module 'vue' {
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
     readonly openApkInstaller: UnwrapRef<typeof import('./src/shared/services/updater/install.service')['openApkInstaller']>
+    readonly openReplayTracker: UnwrapRef<typeof import('./src/plugins/openreplay.plugin')['openReplayTracker']>
     readonly openreplayPlugin: UnwrapRef<typeof import('./src/plugins/openreplay.plugin')['default']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly piniaPlugin: UnwrapRef<typeof import('./src/plugins/pinia.plugin')['default']>
@@ -617,7 +616,6 @@ declare module 'vue' {
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
     readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
-    readonly trackEvent: UnwrapRef<typeof import('./src/plugins/openreplay.plugin')['trackEvent']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly tryOnBeforeMount: UnwrapRef<typeof import('@vueuse/core')['tryOnBeforeMount']>
     readonly tryOnBeforeUnmount: UnwrapRef<typeof import('@vueuse/core')['tryOnBeforeUnmount']>
