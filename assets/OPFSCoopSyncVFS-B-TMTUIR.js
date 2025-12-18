@@ -1,0 +1,1 @@
+import{j as e}from"./vendor-ChzoXKcV.js";export{e as OPFSCoopSyncVFS};

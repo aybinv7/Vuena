@@ -1,0 +1,23 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    // TypeScript configuration files
+    "tsconfig.json": "tsconfig.*.json, tsconfig.*.tsbuildinfo,  env.d.ts ,tsconfig.tsbuildinfo",
+
+    // Vite configuration files
+    "vite.config.ts": "vite.config.*.ts, vite.*.config.ts",
+
+    // Package management files
+    "package.json": "package-lock.json, pnpm-lock.yaml, yarn.lock, bun.lockb",
+
+    // Auto-generated files
+    ".biomelintrc-auto-import.json": "auto-imports.d.ts, auto-imports.json, components.d.ts",
+
+    // Framework7 related
+    "framework7.json": "framework7.*.json",
+
+    // Manifest files
+    "manifest.json": "manifest.json, framework7.json,capacitor.config.json"
+  }
+}
