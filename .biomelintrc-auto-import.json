@@ -219,6 +219,7 @@
       "toRef",
       "toRefs",
       "toValue",
+      "trackedStores",
       "triggerRef",
       "tryOnBeforeMount",
       "tryOnBeforeUnmount",

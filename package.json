@@ -2,7 +2,7 @@
   "name": "vuena",
   "private": true,
   "type": "module",
-  "version": "81.0.0",
+  "version": "82.0.0",
   "description": "A scalable, modular ERP template built with Vue 3, Framework7, PowerSync, and Capacitor. Features offline-first architecture, real-time sync, and mobile-first design. Includes example modules and comprehensive developer tools.",
   "repository": {
     "type": "git",
@@ -73,6 +73,7 @@
     "@journeyapps/wa-sqlite": "^1.4.1",
     "@openreplay/tracker": "^17.0.1",
     "@openreplay/tracker-assist": "^11.0.10",
+    "@openreplay/tracker-vuex": "^4.0.3",
     "@powersync/capacitor": "^0.1.3",
     "@powersync/kysely-driver": "^1.3.1",
     "@powersync/vue": "^0.4.1",

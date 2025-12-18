@@ -1667,6 +1667,12 @@
     "as": "f7router"
   },
   {
+    "name": "trackedStores",
+    "as": "trackedStores",
+    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/config/tracked-stores.ts",
+    "__source": "dir"
+  },
+  {
     "name": "default",
     "as": "authRoutes",
     "from": "C:/Users/PC/code/ayb/project-0/vuena/src/modules/auth/router/routes/auth.routes.ts",
