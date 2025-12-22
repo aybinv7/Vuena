@@ -1,5 +1,11 @@
 {
   "dev": 1,
+<<<<<<< HEAD
   "staging": 140,
   "prod": 21
 }
+=======
+  "staging": 138,
+  "prod": 10
+}
+>>>>>>> 6ea3d295225c83d0ddb721778aafb1017d7aedc5
