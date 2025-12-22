@@ -3,7 +3,9 @@ import trackerAssist from "@openreplay/tracker-assist";
 import { Capacitor } from "@capacitor/core";
 import { Device } from "@capacitor/device";
 import { Network } from "@capacitor/network";
+import trackerVuex from "@openreplay/tracker-vuex";
 import type { StartOptions } from "node_modules/@openreplay/tracker/dist/lib/main/app";
+import { trackedStores } from "@/config/tracked-stores";
 
 export interface OpenReplayOptions {
   enabled?: boolean;
@@ -107,6 +109,26 @@ const openReplay = async function openReplay(
     }
 
     trackerInstance = new OpenReplay(trackerConfig);
+
+    // --- Pinia Tracking Integration ---
+    const vuexPlugin = trackerInstance.use(trackerVuex());
+
+    // Auto-track configured stores
+    Object.entries(trackedStores).forEach(([name, useStore]) => {
+      try {
+        const store = useStore();
+        const wrapper = vuexPlugin(name);
+        wrapper(store);
+        console.log(`OpenReplay: Tracking store '${name}'`);
+      } catch (err) {
+        console.warn(
+          `OpenReplay: Failed to track store '${name}'. Ensure Pinia is installed.`,
+          err
+        );
+      }
+    });
+    // ----------------------------------
+
     const deviceInfo = await getDeviceInfo();
     const authStore = useAuthStore();
     const { user } = storeToRefs(authStore);
