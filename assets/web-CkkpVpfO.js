@@ -1,0 +1,1 @@
+import{J as e}from"./vendor-CVuyWred.js";export{e as DeviceWeb};

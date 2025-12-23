@@ -1,0 +1,1 @@
+import{B as e}from"./vendor-CVuyWred.js";export{e as FileOpenerWeb};

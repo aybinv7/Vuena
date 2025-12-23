@@ -1,0 +1,1 @@
+import{Tt as e}from"./vendor-CVuyWred.js";export{e as CapacitorUpdater};
