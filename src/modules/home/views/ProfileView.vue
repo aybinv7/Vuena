@@ -99,6 +99,28 @@
       </F7ListItem>
     </F7List>
 
+    <!-- Client Selector (Staging/Dev only) -->
+    <template v-if="appEnvironment !== 'production'">
+      <F7BlockTitle>Client Selector (Dev/Staging)</F7BlockTitle>
+      <F7List>
+        <F7ListItem
+          title="Active App ID"
+          :after="configService.state.activeAppId"
+          link
+          @click="handleSwitchClient"
+        >
+          <template #media>
+            <F7Icon f7="briefcase_fill" color="orange" />
+          </template>
+        </F7ListItem>
+        <F7ListItem title="Reset to Default" link @click="handleResetClient">
+          <template #media>
+            <F7Icon f7="arrow_counterclockwise_circle_fill" color="gray" />
+          </template>
+        </F7ListItem>
+      </F7List>
+    </template>
+
     <!-- Danger Zone -->
     <F7BlockTitle>Account</F7BlockTitle>
     <F7List>
@@ -129,6 +151,7 @@ import AppTheme from "@/shared/components/app/AppTheme.vue";
 import { App } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
 import { useUpdater } from "@/shared/services/updater/useUpdater";
+import { configService } from "@/shared/services/configService";
 
 const authStore = useAuthStore();
 const groupsStore = useGroupsStore();
@@ -281,6 +304,40 @@ async function handleClearSync() {
       }
     }
   );
+}
+
+function handleSwitchClient() {
+  f7.dialog.prompt(
+    "Enter the target App ID (e.g. io.aybinv7.client2):",
+    "Switch Client",
+    async (appId) => {
+      if (!appId) return;
+      f7.preloader.show();
+      try {
+        await configService.setAppIdOverride(appId);
+        f7.toast
+          .create({
+            text: "Client switched! Reloading config...",
+            closeTimeout: 2000,
+          })
+          .open();
+        // Optionally reload the app or parts of it
+      } catch (error) {
+        f7.dialog.alert("Failed to switch client configuration.");
+      } finally {
+        f7.preloader.hide();
+      }
+    }
+  );
+}
+
+function handleResetClient() {
+  f7.dialog.confirm("Reset to default client configuration?", async () => {
+    await configService.setAppIdOverride(null);
+    f7.toast
+      .create({ text: "Restored default configuration", closeTimeout: 2000 })
+      .open();
+  });
 }
 
 function handleSignOut() {

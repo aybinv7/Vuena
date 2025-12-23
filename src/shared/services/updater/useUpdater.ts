@@ -19,6 +19,7 @@ import {
   checkNativeUpdate,
   logUpdateEvent,
   getCurrentVersionCode,
+  checkOTAUpdate,
 } from "./api.service";
 import { notifyAppReady, getCurrentBundle } from "./ota.service";
 import { cleanupOldApks } from "./download.service";
@@ -160,44 +161,68 @@ async function check(silent = false): Promise<void> {
   state.value.statusMessage = "Checking for updates...";
 
   try {
-    // Step 1: Check for NATIVE updates (APK/IPA)
-    const nativeUpdate = await checkNativeUpdate();
+    // SINGLE SOURCE OF TRUTH: Check backend for the definitive update decision
+    // The backend now compares Native vs OTA and decides what's best.
+    const otaResponse = await checkOTAUpdate();
 
-    if (nativeUpdate) {
-      console.log("[Updater] Native update found:", nativeUpdate.version);
-
-      // Mark native update as pending - this BLOCKS OTA auto-updates
-      nativeUpdatePending.value = true;
-
-      state.value.currentUpdate = {
-        type: "native",
-        version: nativeUpdate.version,
-        version_code: nativeUpdate.version_code,
-        download_url: nativeUpdate.download_url,
-        release_notes: nativeUpdate.release_notes,
-        required: nativeUpdate.required,
-        platform: nativeUpdate.platform,
-      };
-      state.value.updateAvailable = true;
-
-      await logUpdateEvent("check", nativeUpdate);
-
-      if (!silent) {
-        // UpdatePrompt component will show automatically via reactive state
-      }
+    if (!otaResponse) {
+      console.log("[Updater] No response from update server.");
       return;
     }
 
-    // Step 2: No native update - OTA is handled by plugin
-    // Now safe to enable OTA auto-updates
-    nativeUpdatePending.value = false;
+    // Case 1: BACKEND SAYS NATIVE IS REQUIRED OR PRIORITY
+    // This happens if message is 'native_update_required' OR 'update_available' + native_update is present
+    if (otaResponse.native_update) {
+      const isPriority = otaResponse.message === "update_available";
+      const isRequired = otaResponse.message === "native_update_required";
 
-    if (!silent) {
-      // User manually checked, inform them
-      console.log("[Updater] No native update. OTA handled by plugin.");
+      console.log(
+        `[Updater] Backend prioritized native update (${isPriority ? "priority" : "required"}):`,
+        otaResponse.native_update.version_name
+      );
+
+      const updateObj: UpdateInfo = {
+        type: "native",
+        version: otaResponse.native_update.version_name,
+        version_code: otaResponse.native_update.version_code,
+        download_url: otaResponse.native_update.download_url,
+        release_notes: otaResponse.native_update.release_notes,
+        required: isRequired || (otaResponse.native_update.required ?? false),
+        platform: otaResponse.native_update.platform,
+      };
+
+      nativeUpdatePending.value = true;
+      state.value.currentUpdate = updateObj;
+      state.value.updateAvailable = true;
+      await logUpdateEvent("check", updateObj);
+      return;
     }
 
-    // Reset state if no updates
+    // Case 2: Pure OTA update
+    if (
+      otaResponse.message === "update_available" &&
+      !otaResponse.native_update
+    ) {
+      console.log("[Updater] OTA update available. Plugin auto-handling.");
+      // We keep nativeUpdatePending false to let the plugin proceed
+      nativeUpdatePending.value = false;
+
+      // We don't necessarily show the prompt for OTA here because the plugin
+      // usually downloads it in the background. But if we want a manual prompt:
+      /*
+      state.value.currentUpdate = {
+        type: 'bundle',
+        version: otaResponse.version_name || 'unknown',
+        required: otaResponse.required || false,
+        release_notes: otaResponse.release_notes
+      };
+      state.value.updateAvailable = true;
+      */
+      return;
+    }
+
+    // Case 3: No update
+    nativeUpdatePending.value = false;
     if (!state.value.updateAvailable) {
       state.value.currentUpdate = null;
     }
@@ -373,36 +398,42 @@ async function init(): Promise<void> {
 
   console.log("[Updater] Initializing...");
 
-  // Step 1: Check for native updates FIRST (before enabling OTA)
-  const nativeUpdate = await checkNativeUpdate();
+  try {
+    // Check backend for definitive update decision
+    const otaResponse = await checkOTAUpdate();
 
-  if (nativeUpdate) {
-    console.log("[Updater] Native update required:", nativeUpdate.version);
-    nativeUpdatePending.value = true;
+    if (otaResponse?.native_update) {
+      const isPriority = otaResponse.message === "update_available";
+      const isRequired = otaResponse.message === "native_update_required";
 
-    state.value.currentUpdate = {
-      type: "native",
-      version: nativeUpdate.version,
-      version_code: nativeUpdate.version_code,
-      download_url: nativeUpdate.download_url,
-      release_notes: nativeUpdate.release_notes,
-      required: nativeUpdate.required,
-      platform: nativeUpdate.platform,
-    };
-    state.value.updateAvailable = true;
+      console.log(
+        `[Updater] Native update prioritized during init (${isPriority ? "priority" : "required"}):`,
+        otaResponse.native_update.version_name
+      );
 
-    // DO NOT call notifyAppReady() - this blocks OTA auto-updates
-    console.log("[Updater] OTA blocked until native update installed");
-    return;
+      const updateObj: UpdateInfo = {
+        type: "native",
+        version: otaResponse.native_update.version_name,
+        version_code: otaResponse.native_update.version_code,
+        download_url: otaResponse.native_update.download_url,
+        release_notes: otaResponse.native_update.release_notes,
+        required: isRequired || (otaResponse.native_update.required ?? false),
+        platform: otaResponse.native_update.platform,
+      };
+
+      nativeUpdatePending.value = true;
+      state.value.currentUpdate = updateObj;
+      state.value.updateAvailable = true;
+      console.log("[Updater] OTA blocked until native update handled");
+      return;
+    }
+  } catch (error) {
+    console.error("[Updater] Init failed to check backend:", error);
   }
 
-  // Step 2: No native update - enable OTA auto-updates
+  // Step 2: Safe to enable OTA auto-updates
   nativeUpdatePending.value = false;
-
-  // Setup plugin listeners for OTA events
   await setupPluginListeners();
-
-  // Call notifyAppReady - this enables OTA auto-updates and prevents rollback
   await notifyAppReady();
 
   // Cleanup old APKs

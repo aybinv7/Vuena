@@ -54,8 +54,9 @@ export async function checkNativeUpdate(): Promise<UpdateInfo | null> {
       {
         params: {
           platform,
-          environment: config.environment,
+          channel: config.channel,
           current_version_code: currentVersionCode.toString(),
+          app_id: config.appId,
         },
       }
     );
@@ -65,7 +66,7 @@ export async function checkNativeUpdate(): Promise<UpdateInfo | null> {
     if (data.available && data.update) {
       return {
         type: "native",
-        version: data.update.version,
+        version: data.update.version_name,
         version_code: data.update.version_code,
         download_url: data.update.download_url,
         release_notes: data.update.release_notes,
@@ -116,5 +117,30 @@ export async function logUpdateEvent(
     );
   } catch (error) {
     console.error("[NativeUpdater] Failed to log event:", error);
+  }
+}
+
+/**
+ * Check for OTA updates manually to catch "native_update_required"
+ * @returns Response object from Capgo-compatible endpoint
+ */
+export async function checkOTAUpdate(): Promise<any> {
+  const config = getUpdaterConfig();
+  const platform = getPlatform();
+  const currentVersionCode = await getCurrentVersionCode();
+
+  try {
+    const response = await axios.post(`${config.nativeApiUrl}/api/update`, {
+      appId: config.appId,
+      platform,
+      channel: config.channel,
+      versionCode: currentVersionCode.toString(),
+      version_name: "builtin", // Standard for checking against baseline
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("[OTA] Manual check failed:", error);
+    return null;
   }
 }

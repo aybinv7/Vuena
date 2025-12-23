@@ -24,13 +24,14 @@ declare global {
   const capacitorPlugin: typeof import('./src/plugins/capacitor.plugin').default
   const checkInstallPermission: typeof import('./src/shared/services/updater/install.service').checkInstallPermission
   const checkNativeUpdate: typeof import('./src/shared/services/updater/api.service').checkNativeUpdate
-  const checkOTAUpdate: typeof import('./src/shared/services/updater/ota.service').checkOTAUpdate
+  const checkOTAUpdate: typeof import('./src/shared/services/updater/api.service').checkOTAUpdate
   const cleanupOldApks: typeof import('./src/shared/services/updater/download.service').cleanupOldApks
   const computed: typeof import('vue').computed
   const computedAsync: typeof import('@vueuse/core').computedAsync
   const computedEager: typeof import('@vueuse/core').computedEager
   const computedInject: typeof import('@vueuse/core').computedInject
   const computedWithControl: typeof import('@vueuse/core').computedWithControl
+  const configService: typeof import('./src/shared/services/configService').configService
   const controlledComputed: typeof import('@vueuse/core').controlledComputed
   const controlledRef: typeof import('@vueuse/core').controlledRef
   const createApp: typeof import('vue').createApp
@@ -456,12 +457,14 @@ declare module 'vue' {
     readonly capacitorPlugin: UnwrapRef<typeof import('./src/plugins/capacitor.plugin')['default']>
     readonly checkInstallPermission: UnwrapRef<typeof import('./src/shared/services/updater/install.service')['checkInstallPermission']>
     readonly checkNativeUpdate: UnwrapRef<typeof import('./src/shared/services/updater/api.service')['checkNativeUpdate']>
+    readonly checkOTAUpdate: UnwrapRef<typeof import('./src/shared/services/updater/api.service')['checkOTAUpdate']>
     readonly cleanupOldApks: UnwrapRef<typeof import('./src/shared/services/updater/download.service')['cleanupOldApks']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
     readonly computedInject: UnwrapRef<typeof import('@vueuse/core')['computedInject']>
     readonly computedWithControl: UnwrapRef<typeof import('@vueuse/core')['computedWithControl']>
+    readonly configService: UnwrapRef<typeof import('./src/shared/services/configService')['configService']>
     readonly controlledComputed: UnwrapRef<typeof import('@vueuse/core')['controlledComputed']>
     readonly controlledRef: UnwrapRef<typeof import('@vueuse/core')['controlledRef']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>

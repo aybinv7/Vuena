@@ -2,11 +2,7 @@
   "name": "vuena",
   "private": true,
   "type": "module",
-<<<<<<< HEAD
-  "version": "91.0.0",
-=======
-  "version": "82.0.0",
->>>>>>> 6ea3d295225c83d0ddb721778aafb1017d7aedc5
+  "version": "95.0.1",
   "description": "A scalable, modular ERP template built with Vue 3, Framework7, PowerSync, and Capacitor. Features offline-first architecture, real-time sync, and mobile-first design. Includes example modules and comprehensive developer tools.",
   "repository": {
     "type": "git",
@@ -18,12 +14,14 @@
     "dev": "cross-env NODE_ENV=development vite",
     "dev:staging": "dotenv -e build/staging/.env.staging -e .env.local -- vite",
     "dev:prod": "dotenv -e build/prod/.env.prod -e .env.local -- vite",
+    "dev:generic": "dotenv -e build/generic/.env.generic -e .env.local -- vite",
     "type-check": "vue-tsc --noEmit",
     "sync-version": "node scripts/sync-version.js",
     "build": "cross-env NODE_ENV=production run-p type-check \"build-only {@}\" --",
     "build:dev": "dotenv -e build/dev/.env.dev -- vite build",
     "build:staging": "dotenv -e build/staging/.env.staging -- vite build",
     "build:prod": "dotenv -e build/prod/.env.prod -- vite build",
+    "build:generic": "dotenv -e build/generic/.env.generic -- vite build",
     "build-only": "vite build",
     "preview": "vite preview --port 4173",
     "assets:dev": "npx @capacitor/assets generate --android --assetPath resources/android/dev/",
@@ -32,6 +30,7 @@
     "trapeze:dev": "dotenv -e build/dev/.env.dev -- trapeze run build/dev/trapeze.dev.yaml -y",
     "trapeze:staging": "dotenv -e build/staging/.env.staging -- trapeze run build/staging/trapeze.staging.yaml -y",
     "trapeze:prod": "dotenv -e build/prod/.env.prod -- trapeze run build/prod/trapeze.prod.yaml -y",
+    "trapeze:generic": "dotenv -e build/generic/.env.generic -- trapeze run build/generic/trapeze.generic.yaml -y",
     "run:android:staging": "run-p build:staging && run-p trapeze:staging && npx cap run android",
     "run:android:prod": "run-p build:prod && run-p trapeze:prod && npx cap run android",
     "run:android:dev": "run-p build:dev && run-p trapeze:dev && npx cap run android",
@@ -41,6 +40,7 @@
     "capgo:bundle:dev": "pnpm build:dev && pnpm trapeze:dev && npx cap sync && npx @capgo/cli bundle zip io.aybinv7.vuena.dev --json",
     "capgo:bundle:staging": "pnpm build:staging && pnpm trapeze:staging && npx cap sync && npx @capgo/cli bundle zip io.aybinv7.vuena.staging --json",
     "capgo:bundle:prod": "pnpm build:prod && pnpm trapeze:prod && npx cap sync && npx @capgo/cli bundle zip io.aybinv7.vuena --json",
+    "capgo:bundle:generic": "pnpm build:generic && pnpm trapeze:generic && npx cap sync && npx @capgo/cli bundle zip GENERIC_APP --json",
     "capgo:upload:dev": "pnpm build:dev && pnpm trapeze:dev && npx cap sync && powershell -ExecutionPolicy Bypass -File scripts/capgo-upload.ps1 -Environment dev",
     "capgo:upload:staging": "pnpm build:staging && pnpm trapeze:staging && npx cap sync  && powershell -ExecutionPolicy Bypass -File scripts/capgo-upload.ps1 -Environment staging",
     "capgo:upload:prod": "pnpm build:prod && pnpm trapeze:prod && npx cap sync && powershell -ExecutionPolicy Bypass -File scripts/capgo-upload.ps1 -Environment prod",
