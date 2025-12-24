@@ -2,7 +2,7 @@
   "name": "vuena",
   "private": true,
   "type": "module",
-  "version": "95.0.1",
+  "version": "102.0.0",
   "description": "A scalable, modular ERP template built with Vue 3, Framework7, PowerSync, and Capacitor. Features offline-first architecture, real-time sync, and mobile-first design. Includes example modules and comprehensive developer tools.",
   "repository": {
     "type": "git",
