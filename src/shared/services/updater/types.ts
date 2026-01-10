@@ -47,7 +47,7 @@ export interface UpdateState {
   cachedPath?: string | null;
 }
 
-export const UPDATE_CHANNELS = ["dev", "staging", "production"] as const;
+export const UPDATE_CHANNELS = ["dev", "staging", "prod"] as const;
 export type UpdateChannel = (typeof UPDATE_CHANNELS)[number];
 
 export const UPDATE_ENVIRONMENTS = ["dev", "staging", "prod"] as const;

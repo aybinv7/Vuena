@@ -12,7 +12,7 @@
  *   -p, --platform    : android, ios (default: android)
  *   -e, --environment : dev, staging, prod (default: staging)
  *   -t, --type        : ota, native (default: ota)
- *   -c, --channel     : custom channel (defaults: staging→beta, prod→stable)
+ *   -c, --channel     : custom channel (defaults: staging→staging, prod→prod)
  *   -v, --version     : major, minor, patch (optional - bumps version)
  *   -n, --note        : release notes (optional)
  *   -r, --required    : mandatory update (default: true)
@@ -119,9 +119,9 @@ function parseArgs() {
     // Default channel based on environment
     if (!params.channel) {
         const channelMap = {
-            dev: 'development',
-            staging: 'beta',
-            prod: 'stable'
+            dev: 'dev',
+            staging: 'staging',
+            prod: 'prod'
         };
         params.channel = channelMap[params.environment];
     }

@@ -65,7 +65,6 @@
       "computedEager",
       "computedInject",
       "computedWithControl",
-      "configService",
       "controlledComputed",
       "controlledRef",
       "createApp",

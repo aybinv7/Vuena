@@ -2002,12 +2002,6 @@
     "__source": "dir"
   },
   {
-    "name": "configService",
-    "as": "configService",
-    "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/configService.ts",
-    "__source": "dir"
-  },
-  {
     "name": "getCurrentVersionCode",
     "as": "getCurrentVersionCode",
     "from": "C:/Users/PC/code/ayb/project-0/vuena/src/shared/services/updater/api.service.ts",

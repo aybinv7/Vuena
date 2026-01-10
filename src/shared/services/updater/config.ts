@@ -15,7 +15,7 @@ export interface UpdaterConfig {
   /** Platform (android/ios) */
   platform: "android" | "ios";
 
-  /** Update channel (production, beta, staging) */
+  /** Update channel (prod, staging, dev) */
   channel: string;
 
   /** Environment (prod, staging, dev) */
@@ -30,10 +30,10 @@ export const DEFAULT_CONFIG: UpdaterConfig = {
     import.meta.env.VITE_UPDATE_API_URL || "https://capucho-back.onrender.com",
   appId: import.meta.env.VITE_APP_ID || "",
   platform: "android",
-  channel: import.meta.env.VITE_UPDATE_CHANNEL || "stable",
+  channel: import.meta.env.VITE_UPDATE_CHANNEL || "prod",
   environment:
     import.meta.env.VITE_ENVIRONMENT ||
-    (import.meta.env.PROD ? "production" : "staging"),
+    (import.meta.env.PROD ? "prod" : "staging"),
   showDialogs: true,
 };
 

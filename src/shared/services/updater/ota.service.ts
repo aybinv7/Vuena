@@ -1,7 +1,7 @@
 /**
  * OTA Service
  * Wrapper for @capgo/capacitor-updater plugin
- * 
+ *
  * With autoUpdate enabled, the plugin handles most operations automatically.
  * This service provides utility functions for manual control and debugging.
  */
@@ -112,9 +112,9 @@ export async function setChannel(channel: string): Promise<void> {
 export async function getChannel(): Promise<string> {
   try {
     const result = await CapacitorUpdater.getChannel();
-    return result.channel || "production";
+    return result.channel || "prod";
   } catch (error) {
     console.error("[OTA] Failed to get channel:", error);
-    return "production";
+    return "prod";
   }
 }
