@@ -1,1 +1,0 @@
-import{Y as e}from"./vendor-CVuyWred.js";export{e as AppWeb};

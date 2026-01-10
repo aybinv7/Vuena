@@ -1,1 +1,0 @@
-import{q as e}from"./vendor-CVuyWred.js";export{e as FileTransferWeb};

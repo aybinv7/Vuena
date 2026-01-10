@@ -1,1 +1,0 @@
-import{j as e}from"./vendor-CVuyWred.js";export{e as OPFSCoopSyncVFS};

@@ -1,1 +1,0 @@
-import{H as e}from"./vendor-CVuyWred.js";export{e as SplashScreenWeb};
