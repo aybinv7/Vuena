@@ -89,7 +89,13 @@ export async function checkNativeUpdate(): Promise<UpdateInfo | null> {
  * @param details - Additional details (optional)
  */
 export async function logUpdateEvent(
-  event: "check" | "download" | "install" | "cancel" | "error",
+  event:
+    | "check"
+    | "download"
+    | "install"
+    | "cancel"
+    | "error"
+    | "download_complete",
   update: UpdateInfo | null,
   details?: Record<string, unknown>
 ): Promise<void> {

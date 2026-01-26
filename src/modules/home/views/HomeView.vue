@@ -9,7 +9,7 @@
       @navbar:expand="isNavbarCollapsed = false"
       :large="!isSelectionMode"
       :transparent="!isSelectionMode"
-      :title="isSelectionMode ? `${selectedCount} Selected` : 'FairShare'"
+      :title="isSelectionMode ? `${selectedCount} Selected` : 'Fairshare'"
       :sliding="false"
     >
       <F7Subnavbar

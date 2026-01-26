@@ -203,21 +203,20 @@ async function check(silent = false): Promise<void> {
       otaResponse.message === "update_available" &&
       !otaResponse.native_update
     ) {
-      console.log("[Updater] OTA update available. Plugin auto-handling.");
+      console.log("[Updater] OTA update available. Manual handling required.");
       // We keep nativeUpdatePending false to let the plugin proceed
       nativeUpdatePending.value = false;
 
-      // We don't necessarily show the prompt for OTA here because the plugin
-      // usually downloads it in the background. But if we want a manual prompt:
-      /*
+      // Manually set update state so the prompt appears
       state.value.currentUpdate = {
-        type: 'bundle',
-        version: otaResponse.version_name || 'unknown',
+        type: "ota",
+        version: otaResponse.version_name || "unknown",
+        download_url: otaResponse.url,
         required: otaResponse.required || false,
-        release_notes: otaResponse.release_notes
+        release_notes: otaResponse.release_notes,
       };
       state.value.updateAvailable = true;
-      */
+
       return;
     }
 
@@ -336,17 +335,34 @@ async function startDownload(): Promise<void> {
         );
       }
     } else {
-      // OTA update - plugin already downloaded, just apply
+      // OTA update
       const bundleId = (update as any)._bundleId;
 
       if (bundleId) {
+        // Plugin already downloaded (auto-update/event), just apply
         await CapacitorUpdater.set({ id: bundleId });
-        // UI.showToast("Update ready. Restarting...");
         setTimeout(() => window.location.reload(), 1000);
       } else {
-        // Fallback: trigger plugin to download and apply
-        // UI.showToast("Applying update...");
-        await CapacitorUpdater.reload();
+        // Manual download required (auto-update disabled)
+        if (!update.download_url) {
+          throw new Error("Missing download URL for OTA update");
+        }
+
+        console.log("[Updater] Starting manual OTA download:", update.version);
+        const downloaded = await CapacitorUpdater.download({
+          url: update.download_url,
+          version: update.version,
+        });
+
+        console.log("[Updater] OTA download complete:", downloaded);
+        state.value.downloading = false;
+
+        // Ensure stats are sent for 'download_complete' if plugin doesn't
+        await logUpdateEvent("download_complete", update);
+
+        // Apply immediately
+        await CapacitorUpdater.set({ id: downloaded.id });
+        setTimeout(() => window.location.reload(), 1000);
       }
     }
   } catch (error) {
