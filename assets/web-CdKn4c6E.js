@@ -1,0 +1,1 @@
+import{p as e}from"./vendor-Bgz_mQ2I.js";export{e as DeviceWeb};
