@@ -1,1 +1,0 @@
-import{j as e}from"./vendor-Dj-Vf5uX.js";export{e as OPFSCoopSyncVFS};

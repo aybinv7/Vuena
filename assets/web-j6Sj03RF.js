@@ -1,0 +1,1 @@
+import{a as e}from"./vendor-GP2ecZyf.js";export{e as CapacitorUpdaterWeb};

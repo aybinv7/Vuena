@@ -1,0 +1,1 @@
+import{m as e}from"./vendor-GP2ecZyf.js";export{e as AppWeb};
