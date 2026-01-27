@@ -1,0 +1,1 @@
+import{o as e}from"./vendor-DfjfzaB9.js";export{e as FileOpenerWeb};
