@@ -1,1 +1,0 @@
-import{s as e}from"./vendor-BfFndHGj.js";export{e as FileOpenerWeb};

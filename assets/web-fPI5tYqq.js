@@ -1,1 +1,0 @@
-import{g as e}from"./vendor-BfFndHGj.js";export{e as DeviceWeb};

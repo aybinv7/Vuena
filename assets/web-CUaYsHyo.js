@@ -1,1 +1,0 @@
-import{_ as e}from"./vendor-BfFndHGj.js";export{e as AppWeb};

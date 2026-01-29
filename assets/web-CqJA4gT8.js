@@ -1,1 +1,0 @@
-import{l as e}from"./vendor-BfFndHGj.js";export{e as CapacitorSQLiteWeb};

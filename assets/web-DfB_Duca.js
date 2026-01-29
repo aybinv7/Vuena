@@ -1,1 +1,0 @@
-import{c as e}from"./vendor-BfFndHGj.js";export{e as FirebaseMessagingWeb};
