@@ -1,0 +1,1 @@
+import{p as e}from"./vendor-DBFoHHNu.js";export{e as SplashScreenWeb};

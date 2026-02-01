@@ -1,0 +1,1 @@
+import{b as e}from"./vendor-DBFoHHNu.js";export{e as AppWeb};

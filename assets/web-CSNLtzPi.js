@@ -1,0 +1,2 @@
+import{c as e}from"./vendor-DBFoHHNu.js";var t=class extends e{async echo(e){return console.log(`ECHO`,e),e}async getAppInfo(e){return console.warn(`capuchoappsmanager is not available on web`,e),{bundleId:e.bundleId,isInstalled:!1}}async openApp(e){return console.warn(`capuchoappsmanager is not available on web`,e),{completed:!1}}async getInstalledApps(){return console.warn(`capuchoappsmanager is not available on web`),{apps:[]}}};export{t as capuchoappsmanagerWeb};
+//# sourceMappingURL=web-CSNLtzPi.js.map
