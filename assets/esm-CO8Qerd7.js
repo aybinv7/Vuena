@@ -1,1 +1,0 @@
-import{R as e}from"./vendor-DfjfzaB9.js";export{e as CapacitorUpdater};

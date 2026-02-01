@@ -1,0 +1,1 @@
+import{g as e}from"./vendor-BCI04k6P.js";export{e as FileTransferWeb};
