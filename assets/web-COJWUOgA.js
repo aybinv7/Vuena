@@ -1,0 +1,1 @@
+import{d as e}from"./vendor-DIgbiYWh.js";export{e as SplashScreenWeb};

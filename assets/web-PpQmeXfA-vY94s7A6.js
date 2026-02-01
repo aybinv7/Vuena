@@ -1,1 +1,0 @@
-import{g as e}from"./vendor-mxSGOd0z.js";export{e as FileTransferWeb};

@@ -1,1 +1,0 @@
-import{d as e}from"./vendor-mxSGOd0z.js";export{e as SplashScreenWeb};

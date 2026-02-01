@@ -1,0 +1,1 @@
+import{v as e}from"./vendor-DIgbiYWh.js";export{e as AppWeb};

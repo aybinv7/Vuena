@@ -1,0 +1,1 @@
+import{l as e}from"./vendor-DIgbiYWh.js";export{e as FileOpenerWeb};
