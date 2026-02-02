@@ -1,0 +1,1 @@
+import{s as e}from"./vendor-DjzfAOBG.js";export{e as CapacitorSQLiteWeb};
