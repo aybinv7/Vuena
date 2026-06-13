@@ -1,1 +1,0 @@
-import{o as e}from"./vendor-723GKeNv.js";export{e as SplashScreenWeb};
