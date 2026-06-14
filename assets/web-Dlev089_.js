@@ -1,1 +1,0 @@
-import{s as e}from"./vendor-VdOAwkS0.js";export{e as ShareWeb};

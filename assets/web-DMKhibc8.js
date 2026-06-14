@@ -1,0 +1,1 @@
+import{o as e}from"./vendor-DO_BBaRZ.js";export{e as SplashScreenWeb};

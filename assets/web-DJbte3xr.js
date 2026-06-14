@@ -1,1 +1,0 @@
-import{c as e}from"./vendor-VdOAwkS0.js";export{e as PreferencesWeb};
