@@ -1,0 +1,1 @@
+import{r as e}from"./vendor-DTw32XZi.js";export{e as FileOpenerWeb};

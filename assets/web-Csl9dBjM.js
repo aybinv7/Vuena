@@ -1,0 +1,1 @@
+import{h as e}from"./vendor-DTw32XZi.js";export{e as AppWeb};
