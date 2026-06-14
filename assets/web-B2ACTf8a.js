@@ -1,1 +1,0 @@
-import{i as e}from"./vendor-DO_BBaRZ.js";export{e as FirebaseMessagingWeb};
