@@ -1,1 +1,0 @@
-import{l as e}from"./vendor-ucSbunvR.js";export{e as SplashScreenWeb};
