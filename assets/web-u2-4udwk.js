@@ -1,0 +1,1 @@
+import{h as e}from"./vendor-BpqRM4Nu.js";export{e as GeolocationWeb};

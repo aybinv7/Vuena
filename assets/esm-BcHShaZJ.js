@@ -1,0 +1,1 @@
+import{X as e}from"./vendor-BpqRM4Nu.js";export{e as CapacitorUpdater};

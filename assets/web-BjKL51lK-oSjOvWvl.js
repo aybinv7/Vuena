@@ -1,1 +1,0 @@
-import{p as e}from"./vendor-DTw32XZi.js";export{e as FileTransferWeb};
