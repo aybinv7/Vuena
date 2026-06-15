@@ -1,0 +1,1 @@
+import{tt as e}from"./vendor-D2nVhx1R.js";export{e as CapacitorUpdater};

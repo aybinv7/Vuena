@@ -1,1 +1,0 @@
-import{v as e}from"./vendor-DCbPzeuz.js";export{e as DeviceWeb};
