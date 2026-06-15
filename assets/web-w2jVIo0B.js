@@ -1,0 +1,1 @@
+import{h as e}from"./vendor-DCbPzeuz.js";export{e as GeolocationWeb};

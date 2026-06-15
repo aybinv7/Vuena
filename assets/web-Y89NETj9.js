@@ -1,1 +1,0 @@
-import{l as e}from"./vendor-BpqRM4Nu.js";export{e as SplashScreenWeb};

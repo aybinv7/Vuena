@@ -1,0 +1,1 @@
+import{l as e}from"./vendor-DCbPzeuz.js";export{e as SplashScreenWeb};
